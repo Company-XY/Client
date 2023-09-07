@@ -24,14 +24,16 @@ const BackToTop = () => {
   }, []);
 
   return (
-    <button
-      onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 p-3 rounded-full bg-blue-600 text-white hover:bg-blue-800 ${
-        isVisible ? "visible" : "invisible"
-      } transition-all duration-600 ease-in-out`}
-    >
-      <BsArrowUpShort size={20} />
-    </button>
+    <>
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-2 right-4 p-3 rounded-full bg-blue-600 text-white hover:bg-blue-800 ${
+          isVisible ? "visible" : "invisible"
+        } transition-all duration-600 ease-in-out`}
+      >
+        <BsArrowUpShort size={20} />
+      </button>
+    </>
   );
 };
 

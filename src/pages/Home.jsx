@@ -8,6 +8,7 @@ import Section3 from "../components/Home/Section3";
 import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
 import BackToTop from "../components/Home/BackToTop";
+import Bot from "../components/bot";
 
 const Home = () => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -15,6 +16,7 @@ const Home = () => {
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
       <Hero />
+      <Bot />
       <Section1 />
       <BackToTop />
       <Services />
