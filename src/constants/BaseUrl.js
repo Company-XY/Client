@@ -1,0 +1,1 @@
+BASE_URL = "https://assist-api-okgk.onrender.com/api/v1"
