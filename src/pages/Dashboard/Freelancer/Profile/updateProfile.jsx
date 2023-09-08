@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const UpdateProfile = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [phone, setPhone] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const [avatarFile, setAvatarFile] = useState(null);
   const [location, setLocation] = useState("");
   const [bio, setBio] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -25,11 +25,6 @@ const UpdateProfile = () => {
 
   const prevStep = () => {
     setCurrentStep(currentStep - 1);
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setAvatar(file);
   };
 
   const handleSampleWorkFileChange = (e) => {
@@ -61,12 +56,13 @@ const UpdateProfile = () => {
     }
   };
 
-  const handleApproval = () => {
-    updateIsApproved();
-  };
-
   const handleReload = () => {
     window.location.reload();
+  };
+
+  const handleApproval = () => {
+    updateIsApproved();
+    handleReload();
   };
 
   const handleSubmit = async (e) => {
@@ -74,7 +70,7 @@ const UpdateProfile = () => {
 
     const formData = new FormData();
     formData.append("phone", phone);
-    formData.append("avatar", avatar);
+    formData.append("avatar", avatarFile);
     formData.append("location", location);
     formData.append("bio", bio);
     formData.append("paymentMethod", paymentMethod);
@@ -154,7 +150,7 @@ const UpdateProfile = () => {
             id="avatar"
             name="avatar"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={(e) => setAvatarFile(e.target.files[0])}
           />
           <button onClick={prevStep} className="btn-secondary mr-4">
             Previous
@@ -264,7 +260,6 @@ const UpdateProfile = () => {
             type="file"
             id="sampleWork"
             name="sampleWork"
-            accept="image/*"
             multiple
             onChange={handleSampleWorkFileChange}
           />
@@ -287,11 +282,7 @@ const UpdateProfile = () => {
           <button onClick={prevStep} className="btn-secondary mr-4">
             Previous
           </button>
-          <button
-            onClick={handleApproval}
-            type="submit"
-            className="btn-primary"
-          >
+          <button type="submit" className="btn-primary">
             Submit
           </button>
           <p>
@@ -299,7 +290,7 @@ const UpdateProfile = () => {
               <span>
                 Update successful, go to{" "}
                 <span className="cursor-pointer underline">
-                  <Link to="/dashboard" onClick={handleReload}>
+                  <Link to="/dashboard" onClick={handleApproval}>
                     dashboard
                   </Link>
                 </span>
@@ -320,7 +311,7 @@ const UpdateProfile = () => {
         ></div>
       </div>
       <div className="bg-white p-4 rounded shadow">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <h3 className="text-xl font-semibold mb-4">
             {steps[currentStep - 1].content}
           </h3>

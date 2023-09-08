@@ -10,7 +10,6 @@ const UpdateProfile = () => {
   const [bio, setBio] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [contactInfo, setContactInfo] = useState("");
-  const [isApprovedUpdated, setIsApprovedUpdated] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const nextStep = () => {
@@ -41,7 +40,6 @@ const UpdateProfile = () => {
           }
         );
         console.log("isApproved status updated successfully:", response.data);
-        setIsApprovedUpdated(true); // Set the state to indicate that isApproved has been updated
         setIsSuccess(true);
       } else {
         console.error("User data not found in localStorage");
@@ -51,13 +49,14 @@ const UpdateProfile = () => {
     }
   };
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   const handleApproval = () => {
     updateIsApproved();
   };
 
-  const handleReload = () => {
-    window.location.reload();
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -85,16 +84,7 @@ const UpdateProfile = () => {
           }
         );
         console.log("Profile updated successfully:", response.data);
-        {
-          /*} if (!isApprovedUpdated) {
-          // Call updateIsApproved only if isApproved has not been updated yet
-          updateIsApproved();
-        }
-      } else {
-        // Handle the case where user data is not available in localStorage
-        console.error("User data not found in localStorage");
-      }*/
-        }
+        console.log(avatar);
       }
     } catch (error) {
       console.error("Failed to update profile:", error);
