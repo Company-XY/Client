@@ -14,8 +14,7 @@ const FreelancerRegister = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [name, setName] = useState("");
-  const [consultation, setConsultation] = useState(true);
-  const [type, setType] = useState("Individual");
+  const [type, setType] = useState("Experienced VA");
   const [isLoading, setIsLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +29,7 @@ const FreelancerRegister = () => {
     if (password === password2) {
       try {
         const response = await axios.post(
-          "https://assist-api-okgk.onrender.com/api/v1/register/client",
+          "https://assist-api-okgk.onrender.com/api/v1/register/freelancer",
           {
             type,
             name,

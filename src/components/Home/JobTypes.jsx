@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const JobTypes = () => {
   // Define assistance types with main content and additional content
@@ -7,107 +8,77 @@ const JobTypes = () => {
     {
       title: "Administrative Support",
       mainContent:
-        "Administrative Support virtual assistants can help you with tasks such as managing emails, scheduling appointments, data entry, and document organization.",
-      additionalContent:
-        "Additional services may include bookkeeping, invoicing, and organizing travel arrangements.",
+        "Involves tasks such as managing emails, scheduling appointments, data entry, and document organization.",
     },
     {
       title: "Social Media Management",
       mainContent:
-        "Social Media Management virtual assistants can handle your social media accounts, create content, schedule posts, and engage with your audience.",
-      additionalContent:
-        "Additional services may include social media advertising and analytics reporting.",
+        "Involves handling  social media accounts, creating content, scheduling posts, and engaging with audience.",
     },
     {
       title: "Email Management",
       mainContent:
-        "Email Management virtual assistants can organize your inbox, respond to emails, and filter important messages from spam.",
-      additionalContent:
-        "Additional services may include setting up email filters and managing email marketing campaigns.",
+        "This involves organizing inbox, responding to emails, and filtering important messages from spam.",
     },
     {
       title: "Data Entry",
       mainContent:
-        "Data Entry virtual assistants can input data, update spreadsheets, and maintain databases with accuracy and efficiency.",
-      additionalContent:
-        "Additional services may include data cleansing and verification.",
+        "Data input, updating spreadsheets, and maintaining databases with accuracy and efficiency.",
     },
     {
       title: "Content Writing",
       mainContent:
-        "Content Writing virtual assistants can create blog posts, articles, website content, and marketing materials that are engaging and SEO-friendly.",
-      additionalContent:
-        "Additional services may include content strategy development and keyword research.",
+        "Content Writing involves writing blog posts, articles, website content, and marketing materials that are engaging and SEO-friendly.",
     },
     {
       title: "Graphic Design",
       mainContent:
-        "Graphic Design virtual assistants can design logos, banners, social media graphics, and marketing materials to enhance your brand's visual identity.",
-      additionalContent:
-        "Additional services may include image editing and design consultations.",
+        "Graphic Design involves designing logos, banners, social media graphics, and marketing materials to enhance brand's visual identity.",
     },
     {
       title: "Research and Analysis",
       mainContent:
-        "Research and Analysis virtual assistants can conduct market research, data analysis, and competitor analysis to inform your business decisions.",
-      additionalContent:
-        "Additional services may include creating reports and presentations based on research findings.",
+        "Research and Analysis involves market research, data analysis, and perform competitor analysis to inform business decisions.",
     },
     {
       title: "Customer Support",
       mainContent:
-        "Customer Support virtual assistants can respond to customer inquiries, handle complaints, and provide exceptional customer service.",
-      additionalContent:
-        "Additional services may include managing customer support tickets and providing product support.",
+        "Customer Support involves responding to customer inquiries, handle complaints, and provide exceptional customer service.",
     },
     {
       title: "Calendar Management",
       mainContent:
-        "Calendar Management virtual assistants can schedule appointments, set reminders, and help you stay organized.",
-      additionalContent:
-        "Additional services may include arranging meetings and coordinating event logistics.",
+        "This involves scheduling appointments, setting reminders, and helping stay organized.",
     },
     {
       title: "Travel Arrangements",
       mainContent:
-        "Travel Arrangements virtual assistants can plan and book travel, including flights, accommodations, and transportation.",
-      additionalContent:
-        "Additional services may include creating itineraries and ensuring a smooth travel experience.",
+        "This involves planning and booking travel, including flights, accommodations, and transportation.",
     },
     {
       title: "Bookkeeping and Accounting",
       mainContent:
-        "Bookkeeping and Accounting virtual assistants can manage financial records, reconcile accounts, and prepare financial reports.",
-      additionalContent:
-        "Additional services may include tax preparation and financial analysis.",
+        "Bookkeeping and Accounting involves managing financial records, reconciling accounts, and preparing financial reports.",
     },
     {
       title: "Website Maintenance",
       mainContent:
-        "Website Maintenance virtual assistants can update website content, perform regular backups, and ensure your website runs smoothly.",
-      additionalContent:
-        "Additional services may include SEO optimization and security monitoring.",
+        "Website Maintenance involves date website content, perform regular backups, and ensure your website runs smoothly.",
     },
     {
       title: "Project Coordination",
       mainContent:
-        "Project Coordination virtual assistants can help you plan and execute projects, manage timelines, and coordinate tasks.",
-      additionalContent:
-        "Additional services may include project documentation and progress tracking.",
+        "Help plan and execute projects, manage timelines, and coordinate tasks.",
     },
     {
       title: "Event Planning",
       mainContent:
-        "Event Planning virtual assistants can assist with event coordination, including venue selection, guest invitations, and logistics.",
-      additionalContent:
-        "Additional services may include budget management and vendor coordination.",
+        " Sould be able to assist with event coordination, including venue selection, guest invitations, and logistics.",
     },
     {
       title: "Online Research",
       mainContent:
         "Online Research virtual assistants can conduct internet research on various topics to gather information and insights.",
-      additionalContent:
-        "Additional services may include creating reports and summarizing research findings.",
     },
   ];
 
@@ -153,7 +124,27 @@ const JobTypes = () => {
               </div>
               {expandedJobType === index && (
                 <div className="mt-2">
-                  <p className="text-gray-700">{job.additionalContent}</p>
+                  <p className="text-black-700 text-xs">
+                    {job.mainContent} <br />
+                    <Link
+                      to="*"
+                      className="inline-flex items-center text-base font-medium text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 text-xs"
+                    >
+                      Read more
+                      <svg
+                        className="w-5 h-5 ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </Link>
+                  </p>
                 </div>
               )}
             </div>
