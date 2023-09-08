@@ -55,6 +55,7 @@ const UpdateProfile = () => {
 
   const handleApproval = () => {
     updateIsApproved();
+    setCurrentStep(currentStep + 1);
   };
 
   const handleSubmit = async (e) => {
@@ -91,142 +92,129 @@ const UpdateProfile = () => {
     }
   };
 
-  const progressBarWidth = ((currentStep - 1) / 6) * 100;
-
   const steps = [
     {
       stepNumber: 1,
       content: (
         <div>
-          {/* Step 1 Form */}
-          <label htmlFor="phone">Phone:</label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <button onClick={nextStep} className="btn-primary">
+          <h2 className="text-center">Step 1/2</h2>
+          <div className="py-2 my-2">
+            <label htmlFor="phone" className="block font-semibold mb-2">
+              Phone:
+            </label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="py-2 my-2">
+            <label htmlFor="location" className="block font-semibold mb-2">
+              Location:
+            </label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="py-2 my-2">
+            <label htmlFor="avatar" className="block font-semibold mb-2">
+              Avatar:
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            />{" "}
+          </div>
+
+          <button
+            onClick={nextStep}
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
+          >
             Next
           </button>
         </div>
       ),
     },
+
     {
       stepNumber: 2,
       content: (
         <div>
-          {/* Step 2 Form */}
-          <label htmlFor="avatar">Avatar:</label>
-          <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
-        </div>
-      ),
-    },
-    {
-      stepNumber: 3,
-      content: (
-        <div>
-          {/* Step 3 Form */}
-          <label htmlFor="location">Location:</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
-        </div>
-      ),
-    },
-    {
-      stepNumber: 4,
-      content: (
-        <div>
-          {/* Step 4 Form */}
-          <label htmlFor="bio">Bio:</label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          ></textarea>
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
-        </div>
-      ),
-    },
-    {
-      stepNumber: 5,
-      content: (
-        <div>
-          {/* Step 5 Form */}
-          <label htmlFor="paymentMethod">Payment Method:</label>
-          <input
-            type="text"
-            id="paymentMethod"
-            name="paymentMethod"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
-        </div>
-      ),
-    },
-    {
-      stepNumber: 6,
-      content: (
-        <div>
-          {/* Step 6 Form */}
-          <label htmlFor="contactInfo">Contact Info:</label>
-          <input
-            type="text"
-            id="contactInfo"
-            name="contactInfo"
-            value={contactInfo}
-            onChange={(e) => setContactInfo(e.target.value)}
-          />
-          <button onClick={prevStep} className="btn-secondary mr-4">
+          <h2 className="text-center">Step 1/2</h2>
+          <div>
+            <label htmlFor="bio" className="block font-semibold mb-2">
+              Bio:
+            </label>
+            <textarea
+              id="bio"
+              name="bio"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            ></textarea>
+          </div>
+          <div>
+            <label htmlFor="contactInfo" className="block font-semibold mb-2">
+              Contact Info:
+            </label>
+            <input
+              type="text"
+              id="contactInfo"
+              name="contactInfo"
+              value={contactInfo}
+              onChange={(e) => setContactInfo(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label htmlFor="paymentMethod" className="block font-semibold mb-2">
+              Payment Method:
+            </label>
+            <input
+              type="text"
+              id="paymentMethod"
+              name="paymentMethod"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <button
+            onClick={prevStep}
+            className="mt-4 px-4 py-2 bg-gray-300 text-gray-600 rounded-md shadow-md hover:bg-gray-400 focus:ring focus:ring-gray-200 focus:outline-none mr-4"
+          >
             Previous
           </button>
           <button
             onClick={handleApproval}
-            type="submit"
-            className="btn-primary"
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
           >
-            Submit
+            Complete
           </button>
+        </div>
+      ),
+    },
+
+    {
+      stepNumber: 3,
+      content: (
+        <div>
           <p>
             {isSuccess ? (
               <span>
-                Update successfull, go to{" "}
+                Update successful, go to{" "}
                 <span className="cursor-pointer underline">
                   <Link to="/dashboard" onClick={handleReload}>
                     {" "}
@@ -242,19 +230,16 @@ const UpdateProfile = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-2xl p-4">
-      <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
-      <div className="bg-blue-200 h-4 rounded-full mb-4">
-        <div
-          className={`bg-blue-500 h-full rounded-full transition-width duration-300 ease-in-out w-${progressBarWidth}`}
-        ></div>
-      </div>
-      <div className="bg-white p-4 rounded shadow">
-        <form onSubmit={handleSubmit}>
-          <h3 className="text-xl font-semibold mb-4">
-            {steps[currentStep - 1].content}
-          </h3>
-        </form>
+    <div className="flex items-center justify-center h-[80vh]">
+      <div className="w-full max-w-screen-md p-4">
+        <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
+        <div className="bg-white p-4 rounded shadow-md">
+          <form className="" onSubmit={handleSubmit}>
+            <h3 className="text-xl font-semibold mb-4">
+              {steps[currentStep - 1].content}
+            </h3>
+          </form>
+        </div>
       </div>
     </div>
   );

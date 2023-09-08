@@ -116,24 +116,33 @@ const UpdateProfile = () => {
     {
       stepNumber: 1,
       content: (
-        <div>
-          <label htmlFor="phone">Phone:</label>
+        <div className="space-y-4">
+          <label htmlFor="phone" className="block">
+            Phone:
+          </label>
           <input
             type="text"
             id="phone"
             name="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <label htmlFor="location">Location:</label>
+          <label htmlFor="location" className="block">
+            Location:
+          </label>
           <input
             type="text"
             id="location"
             name="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={nextStep} className="btn-primary">
+          <button
+            onClick={nextStep}
+            className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          >
             Next
           </button>
         </div>
@@ -143,21 +152,32 @@ const UpdateProfile = () => {
     {
       stepNumber: 2,
       content: (
-        <div>
-          <label htmlFor="avatar">Avatar:</label>
+        <div className="space-y-4">
+          <label htmlFor="avatar" className="block">
+            Avatar:
+          </label>
           <input
             type="file"
             id="avatar"
             name="avatar"
             accept="image/*"
             onChange={(e) => setAvatarFile(e.target.files[0])}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={prevStep}
+              className="bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mr-4"
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextStep}
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Next
+            </button>
+          </div>
         </div>
       ),
     },
@@ -165,28 +185,42 @@ const UpdateProfile = () => {
     {
       stepNumber: 3,
       content: (
-        <div>
-          <label htmlFor="bio">Bio:</label>
+        <div className="space-y-4">
+          <label htmlFor="bio" className="block">
+            Bio:
+          </label>
           <textarea
             id="bio"
             name="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           ></textarea>
-          <label htmlFor="skills">Skills:</label>
+          <label htmlFor="skills" className="block">
+            Skills:
+          </label>
           <input
             type="text"
             id="skills"
             name="skills"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={prevStep}
+              className="bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mr-4"
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextStep}
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Next
+            </button>
+          </div>
         </div>
       ),
     },
@@ -194,29 +228,43 @@ const UpdateProfile = () => {
     {
       stepNumber: 4,
       content: (
-        <div>
-          <label htmlFor="paymentMethod">Payment Method:</label>
+        <div className="space-y-4">
+          <label htmlFor="paymentMethod" className="block">
+            Payment Method:
+          </label>
           <input
             type="text"
             id="paymentMethod"
             name="paymentMethod"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <label htmlFor="paymentRate">Payment Rate:</label>
+          <label htmlFor="paymentRate" className="block">
+            Payment Rate:
+          </label>
           <input
             type="text"
             id="paymentRate"
             name="paymentRate"
             value={paymentRate}
             onChange={(e) => setPaymentRate(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={prevStep}
+              className="bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mr-4"
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextStep}
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Next
+            </button>
+          </div>
         </div>
       ),
     },
@@ -224,29 +272,43 @@ const UpdateProfile = () => {
     {
       stepNumber: 5,
       content: (
-        <div>
-          <label htmlFor="experience">Experience:</label>
+        <div className="space-y-4">
+          <label htmlFor="experience" className="block">
+            Experience:
+          </label>
           <input
             type="text"
             id="experience"
             name="experience"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <label htmlFor="tasks">Tasks:</label>
+          <label htmlFor="tasks" className="block">
+            Tasks:
+          </label>
           <input
             type="text"
             id="tasks"
             name="tasks"
             value={tasks}
             onChange={(e) => setTasks(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button onClick={nextStep} className="btn-primary">
-            Next
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={prevStep}
+              className="bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mr-4"
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextStep}
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Next
+            </button>
+          </div>
         </div>
       ),
     },
@@ -254,37 +316,54 @@ const UpdateProfile = () => {
     {
       stepNumber: 6,
       content: (
-        <div>
-          <label htmlFor="sampleWork">Sample Work:</label>
+        <div className="space-y-4">
+          <label htmlFor="sampleWork" className="block">
+            Sample Work:
+          </label>
           <input
             type="file"
             id="sampleWork"
             name="sampleWork"
             multiple
             onChange={handleSampleWorkFileChange}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <label htmlFor="availability">Availability:</label>
+          <label htmlFor="availability" className="block">
+            Availability:
+          </label>
           <input
             type="text"
             id="availability"
             name="availability"
             value={availability}
             onChange={(e) => setAvailability(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <label htmlFor="contactInfo">Contact Info:</label>
+          <label htmlFor="contactInfo" className="block">
+            Contact Info:
+          </label>
           <input
             type="text"
             id="contactInfo"
             name="contactInfo"
             value={contactInfo}
             onChange={(e) => setContactInfo(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded-md"
           />
-          <button onClick={prevStep} className="btn-secondary mr-4">
-            Previous
-          </button>
-          <button type="submit" className="btn-primary">
-            Submit
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={prevStep}
+              className="bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mr-4"
+            >
+              Previous
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Submit
+            </button>
+          </div>
           <p>
             {isSuccess ? (
               <span>
