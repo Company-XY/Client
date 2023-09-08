@@ -128,7 +128,7 @@ const JobTypes = () => {
                     {job.mainContent} <br />
                     <Link
                       to="*"
-                      className="inline-flex items-center text-base font-medium text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 text-xs"
+                      className="inline-flex items-center font-medium text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 text-xs"
                     >
                       Read more
                       <svg
