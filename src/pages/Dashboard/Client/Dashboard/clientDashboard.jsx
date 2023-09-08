@@ -2,11 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../../store/Slices/userSlice";
-import Client from "./Client/Dashboard/clientDashboard";
-import Freelancer from "./Freelancer/Dashboard/freelancerDashboard";
+import { setUser } from "../../../../store/Slices/userSlice";
+import Profile from "../Profile/updateProfile";
 
-const Dashboard = () => {
+const clientDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
@@ -20,7 +19,7 @@ const Dashboard = () => {
     if (userString) {
       const user = JSON.parse(userString);
       dispatch(setUser(user));
-      fetchUserData(user._id, user.token); 
+      fetchUserData(user._id, user.token);
     } else {
       navigate("/");
     }
@@ -47,16 +46,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-10 mt-10 pt-5">
-      <h2 className="text-center">Dashboard</h2>
+    <div className="px-10 pt-5">
       {isLoading ? (
-        <p>Loading user data...an animation will replace this for better UX</p>
+        <p>Wait</p>
       ) : (
         <div className="px-5 py-2">
-          {userData && userData.role === "Freelancer" ? (
-            <Freelancer />
+          {userData && userData.isApproved ? (
+            <section>
+              <h2>Dashboard default</h2>
+            </section>
           ) : (
-            <Client />
+            <Profile />
           )}
         </div>
       )}
@@ -64,4 +64,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default clientDashboard;
