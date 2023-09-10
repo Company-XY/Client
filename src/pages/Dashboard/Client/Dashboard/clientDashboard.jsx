@@ -53,7 +53,7 @@ const clientDashboard = () => {
         <div className="px-5 py-2">
           {userData && userData.isApproved ? (
             <section>
-              <h2>Dashboard default</h2>
+              <h2>Dashboard default. main dashboard should be imported here</h2>
             </section>
           ) : (
             <Profile />
