@@ -15,6 +15,7 @@ const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const [nav, setNav] = useState(false);
   const [darkIcon, setDarkIcon] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
@@ -33,8 +34,13 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(removeUser(user));
+    setIsLoggedIn(false);
     navigate("/");
   };
+
+  useEffect(() => {
+    document.title = isLoggedIn ? "Dashboard | Assist Africa" : "Assist Africa";
+  }, [isLoggedIn]);
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
