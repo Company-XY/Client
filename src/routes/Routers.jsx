@@ -5,12 +5,14 @@ import Register from "../pages/Register/Register";
 import ClientRegister from "../pages/Register/clientRegister";
 import FreelancerRegister from "../pages/Register/freelancerRegister";
 import Dashboard from "../pages/Dashboard/dashboard";
-//import Header from "../components/Header/Header";
 import Blog from "../pages/Blog/Blog";
 import PostProject from "../pages/Dashboard/Client/Dashboard/postProject";
 import BookConsultation from "../pages/Dashboard/Client/Dashboard/bookConsultation";
 import FillDetails from "../pages/Dashboard/Client/Dashboard/guidanceDetails";
 import Call from "../pages/Dashboard/Client/Dashboard/call";
+import Reset from "../pages/Reset";
+import Password from "../pages/Password";
+
 function Routers() {
   return (
     <Routes>
@@ -25,6 +27,8 @@ function Routers() {
       <Route path="/dashboard/client/book/details" element={<FillDetails />} />
       <Route path="/dashboard/client/book/call" element={<Call />} />
       <Route path="/blog" element={<Blog />} />
+      <Route path="/reset" element={<Reset />} />
+      <Route path="/password/:token" element={<Password />} />
     </Routes>
   );
 }
