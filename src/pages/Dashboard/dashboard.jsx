@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import Client from "./Client/Dashboard/clientDashboard";
 import Freelancer from "./Freelancer/Dashboard/freelancerDashboard";
+import Skeleton from "../Loading";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Dashboard = () => {
     if (userString) {
       const user = JSON.parse(userString);
       dispatch(setUser(user));
-      fetchUserData(user._id, user.token); 
+      fetchUserData(user._id, user.token);
     } else {
       navigate("/");
     }
@@ -47,10 +48,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-10 mt-10 pt-5">
-      <h2 className="text-center">Dashboard</h2>
+    <div className="px-10 mt-5 pt-4">
       {isLoading ? (
-        <p>Loading user data...an animation will replace this for better UX</p>
+        <Skeleton />
       ) : (
         <div className="px-5 py-2">
           {userData && userData.role === "Freelancer" ? (

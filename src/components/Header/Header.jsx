@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { removeUser } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
@@ -15,14 +15,12 @@ const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const [nav, setNav] = useState(false);
   const [darkIcon, setDarkIcon] = useState(true);
-  const [logo, setLogo] = useState(false);
 
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode());
     setDarkIcon(!darkIcon);
-    setLogo((prevLogo) => !prevLogo);
   };
 
   const isAuthenticated = localStorage.getItem("user") !== null;
@@ -180,11 +178,11 @@ const Header = () => {
                         <span>{userName}</span>
                       </p>
                     </li>
-                    <li>
+                    {/*<li>
                       <p className="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                         Balance : <span>0 {userBalance} USD</span>
                       </p>
-                    </li>
+              </li>*/}
                     <li className="grid place-items-center">
                       {/*------ DARK MODE ICON TOGGLE------*/}
                       <button

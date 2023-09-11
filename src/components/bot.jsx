@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
+
+  useEffect(() => {
+    const chatMessagesContainer = document.getElementById("chat-messages");
+    if (chatMessagesContainer) {
+      chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+    }
+  }, [chatMessages]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -17,7 +24,8 @@ const Chatbot = () => {
   const sendMessage = () => {
     if (userMessage.trim() === "") return;
 
-    setChatMessages([...chatMessages, { sender: "You", text: userMessage }]);
+    const newUserMessage = { sender: "You", text: userMessage };
+    setChatMessages([...chatMessages, newUserMessage]);
 
     const requestBody = {
       message: userMessage,
@@ -35,16 +43,20 @@ const Chatbot = () => {
       )
       .then((response) => {
         const botResponse = response.data.response;
-        setChatMessages([
-          ...chatMessages,
-          { sender: "Chatbot", text: botResponse },
-        ]);
+        const newBotMessage = { sender: "Chatbot", text: botResponse };
+        setChatMessages([...chatMessages, newBotMessage]);
       })
       .catch((error) => {
         console.error("Error sending message:", error);
       });
 
     setUserMessage("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
   };
 
   return (
@@ -107,7 +119,12 @@ const Chatbot = () => {
 
         <div className="px-4 py-3 h-60 overflow-y-auto" id="chat-messages">
           {chatMessages.map((message, index) => (
-            <div key={index} className="mb-2">
+            <div
+              key={index}
+              className={`mb-2 ${
+                message.sender === "You" ? "text-green-700" : "text-blue-700"
+              }`}
+            >
               <div className="font-semibold">{message.sender}:</div>
               <div>{message.text}</div>
             </div>
@@ -121,6 +138,7 @@ const Chatbot = () => {
             className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none mb-2"
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <button
             className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 focus:outline-none"

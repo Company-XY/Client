@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../../../store/Slices/userSlice";
 import Profile from "../Profile/updateProfile";
+import Dashboard from "./dashboard";
+import Skeleton from "../../../Loading";
 
 const clientDashboard = () => {
   const dispatch = useDispatch();
@@ -48,12 +50,12 @@ const clientDashboard = () => {
   return (
     <div className="px-10 pt-5">
       {isLoading ? (
-        <p>Wait</p>
+        <Skeleton />
       ) : (
         <div className="px-5 py-2">
           {userData && userData.isApproved ? (
             <section>
-              <h2>Dashboard default. main dashboard should be imported here</h2>
+              <Dashboard />{" "}
             </section>
           ) : (
             <Profile />
