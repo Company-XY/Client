@@ -24,7 +24,7 @@ const Profile = () => {
       );
 
       setUserData(response.data);
-      console.log(userData);
+      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
@@ -43,7 +43,7 @@ const Profile = () => {
           <div className="w-52 mx-auto">
             <img
               className="h-40 w-full object-cover rounded-full"
-              src={userData.avatar || Avatar}
+              src={userData.avatar}
               alt="Avatar"
             />
           </div>
