@@ -1,4 +1,4 @@
-import Profile from "./profile";
+import Profile from "../Profile/getProfile";
 import Jobs from "./myJobs";
 import Actions from "./clientActions";
 import Messages from "./messages";

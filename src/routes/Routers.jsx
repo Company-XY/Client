@@ -12,6 +12,7 @@ import FillDetails from "../pages/Dashboard/Client/Dashboard/guidanceDetails";
 import Call from "../pages/Dashboard/Client/Dashboard/call";
 import Reset from "../pages/Reset";
 import Password from "../pages/Password";
+import Admins from "../pages/Dashboard/Admins/Admins";
 
 function Routers() {
   return (
@@ -22,6 +23,7 @@ function Routers() {
       <Route path="/register/client" element={<ClientRegister />} />
       <Route path="/register/freelancer" element={<FreelancerRegister />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard/admin" element={<Admins />} />
       <Route path="/dashboard/client/post" element={<PostProject />} />
       <Route path="/dashboard/client/book" element={<BookConsultation />} />
       <Route path="/dashboard/client/book/details" element={<FillDetails />} />

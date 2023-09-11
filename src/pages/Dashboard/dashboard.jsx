@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import Client from "./Client/Dashboard/clientDashboard";
 import Freelancer from "./Freelancer/Dashboard/freelancerDashboard";
 import Skeleton from "../Loading";
+import Admins from "./Admins/Admins";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
 
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,11 +52,17 @@ const Dashboard = () => {
       {isLoading ? (
         <Skeleton />
       ) : (
-        <div className="px-5 py-2">
-          {userData && userData.role === "Freelancer" ? (
-            <Freelancer />
+        <div>
+          {userData && userData.isAdmin ? (
+            <Admins />
           ) : (
-            <Client />
+            <div className="px-5 py-2">
+              {userData && userData.role === "Freelancer" ? (
+                <Freelancer />
+              ) : (
+                <Client />
+              )}
+            </div>
           )}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Avatar from "../../../../assets/feature-1.jpg";
+import axios from "axios";
 
 const Profile = () => {
   const initialProfile = {
@@ -40,7 +41,6 @@ const Profile = () => {
   const handleSaveClick = () => {
     setIsEditing(false);
 
-    // Update the profile avatar if a new one was selected
     if (newAvatar) {
       const reader = new FileReader();
       reader.onload = (event) => {
