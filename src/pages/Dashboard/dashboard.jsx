@@ -6,7 +6,7 @@ import { setUser } from "../../store/Slices/userSlice";
 import Client from "./Client/Dashboard/clientDashboard";
 import Freelancer from "./Freelancer/Dashboard/freelancerDashboard";
 import Skeleton from "../Loading";
-import Admins from "./Admins/Admins";
+import Admin from "./Admins/Admins";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -59,8 +59,10 @@ const Dashboard = () => {
             <div className="px-5 py-2">
               {userData && userData.role === "Freelancer" ? (
                 <Freelancer />
-              ) : (
+              ) : userData && userData.role === "Client" ? (
                 <Client />
+              ) : (
+                <Admin />
               )}
             </div>
           )}

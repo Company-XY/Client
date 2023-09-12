@@ -142,22 +142,15 @@ const Header = () => {
                 className="items-center hidden justify-between w-full lg:flex lg:w-auto lg:order-1"
                 id="desktop-menu"
               >
-                <ul
-                  onClick={() => setNav(!nav)}
-                  className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
-                >
+                <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                   <li>
-                    <p className="flex gap-2 py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
-                      <span className="grid place-items-center cursor-pointer">
-                        {" "}
-                        <BiUserCircle size={25} />{" "}
-                      </span>{" "}
-                      <span className="cursor-pointer">{userName}</span>
+                    <p className="block cursor-pointer py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                      <RouterLink to="/">Home</RouterLink>
                     </p>
                   </li>
                   <li>
-                    <p className="block cursor-pointer py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
-                      Balance : <span>0 {userBalance} USD</span>
+                    <p className="flex gap-2 py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                      <RouterLink to="/dashboard">Dashboard</RouterLink>
                     </p>
                   </li>
                 </ul>
