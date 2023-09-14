@@ -13,6 +13,7 @@ import Call from "../pages/Dashboard/Client/Dashboard/call";
 import Reset from "../pages/Reset";
 import Password from "../pages/Password";
 import Admins from "../pages/Dashboard/Admins/Admins";
+import Review from "../pages/Dashboard/Client/Dashboard/Review";
 
 function Routers() {
   return (
@@ -28,6 +29,7 @@ function Routers() {
       <Route path="/dashboard/client/book" element={<BookConsultation />} />
       <Route path="/dashboard/client/book/details" element={<FillDetails />} />
       <Route path="/dashboard/client/book/call" element={<Call />} />
+      <Route path="/dashboard/client/review" element={<Review />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/reset" element={<Reset />} />
       <Route path="/password/:token" element={<Password />} />

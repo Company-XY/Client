@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const MyJobs = () => {
   const [activeTab, setActiveTab] = useState("open");
 
-  // Sample job data categorized by tabs
   const jobData = {
     open: [
       {
