@@ -3,30 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const PostProject = () => {
-  const prServices = [
-    "Brand Messaging",
-    "Crisis Management",
-    "Event Planning",
-    "Influencer Outreach",
-    "Media Relations",
-    "Press Release Writing",
-    "Social Media Management",
-    "Strategic Communication",
-    "Content Creation",
-    "Reputation Management",
-    "Community Engagement",
-    "Digital Marketing",
-    "Market Research",
-    "Publicity Campaigns",
-    "Thought Leadership",
-  ];
-
   const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [PR_service, setPR_service] = useState("");
-  const [skills, setSkills] = useState({});
+  const [Services, setServices] = useState("");
+  const [skills, setSkills] = useState("");
   const [budget, setBudget] = useState("");
   const [duration, setDuration] = useState("");
   const [error, setError] = useState(null);
@@ -37,13 +18,10 @@ const PostProject = () => {
 
   const userId = userObject._id;
   const token = userObject.token;
+  const userEmail = userObject.email;
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const maxFiles = 5;
-
-  const handleServiceSelect = (event) => {
-    setPR_service(event.target.value);
-  };
 
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files);
@@ -81,7 +59,7 @@ const PostProject = () => {
   };
 
   const handleSubmit = async (e) => {
-    const user_email = "oloogeorge633@gmail.com";
+    const user_email = userEmail;
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -89,7 +67,7 @@ const PostProject = () => {
         {
           title,
           user_email,
-          PR_service,
+          Services,
           description,
           skills,
           budget,
@@ -128,25 +106,14 @@ const PostProject = () => {
           </div>
           <div className="flex flex-col mb-4">
             <label htmlFor="prService">Select PR Service:</label>
-            <input
-              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
-              type="text"
-              id="prService"
-              placeholder="Search or Select..."
-              value={PR_service}
-              onChange={handleServiceSelect}
-            />
             <select
-              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4 my-2"
-              id="prServiceSelect"
-              value={PR_service}
-              onChange={handleServiceSelect}
+              value={Services}
+              onChange={(e) => setServices(e.target.value)}
+              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
             >
-              {prServices.map((service, index) => (
-                <option key={index} value={service}>
-                  {service}
-                </option>
-              ))}
+              <option>Thought Leadership</option>
+              <option>Content Creation</option>
+              <option>Strategic Communication</option>
             </select>
           </div>
           <div className="flex flex-col mb-4">
@@ -177,6 +144,16 @@ const PostProject = () => {
               type="text"
               placeholder="Details..."
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label>What skills are required for the project</label>
+            <input
+              value={skills}
+              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
+              type="text"
+              placeholder="Skills"
+              onChange={(e) => setSkills(e.target.value)}
             />
           </div>
           <div className="flex flex-col mb-4">
