@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../../../store/Slices/userSlice";
-import Profile from "../Profile/updateProfile";
+import Profile from "../Profile/profileUpdate";
+import MainDashboard from "./mainDashboard";
 
 const freelancerDashboard = () => {
   const dispatch = useDispatch();
@@ -52,9 +53,9 @@ const freelancerDashboard = () => {
       ) : (
         <div className="px-5 py-2">
           {userData && userData.isApproved ? (
-            <section>
-              <h2>Dashboard Freelancer default</h2>
-            </section>
+            <>
+              <MainDashboard />
+            </>
           ) : (
             <Profile />
           )}

@@ -312,7 +312,6 @@ const UpdateProfile = () => {
         </div>
       ),
     },
-    // Step 6: Sample Work, Availability, and Contact Info
     {
       stepNumber: 6,
       content: (

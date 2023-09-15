@@ -15,6 +15,7 @@ import Password from "../pages/Password";
 import Admins from "../pages/Dashboard/Admins/Admins";
 import Review from "../pages/Dashboard/Client/Dashboard/Review";
 import JobPage from "../pages/Dashboard/Client/Dashboard/jobPage";
+import JobPage2 from "../pages/Dashboard/Freelancer/Dashboard/JobPage";
 
 function Routers() {
   return (
@@ -31,6 +32,7 @@ function Routers() {
       <Route path="/dashboard/client/book/details" element={<FillDetails />} />
       <Route path="/dashboard/client/book/call" element={<Call />} />
       <Route path="/dashboard/client/review" element={<Review />} />
+      <Route path="/dashboard/job/:jobId" element={<JobPage2 />} />
       <Route path="/dashboard/client/job/:jobId" element={<JobPage />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/reset" element={<Reset />} />
