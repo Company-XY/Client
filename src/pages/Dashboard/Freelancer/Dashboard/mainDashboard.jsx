@@ -107,7 +107,7 @@ const MainDashboard = () => {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 mt-2 rounded hover:bg-blue-600"
         >
-          Apply Filters
+          Search
         </button>
       </form>
       <div className="grid grid-cols-1 gap-4">
