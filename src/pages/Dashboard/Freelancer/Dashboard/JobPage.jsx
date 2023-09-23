@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const JobPage = () => {
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const token = userObject.token;
   const { jobId } = useParams();
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [bidAmount, setBidAmount] = useState("");
+  const [proposal, setProposal] = useState("");
+  const [files, setFiles] = useState([]);
   const [isBidding, setIsBidding] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -30,18 +36,30 @@ const JobPage = () => {
   const handleBidSubmit = async (e) => {
     e.preventDefault();
 
-    if (bidAmount.trim() === "") {
-      alert("Please enter a bid amount.");
+    if (bidAmount.trim() === "" || proposal.trim() === "") {
+      alert("Please enter both bid amount and a proposal.");
       return;
     }
 
     setIsBidding(true);
 
     try {
+      const formData = new FormData();
+      formData.append("job_id", jobId);
+      formData.append("price", bidAmount);
+      formData.append("proposal", proposal);
+      for (const file of files) {
+        formData.append("files", file);
+      }
+
       const response = await axios.post(
-        `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}/bids`,
+        `https://assist-api-okgk.onrender.com/api/v1/place-bid`,
+        formData,
         {
-          amount: bidAmount,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -53,8 +71,19 @@ const JobPage = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+  };
+
   return (
     <div className="p-4 mt-14">
+      <span
+        className="underline font-semibold cursor-pointer"
+        onClick={() => navigate("/dashboard")}
+      >
+        Go Back
+      </span>
       <h2 className="text-2xl font-semibold mb-4">Job Details</h2>
       {isLoading ? (
         <p>Loading...</p>
@@ -72,12 +101,26 @@ const JobPage = () => {
               <input
                 type="number"
                 min="0"
-                step="0.01"
+                step="10"
                 placeholder="Enter your bid amount"
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
                 className="w-40 p-2 border border-gray-300 rounded-md mr-2"
                 required
+              />
+              <input
+                type="text"
+                placeholder="Enter your bid proposal"
+                value={proposal}
+                onChange={(e) => setProposal(e.target.value)}
+                className="w-40 p-2 border border-gray-300 rounded-md mr-2"
+                required
+              />
+              <input
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                className="mr-2"
               />
               <button
                 type="submit"
