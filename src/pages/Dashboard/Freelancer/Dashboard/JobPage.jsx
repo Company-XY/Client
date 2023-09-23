@@ -79,7 +79,7 @@ const JobPage = () => {
   return (
     <div className="p-4 mt-14">
       <span
-        className="underline font-semibold cursor-pointer"
+        className="underline font-semibold cursor-pointer py-2 my-2"
         onClick={() => navigate("/dashboard")}
       >
         Go Back
