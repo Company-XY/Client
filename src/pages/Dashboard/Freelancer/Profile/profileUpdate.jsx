@@ -306,9 +306,9 @@ const UpdateProfile = () => {
             Submit
           </button>
         </form>
-        <p>
+        <p className="mt-4">
           {isSuccess ? (
-            <span>
+            <span className="font-semibold">
               Update successful, go to{" "}
               <span className="cursor-pointer underline">
                 <Link to="/dashboard" onClick={updateIsApproved}>
