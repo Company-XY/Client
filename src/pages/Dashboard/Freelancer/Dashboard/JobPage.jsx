@@ -61,6 +61,7 @@ const JobPage = () => {
             Authorization: `Bearer ${token}`,
           },
         }
+        //new
       );
 
       console.log("Bid placed successfully:", response.data);
