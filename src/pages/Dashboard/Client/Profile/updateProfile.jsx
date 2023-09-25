@@ -185,9 +185,7 @@ const UpdateProfile = () => {
             <p>
               Update successful, go to{" "}
               <span className="cursor-pointer underline">
-                <Link to="/dashboard" onClick={updateIsApproved}>
-                  dashboard
-                </Link>
+                <span onClick={updateIsApproved}>dashboard</span>
               </span>
             </p>
           )}
