@@ -23,6 +23,7 @@ const JobPage = () => {
         );
 
         setJob(response.data);
+        console.log(response.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch job details:", error);
@@ -61,7 +62,6 @@ const JobPage = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-        //new
       );
 
       console.log("Bid placed successfully:", response.data);
