@@ -54,6 +54,34 @@ const UpdateProfile = () => {
       }
     }
   };
+  const updateIsApproved = async () => {
+    try {
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const { _id, token } = JSON.parse(userString);
+        const response = await axios.patch(
+          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          { isApproved: true },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("isApproved status updated successfully:", response);
+        setIsSuccess(true);
+        handleReload();
+      } else {
+        console.error("User data not found in localStorage");
+      }
+    } catch (error) {
+      console.error("Failed to update isApproved status:", error);
+    }
+  };
+
+  const handleReload = () => {
+    window.location.reload();
+  };
 
   return (
     <div className="flex items-center justify-center h-[80vh]">
@@ -157,7 +185,9 @@ const UpdateProfile = () => {
             <p>
               Update successful, go to{" "}
               <span className="cursor-pointer underline">
-                <Link to="/dashboard">dashboard</Link>
+                <Link to="/dashboard" onClick={updateIsApproved}>
+                  dashboard
+                </Link>
               </span>
             </p>
           )}
