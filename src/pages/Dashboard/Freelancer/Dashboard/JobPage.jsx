@@ -54,7 +54,7 @@ const JobPage = () => {
       }
 
       const response = await axios.post(
-        `https://assist-api-okgk.onrender.com/api/v1/place-bid`,
+        "https://assist-api-okgk.onrender.com/api/v1/place-bid",
         formData,
         {
           headers: {
