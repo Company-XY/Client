@@ -170,7 +170,7 @@ const MainDashboard = () => {
           </Link>
         ))}
       </div>
-      <div className="grid grid-cols-1 gap-4">
+      {/*<div className="grid grid-cols-1 gap-4">
         {calls.map((calls) => (
           <Link to={`/dashboard/job/${calls._id}`}>
             <div key={calls.id} className="border border-gray-300 rounded p-4">
@@ -194,7 +194,7 @@ const MainDashboard = () => {
             </div>
           </Link>
         ))}
-      </div>
+        </div>*/}
     </div>
   );
 };
