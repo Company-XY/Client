@@ -56,8 +56,14 @@ const JobPage = () => {
           </p>
           <p className="text-gray-600">Files: {job.files}</p>
           <div>
-            <h2 className="text-gray-600 mt-4">Bids: {job.bids}</h2>
-            <div>Individual bid details to appear here</div>
+            {job.bids ? (
+              <div>
+                <h2 className="text-gray-600 mt-4">Bids: {job.bids.length}</h2>
+                <div>Individual bid details to appear here</div>
+              </div>
+            ) : (
+              <p className="font-semibold">No bids available for this job.</p>
+            )}
           </div>
         </div>
       )}
