@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const UpdateProfile = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +12,7 @@ const UpdateProfile = () => {
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -24,7 +24,7 @@ const UpdateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const userString = localStorage.getItem("user");
     if (userString) {
       const { _id, token } = JSON.parse(userString);
@@ -49,8 +49,10 @@ const UpdateProfile = () => {
 
         console.log("Profile updated successfully:", response.data);
         setIsSuccess(true);
+        setLoading(false);
       } catch (error) {
         console.error("Failed to update profile:", error);
+        setLoading(false);
       }
     }
   };
@@ -84,7 +86,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-[80vh]">
+    <div className="flex items-center justify-center h-[80vh] mt-14">
       <div className="w-full max-w-screen-md p-4">
         <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
         <div className="bg-white p-4 rounded shadow-md">
@@ -177,15 +179,18 @@ const UpdateProfile = () => {
               type="submit"
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
             >
-              Update Profile
+              {loading ? <span>Wait</span> : <span>Update Profile</span>}
             </button>
           </form>
 
           {isSuccess && (
             <p>
               Update successful, go to{" "}
-              <span className="cursor-pointer underline">
-                <span onClick={updateIsApproved}>dashboard</span>
+              <span
+                className="cursor-pointer underline"
+                onClick={updateIsApproved}
+              >
+                <span>dashboard</span>
               </span>
             </p>
           )}
