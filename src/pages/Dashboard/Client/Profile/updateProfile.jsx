@@ -3,40 +3,53 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const UpdateProfile = () => {
-  const [formData, setFormData] = useState({
-    phone: "",
-    avatar: null,
-    location: "",
-    bio: "",
-    paymentMethod: "",
-    contactInfo: "",
-  });
-
+  const [phone, setPhone] = useState("");
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [location, setLocation] = useState("");
+  const [bio, setBio] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "file" ? files[0] : value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const userString = localStorage.getItem("user");
+
     if (userString) {
       const { _id, token } = JSON.parse(userString);
 
-      try {
-        const formData = new FormData();
+      const profileData = {
+        phone,
+        location,
+        bio,
+        paymentMethod,
+        contactInfo,
+      };
 
-        for (const key in formData) {
-          formData.append(key, formData[key]);
-        }
+      const formData = new FormData();
+      formData.append("avatar", e.target.files);
 
-        const response = await axios.patch(
+      axios
+        .patch(
+          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          profileData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Profile updated successfully:", response.data);
+          setIsSuccess(true);
+        })
+        .catch((error) => {
+          console.error("Failed to update profile:", error);
+        });
+
+      axios
+        .patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
           formData,
           {
@@ -45,14 +58,43 @@ const UpdateProfile = () => {
               "Content-Type": "multipart/form-data",
             },
           }
-        );
-
-        console.log("Profile updated successfully:", response.data);
-        setIsSuccess(true);
-      } catch (error) {
-        console.error("Failed to update profile:", error);
-      }
+        )
+        .then((response) => {
+          console.log("Avatar updated successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Failed to update avatar:", error);
+        });
     }
+  };
+
+  const updateIsApproved = async () => {
+    try {
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const { _id, token } = JSON.parse(userString);
+        const response = await axios.patch(
+          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          { isApproved: true },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("isApproved status updated successfully:", response);
+        setIsSuccess(true);
+        handleReload();
+      } else {
+        console.error("User data not found in localStorage");
+      }
+    } catch (error) {
+      console.error("Failed to update isApproved status:", error);
+    }
+  };
+
+  const handleReload = () => {
+    window.location.reload();
   };
 
   return (
@@ -69,8 +111,8 @@ const UpdateProfile = () => {
                 type="text"
                 id="phone"
                 name="phone"
-                value={formData.phone}
-                onChange={handleChange}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
@@ -83,12 +125,11 @@ const UpdateProfile = () => {
                 type="text"
                 id="location"
                 name="location"
-                value={formData.location}
-                onChange={handleChange}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
-
             <div className="py-2 my-2">
               <label htmlFor="avatar" className="block font-semibold mb-2">
                 Avatar:
@@ -98,10 +139,11 @@ const UpdateProfile = () => {
                 id="avatar"
                 name="avatar"
                 accept="image/*"
-                onChange={handleChange}
+                onChange={(e) => setAvatarFile(e.target.files[0])}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
+
             <div className="py-2 my-2">
               <label htmlFor="bio" className="block font-semibold mb-2">
                 Bio:
@@ -109,8 +151,8 @@ const UpdateProfile = () => {
               <textarea
                 id="bio"
                 name="bio"
-                value={formData.bio}
-                onChange={handleChange}
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               ></textarea>
             </div>
@@ -123,8 +165,8 @@ const UpdateProfile = () => {
                 type="text"
                 id="contactInfo"
                 name="contactInfo"
-                value={formData.contactInfo}
-                onChange={handleChange}
+                value={contactInfo}
+                onChange={(e) => setContactInfo(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
@@ -140,8 +182,8 @@ const UpdateProfile = () => {
                 type="text"
                 id="paymentMethod"
                 name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
@@ -156,7 +198,10 @@ const UpdateProfile = () => {
           {isSuccess && (
             <p>
               Update successful, go to{" "}
-              <span className="cursor-pointer underline">
+              <span
+                className="cursor-pointer underline"
+                onClick={updateIsApproved}
+              >
                 <Link to="/dashboard">dashboard</Link>
               </span>
             </p>
