@@ -87,17 +87,6 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="businessName">Business Name</label>
-          <input
-            type="text"
-            id="businessName"
-            value={businessName}
-            onChange={(e) => setBusinessName(e.target.value)}
-            className="w-full bg-purple-200 rounded-lg p-2"
-            required
-          />
-        </div>
-        <div className="mb-4">
           <label htmlFor="description">PR Goals</label>
           <textarea
             id="description"
