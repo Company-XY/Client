@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const UpdateProfile = () => {
   const [phone, setPhone] = useState("");
@@ -9,11 +10,10 @@ const UpdateProfile = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+
     const userString = localStorage.getItem("user");
 
     if (userString) {
@@ -84,29 +84,6 @@ const UpdateProfile = () => {
         );
         console.log("isApproved status updated successfully:", response);
         setIsSuccess(true);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to update profile:", error);
-        setLoading(false);
-      }
-    }
-  };
-  const updateIsApproved = async () => {
-    try {
-      const userString = localStorage.getItem("user");
-      if (userString) {
-        const { _id, token } = JSON.parse(userString);
-        const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          { isApproved: true },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("isApproved status updated successfully:", response);
-        setIsSuccess(true);
         handleReload();
       } else {
         console.error("User data not found in localStorage");
@@ -121,7 +98,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-[80vh] mt-14">
+    <div className="flex items-center justify-center h-[80vh]">
       <div className="w-full max-w-screen-md p-4">
         <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
         <div className="bg-white p-4 rounded shadow-md">
@@ -214,7 +191,7 @@ const UpdateProfile = () => {
               type="submit"
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
             >
-              {loading ? <span>Wait</span> : <span>Update Profile</span>}
+              Update Profile
             </button>
           </form>
 
@@ -225,7 +202,7 @@ const UpdateProfile = () => {
                 className="cursor-pointer underline"
                 onClick={updateIsApproved}
               >
-                <span>dashboard</span>
+                <Link to="/dashboard">dashboard</Link>
               </span>
             </p>
           )}
