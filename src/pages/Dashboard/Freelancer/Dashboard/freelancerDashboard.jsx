@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../../../store/Slices/userSlice";
 import Profile from "../Profile/profileUpdate";
 import MainDashboard from "./mainDashboard";
-import Skeleton from "./jobsPageSkeleton";
+import Skeleton from "../../../Loading2";
+//import Skeleton from "./jobsPageSkeleton";
 
 const freelancerDashboard = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const freelancerDashboard = () => {
   return (
     <div className="px-10 pt-5">
       {isLoading ? (
-        <Skeleton />
+        <Skeleton active={isLoading} />
       ) : (
         <div className="px-5 py-2">
           {userData && userData.isApproved ? (
