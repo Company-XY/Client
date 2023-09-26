@@ -6,6 +6,8 @@ const Call = () => {
   const [businessName, setBusinessName] = useState("");
   const [prGoals, setPrGoals] = useState("");
   const [budget, setBudget] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userObjectString = localStorage.getItem("user");
 
@@ -27,7 +29,7 @@ const Call = () => {
       prGoals,
       budget,
     };
-
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://assist-api-okgk.onrender.com/api/v1/details",
@@ -40,8 +42,12 @@ const Call = () => {
       );
 
       console.log("Call request successful", response.data);
+      setLoading(false);
+      setSuccess(true);
     } catch (error) {
       console.error("Call request failed", error);
+      setLoading(false);
+      setSuccess(false);
     }
   };
 
@@ -97,8 +103,9 @@ const Call = () => {
           type="submit"
           className="bg-purple-600 text-white p-2 rounded-md hover:bg-purple-800"
         >
-          Submit
+          {loading ? <span>Wait...</span> : <span>Submit</span>}
         </button>
+        <p>{success && <span>Call Requested Successfully</span>}</p>
       </form>
     </div>
   );
