@@ -23,6 +23,7 @@ const JobPage = () => {
         );
 
         setJob(response.data);
+        console.log(response.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch job details:", error);
@@ -53,7 +54,7 @@ const JobPage = () => {
       }
 
       const response = await axios.post(
-        `https://assist-api-okgk.onrender.com/api/v1/place-bid`,
+        "https://assist-api-okgk.onrender.com/api/v1/place-bid",
         formData,
         {
           headers: {

@@ -97,12 +97,14 @@ const PostProject = () => {
         </h1>
         <form onSubmit={handleSubmit} className="py-4 px-4 w-full">
           <div className="flex flex-col mb-4">
-            <label>Select Country</label>
-            <select className="border-2 border-purple-800 rounded-lg h-10">
-              <option>Kenya</option>
-              <option>Tanzania</option>
-              <option>Uganda</option>
-            </select>
+            <label>Title of the project</label>
+            <input
+              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
+              type="text"
+              value={title}
+              placeholder="Title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="flex flex-col mb-4">
             <label htmlFor="prService">Select PR Service:</label>
@@ -117,26 +119,6 @@ const PostProject = () => {
             </select>
           </div>
           <div className="flex flex-col mb-4">
-            <label>Name of the project</label>
-            <input
-              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
-              type="text"
-              value={title}
-              placeholder="Title"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col mb-4">
-            <label>What experience are you looking for</label>
-            <select className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4">
-              <option>0-1 year</option>
-              <option>1-3 years</option>
-              <option>3-5 years</option>
-              <option>over 5 years</option>
-              <option>Any</option>
-            </select>
-          </div>
-          <div className="flex flex-col mb-4">
             <label>Describe the project and what you want done</label>
             <textarea
               value={description}
@@ -144,16 +126,6 @@ const PostProject = () => {
               type="text"
               placeholder="Details..."
               onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col mb-4">
-            <label>What skills are required for the project</label>
-            <input
-              value={skills}
-              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
-              type="text"
-              placeholder="Skills"
-              onChange={(e) => setSkills(e.target.value)}
             />
           </div>
           <div className="flex flex-col mb-4">
@@ -179,6 +151,26 @@ const PostProject = () => {
               <option>35000 - 55000</option>
               <option>Over 55000</option>
             </select>
+          </div>
+          <div className="flex flex-col mb-4">
+            <label>What experience are you looking for</label>
+            <select className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4">
+              <option>0-1 year</option>
+              <option>1-3 years</option>
+              <option>3-5 years</option>
+              <option>over 5 years</option>
+              <option>Any</option>
+            </select>
+          </div>
+          <div className="flex flex-col mb-4">
+            <label>What skills are required for the project</label>
+            <input
+              value={skills}
+              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
+              type="text"
+              placeholder="Skills"
+              onChange={(e) => setSkills(e.target.value)}
+            />
           </div>
           <div className="flex flex-col mb-4">
             <label>Upload up to 5 relevant files</label>
