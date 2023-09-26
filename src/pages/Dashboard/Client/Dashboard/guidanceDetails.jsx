@@ -47,7 +47,9 @@ const Call = () => {
 
   return (
     <div className="p-4 mt-14">
-      <h2 className="text-2xl font-semibold mb-4">Schedule a Call</h2>
+      <h2 className="text-2xl font-semibold mb-4">
+        Fill in details to get guidance
+      </h2>
       <span
         className="underline font-semibold cursor-pointer py-2 my-2"
         onClick={handleGoBack}

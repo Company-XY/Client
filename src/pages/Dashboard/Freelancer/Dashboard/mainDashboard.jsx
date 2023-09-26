@@ -9,6 +9,9 @@ const MainDashboard = () => {
   const token = userObject.token;
 
   const [jobs, setJobs] = useState([]);
+  const [calls, setCalls] = useState([]);
+  const [details, setDetails] = useState([]);
+  const [tab, setTab] = useState(true);
   const [filter, setFilter] = useState({
     budget: "",
     duration: "",
@@ -33,6 +36,40 @@ const MainDashboard = () => {
       console.error("Failed to fetch user data:", error);
     }
   };
+  const fetchCalls = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-okgk.onrender.com/api/v1/calls`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setCalls(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  };
+  const fetchDetails = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-okgk.onrender.com/api/v1/details`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setDetails(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  };
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -50,8 +87,18 @@ const MainDashboard = () => {
   useEffect(() => {
     if (userId && token) {
       fetchJobs();
+      fetchCalls();
+      fetchDetails;
     }
   }, [userId, token]);
+
+  const handleTab = (e) => {
+    e.preventDefault();
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -119,6 +166,31 @@ const MainDashboard = () => {
               <p>Duration: {job.duration}</p>
               <p>Skills required: {job.skills.join(", ")}</p>
               <p>{job.description}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 gap-4">
+        {calls.map((calls) => (
+          <Link to={`/dashboard/job/${calls._id}`}>
+            <div key={calls.id} className="border border-gray-300 rounded p-4">
+              <h2 className="text-xl font-semibold">{calls.businessName}</h2>
+              <p>Budget: {calls.budget}</p>
+              <p>{calls.prGoals}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 gap-4">
+        {details.map((details) => (
+          <Link to={`/dashboard/job/${job._id}`}>
+            <div
+              key={details.id}
+              className="border border-gray-300 rounded p-4"
+            >
+              <h2 className="text-xl font-semibold">{details.businessName}</h2>
+              <p>Budget: {details.budget}</p>
+              <p>{details.prGoals}</p>
             </div>
           </Link>
         ))}
