@@ -54,7 +54,27 @@ const JobPage = () => {
             <span className="font-semibold">Skills: </span>
             {job.skills}
           </p>
-          <p className="text-gray-600">Files: {job.files}</p>
+          <p className="text-gray-600">
+            {job.files && job.files.length > 0 ? (
+              <div>
+                <h3 className="text-lg font-semibold">Files:</h3>
+                {job.files.map((file) => (
+                  <div key={file._id}>
+                    <a
+                      href={file.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {file.title}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600">No files available for this job.</p>
+            )}
+          </p>
           <div>
             {job.bids ? (
               <div>

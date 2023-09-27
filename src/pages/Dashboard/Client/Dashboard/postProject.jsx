@@ -76,7 +76,7 @@ const PostProject = () => {
     for (let i = 0; i < uploadedFiles.length; i++) {
       formData.append("files", uploadedFiles[i]);
     }
-
+    setIsLoading(true);
     try {
       const response = await axios.post(
         "https://assist-api-okgk.onrender.com/api/v1/jobs",
@@ -184,7 +184,7 @@ const PostProject = () => {
             className="w-1/5 rounded-lg border-2 py-2 px-4 bg-green-600 hover:bg-green-800"
             type="submit"
           >
-            Submit
+            {isLoading ? <span>Please Wait</span> : <span>Submit</span>}
           </button>
         </form>
       </div>
