@@ -6,6 +6,7 @@ const JobPage = () => {
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const token = userObject.token;
+  const email = userObject.email;
   const { jobId } = useParams();
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -55,13 +56,14 @@ const JobPage = () => {
     try {
       const formData = new FormData();
       formData.append("price", bidAmount);
+      formData.append("email", email);
       formData.append("proposal", proposal);
       for (const file of files) {
         formData.append("files", file);
       }
 
       const response = await axios.post(
-        `https://assist-api-okgk.onrender.com/api/v1/place-bid/${jobId}`,
+        `http://localhost:8080/api/v1/place-bid/${jobId}`,
         formData,
         {
           headers: {
@@ -109,14 +111,18 @@ const JobPage = () => {
           <ul>
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
-                <a
-                  href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  download
-                >
-                  {file.title}
-                </a>
+                {file._id ? (
+                  <a
+                    href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    download
+                  >
+                    {file.title}
+                  </a>
+                ) : (
+                  <span>File missing ID</span>
+                )}
               </li>
             ))}
           </ul>
@@ -137,8 +143,6 @@ const JobPage = () => {
                 type="number"
                 id="bidAmount"
                 name="bidAmount"
-                min="0"
-                step="10"
                 placeholder="Enter your bid amount"
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
