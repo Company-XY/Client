@@ -59,24 +59,32 @@ const PostProject = () => {
   };
 
   const handleSubmit = async (e) => {
-    const user_email = userEmail;
     e.preventDefault();
+
+    const user_email = userEmail;
+
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("user_email", user_email);
+    formData.append("Services", Services);
+    formData.append("description", description);
+    formData.append("skills", skills);
+    formData.append("budget", budget);
+    formData.append("duration", duration);
+
+    for (let i = 0; i < uploadedFiles.length; i++) {
+      formData.append("files", uploadedFiles[i]);
+    }
+
     try {
       const response = await axios.post(
         "https://assist-api-okgk.onrender.com/api/v1/jobs",
-        {
-          title,
-          user_email,
-          Services,
-          description,
-          skills,
-          budget,
-          duration,
-          files: uploadedFiles,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -161,16 +169,6 @@ const PostProject = () => {
               <option>over 5 years</option>
               <option>Any</option>
             </select>
-          </div>
-          <div className="flex flex-col mb-4">
-            <label>What skills are required for the project</label>
-            <input
-              value={skills}
-              className="border-2 border-purple-800 rounded-lg h-10 py-2 px-4"
-              type="text"
-              placeholder="Skills"
-              onChange={(e) => setSkills(e.target.value)}
-            />
           </div>
           <div className="flex flex-col mb-4">
             <label>Upload up to 5 relevant files</label>
