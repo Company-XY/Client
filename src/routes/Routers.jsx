@@ -16,6 +16,7 @@ import Admins from "../pages/Dashboard/Admins/Admins";
 import Review from "../pages/Dashboard/Client/Dashboard/Review";
 import JobPage from "../pages/Dashboard/Client/Dashboard/jobPage";
 import JobPage2 from "../pages/Dashboard/Freelancer/Dashboard/JobPage";
+import Deposit from "../pages/Dashboard/Client/Dashboard/deposit";
 
 function Routers() {
   return (
@@ -37,6 +38,7 @@ function Routers() {
       <Route path="/blog" element={<Blog />} />
       <Route path="/reset" element={<Reset />} />
       <Route path="/password/:token" element={<Password />} />
+      <Route path="/deposit" element={<Deposit />} />
     </Routes>
   );
 }
