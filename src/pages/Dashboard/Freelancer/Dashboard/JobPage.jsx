@@ -101,7 +101,7 @@ const JobPage = () => {
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
                 <a
-                  href={`https://assist-api-okgk.onrender.com/${file.fileUrl}`}
+                  href={`https://assist-api-okgk.onrender.com/api/v1//download/${jobId}/${file._id}`}
                   target="_blank"
                   rel="noreferrer"
                   download
