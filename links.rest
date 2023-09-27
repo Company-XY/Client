@@ -57,3 +57,11 @@ Content-Type: application/json
 {
     "email": "collog1824@gmail.com"
 }
+###
+POST https://assist-api-okgk.onrender.com/api/v1/deposit
+Content-Type: application/json
+
+{
+    "phone":"0799590711",
+    "amount": "1"
+}

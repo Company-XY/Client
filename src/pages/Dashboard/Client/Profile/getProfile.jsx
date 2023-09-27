@@ -51,6 +51,7 @@ const Profile = () => {
             <h2>{userData.location}</h2>
             <h2>Joined {userData.joinedDate}</h2>
             <h2>{userData.recommendations} Recommendations</h2>
+            <h2>Balance: Ksh.{userData.accountBalance}</h2>
           </div>
         </div>
       ) : (

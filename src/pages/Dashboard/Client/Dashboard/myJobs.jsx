@@ -58,10 +58,10 @@ const UserJobs = () => {
                 </h3>
                 <p className="text-gray-600">{job.description}</p>
                 <p className="text-gray-600">Budget: {job.budget}</p>
-                <p className="text-gray-600">Bids: {job.bids}</p>
+                {/*<p className="text-gray-600">Bids: {job.bids}</p>*/}
                 <p className="text-gray-600 flex justify-between">
                   <p>Duration: {job.duration}</p>
-                  <p className="bg-blue-400 p-1 rounded-lg">{job.skills}</p>
+                  {/*<p className="bg-blue-400 p-1 rounded-lg">{job.skills}</p>*/}
                 </p>
               </div>
             </Link>

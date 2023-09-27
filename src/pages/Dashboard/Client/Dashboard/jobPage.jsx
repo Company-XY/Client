@@ -55,6 +55,7 @@ const JobPage = () => {
             {job.skills}
           </p>
           <p className="text-gray-600">
+            <span className="font-semibold">Files: </span>
             {job.files && job.files.length > 0 ? (
               <div>
                 <h3 className="text-lg font-semibold">Files:</h3>
@@ -75,6 +76,7 @@ const JobPage = () => {
               <p className="text-gray-600">No files available for this job.</p>
             )}
           </p>
+
           <div>
             {job.bids ? (
               <div>
