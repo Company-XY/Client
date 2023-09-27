@@ -14,6 +14,7 @@ const JobPage = () => {
   const [files, setFiles] = useState([]);
   const [isBidding, setIsBidding] = useState(false);
   const navigate = useNavigate();
+  const [hasPlacedBid, setHasPlacedBid] = useState(false);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -25,6 +26,13 @@ const JobPage = () => {
         setJob(response.data);
         console.log(response.data);
         setIsLoading(false);
+
+        const userBid = response.data.bids.find(
+          (bid) => bid.user === userObject.userId
+        );
+        if (userBid) {
+          setHasPlacedBid(true);
+        }
       } catch (error) {
         console.error("Failed to fetch job details:", error);
         setIsLoading(false);
@@ -32,7 +40,7 @@ const JobPage = () => {
     };
 
     fetchJob();
-  }, [jobId]);
+  }, [jobId, userObject.userId]);
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +72,7 @@ const JobPage = () => {
       );
 
       console.log("Bid placed successfully:", response.data);
+      setHasPlacedBid(true);
     } catch (error) {
       console.error("Failed to place bid:", error);
     } finally {
@@ -101,7 +110,7 @@ const JobPage = () => {
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
                 <a
-                  href={`https://assist-api-okgk.onrender.com/api/v1//download/${jobId}/${file._id}`}
+                  href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
                   target="_blank"
                   rel="noreferrer"
                   download
@@ -135,6 +144,7 @@ const JobPage = () => {
                 onChange={(e) => setBidAmount(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
                 required
+                disabled={hasPlacedBid}
               />
             </div>
             <div className="flex items-center">
@@ -149,6 +159,7 @@ const JobPage = () => {
                 onChange={(e) => setProposal(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
                 required
+                disabled={hasPlacedBid}
               />
             </div>
             <div className="flex items-center">
@@ -162,6 +173,7 @@ const JobPage = () => {
                 multiple
                 onChange={handleFileChange}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
+                disabled={hasPlacedBid}
               />
             </div>
             <button
@@ -169,9 +181,13 @@ const JobPage = () => {
               className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
                 isBidding ? "cursor-not-allowed opacity-50" : ""
               }`}
-              disabled={isBidding}
+              disabled={isBidding || hasPlacedBid}
             >
-              {isBidding ? "Placing Bid..." : "Place Bid"}
+              {hasPlacedBid
+                ? "Bid Placed"
+                : isBidding
+                ? "Placing Bid..."
+                : "Place Bid"}
             </button>
           </div>
         </form>
