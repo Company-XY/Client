@@ -23,7 +23,6 @@ const UpdateProfile = () => {
 
     const formData = new FormData();
     formData.append("phone", phone);
-    formData.append("avatar", avatarFile);
     formData.append("location", location);
     formData.append("bio", bio);
     formData.append("paymentMethod", paymentMethod);
@@ -31,10 +30,6 @@ const UpdateProfile = () => {
     formData.append("experience", experience);
     formData.append("tasks", tasks);
     formData.append("skills", skills);
-
-    sampleWorkFiles.forEach((file, index) => {
-      formData.append(`sampleWork[${index}]`, file);
-    });
 
     formData.append("availability", availability);
     formData.append("contactInfo", contactInfo);
