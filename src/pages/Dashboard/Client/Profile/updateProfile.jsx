@@ -27,9 +27,6 @@ const UpdateProfile = () => {
         contactInfo,
       };
 
-      const formData = new FormData();
-      formData.append("avatar", e.target.files);
-
       axios
         .patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
@@ -46,24 +43,6 @@ const UpdateProfile = () => {
         })
         .catch((error) => {
           console.error("Failed to update profile:", error);
-        });
-
-      axios
-        .patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Avatar updated successfully:", response.data);
-        })
-        .catch((error) => {
-          console.error("Failed to update avatar:", error);
         });
     }
   };
@@ -98,7 +77,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-[80vh]">
+    <div className="flex items-center justify-center h-[80vh] mt-14">
       <div className="w-full max-w-screen-md p-4">
         <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
         <div className="bg-white p-4 rounded shadow-md">
