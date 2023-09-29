@@ -26,14 +26,14 @@ const bookConsultation = () => {
         <section className="flex flex-col gap-2 items-center">
           <button
             onClick={handleDetails}
-            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-purple-600 hover:bg-purple-800"
+            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:bg-blue-800"
           >
             Fill in Details
           </button>
           <p>OR</p>
           <button
             onClick={handleCall}
-            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-purple-600 hover:bg-purple-800"
+            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:bg-blue-800"
           >
             Book a Call
           </button>

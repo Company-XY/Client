@@ -28,19 +28,19 @@ const JobPage = () => {
   }, [jobId]);
 
   return (
-    <div className="p-4 mt-14">
+    <div className="p-4 mt-14 max-w-4xl mx-auto">
       <p
         className="underline font-semibold my-2 cursor-pointer"
         onClick={() => navigate("/dashboard")}
       >
-        Back to Dashboard
+        Go Back
       </p>
-      <h2 className="text-2xl font-semibold mb-4">Job Details</h2>
+      <h2 className="text-2xl font-semibold mb-4">Project Details</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div className="bg-white p-4 border border-gray-300 rounded-lg">
-          <h3 className="text-lg font-semibold">{job.title}</h3>
+          <h3 className="text-2xl font-semibold">{job.title}</h3>
           <p className="text-gray-600">{job.description}</p>
           <p className="text-gray-600">
             <span className="font-semibold">Budget: </span>
@@ -55,7 +55,6 @@ const JobPage = () => {
             {job.skills}
           </p>
           <p className="text-gray-600">
-            <span className="font-semibold">Files: </span>
             {job.files && job.files.length > 0 ? (
               <div>
                 <h3 className="text-lg font-semibold">Files:</h3>
