@@ -17,6 +17,7 @@ const UpdateProfile = () => {
   const [contactInfo, setContactInfo] = useState("");
   const [isApprovedUpdated, setIsApprovedUpdated] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ const UpdateProfile = () => {
 
     formData.append("availability", availability);
     formData.append("contactInfo", contactInfo);
-
+    setLoading(true);
     try {
       const userString = localStorage.getItem("user");
       if (userString) {
@@ -50,9 +51,11 @@ const UpdateProfile = () => {
         );
         console.log("Profile updated successfully:", response.data);
         setIsSuccess(true);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Failed to update profile:", error);
+      setLoading(false);
     }
   };
 
@@ -86,23 +89,30 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl p-4">
-      <h2 className="text-2xl font-semibold mb-4">Update Your Profile</h2>
+    <div className="mx-auto max-w-3xl p-4">
+      <h2 className="text-2xl font-semibold mb-4 text-center">
+        Update Your Profile
+      </h2>
+      <p className="text-center leading-8">
+        To proceed to the dashboard and post projects, you need to create a
+        profile
+      </p>
       <div className="bg-white p-4 rounded shadow">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <label htmlFor="phone" className="block">
+          <label htmlFor="phone" className="block py-2">
             <span className="font-semibold">Phone:</span>
             <p className="font-normal">Enter your phone number</p>
             <input
               type="text"
               id="phone"
               name="phone"
+              required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
-          <label htmlFor="avatar" className="block">
+          <label htmlFor="avatar" className="block py-2">
             <span className="font-semibold">Avatar:</span>
             <p className="font-normal">
               Upload a quality picture to be used as your profile picture
@@ -116,19 +126,20 @@ const UpdateProfile = () => {
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
-          <label htmlFor="location" className="block">
+          <label htmlFor="location" className="block py-2">
             <span className="font-semibold">Location:</span>
             <p className="font-normal">Where are you located?</p>
             <input
               type="text"
               id="location"
               name="location"
+              required
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
-          <label htmlFor="bio" className="block">
+          <label htmlFor="bio" className="block py-2">
             <span className="font-semibold">Bio:</span>
             <p className="font-normal">
               A brief but detailed description of your services, skills and
@@ -137,12 +148,13 @@ const UpdateProfile = () => {
             <textarea
               id="bio"
               name="bio"
+              requried
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             ></textarea>
           </label>
-          <label htmlFor="paymentMethod" className="block">
+          <label htmlFor="paymentMethod" className="block py-2">
             <span className="font-semibold">Payment Method:</span>
             <p className="font-normal">
               What is your preferred payment option?
@@ -150,6 +162,7 @@ const UpdateProfile = () => {
             <select
               id="paymentMethod"
               name="paymentMethod"
+              required
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
@@ -159,7 +172,7 @@ const UpdateProfile = () => {
               <option value="stripe">Stripe</option>
             </select>
           </label>
-          <label htmlFor="paymentRate" className="block">
+          <label htmlFor="paymentRate" className="block py-2">
             <span className="font-semibold">Payment Rate:</span>
             <p className="font-normal">
               What is your hourly rate in USD per hour?
@@ -168,17 +181,19 @@ const UpdateProfile = () => {
               type="number"
               id="paymentRate"
               name="paymentRate"
+              required
               value={paymentRate}
               onChange={(e) => setPaymentRate(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
-          <label htmlFor="experience" className="block">
+          <label htmlFor="experience" className="block py-2">
             <span className="font-semibold">Experience:</span>
             <p className="font-normal">What is your level of experience?</p>
             <select
               id="experience"
               name="experience"
+              required
               value={experience}
               onChange={(e) => setExperience(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
@@ -189,12 +204,13 @@ const UpdateProfile = () => {
               <option value="expert">More than 5 years</option>
             </select>
           </label>
-          <label htmlFor="tasks" className="block">
+          <label htmlFor="tasks" className="block py-2">
             <span className="font-semibold">Tasks:</span>
             <p className="font-normal">Which are your preferred tasks?</p>
             <select
               id="tasks"
               name="tasks"
+              required
               value={tasks}
               onChange={(e) => setTasks(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
@@ -222,7 +238,7 @@ const UpdateProfile = () => {
               <option value="Task 12">Task 12</option>
             </select>
           </label>
-          <label htmlFor="skills" className="block">
+          <label htmlFor="skills" className="block py-2">
             <span className="font-semibold">Skills:</span>
             <p className="font-normal">
               What skills do you possess as a virtual assistant?
@@ -230,6 +246,7 @@ const UpdateProfile = () => {
             <select
               id="skills"
               name="skills"
+              required
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
@@ -246,7 +263,7 @@ const UpdateProfile = () => {
               <option value="Skill 10">Skill 10</option>
             </select>
           </label>
-          <label htmlFor="availability" className="block">
+          <label htmlFor="availability" className="block py-2">
             <span className="font-semibold">Availability:</span>
             <p className="font-normal">
               How many hours per week are you available?
@@ -254,6 +271,7 @@ const UpdateProfile = () => {
             <select
               type="number"
               id="availability"
+              required
               name="availability"
               value={availability}
               onChange={(e) => setAvailability(e.target.value)}
@@ -266,7 +284,7 @@ const UpdateProfile = () => {
               <option value="50 hours">more than 40 hours</option>
             </select>
           </label>
-          <label htmlFor="contactInfo" className="block">
+          <label htmlFor="contactInfo" className="block py-2">
             <span className="font-semibold">Contact Info:</span>
             <p className="font-normal">
               Enter your physical address or any other information
@@ -275,12 +293,13 @@ const UpdateProfile = () => {
               type="text"
               id="contactInfo"
               name="contactInfo"
+              required
               value={contactInfo}
               onChange={(e) => setContactInfo(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
-          <label htmlFor="sampleWork" className="block">
+          <label htmlFor="sampleWork" className="block py-2">
             <span className="font-semibold">Sample Work:</span>
             <p className="font-normal">
               Upload up to 5 samples of your previous work
@@ -294,25 +313,30 @@ const UpdateProfile = () => {
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
+          {isSuccess && (
+            <div className="text-green-500 py-2 bg-gray-200 px-4 rounded-lg text-center">
+              <p>
+                Update successful, click to proceed to{" "}
+                <span
+                  className="cursor-pointer underline text-green-700"
+                  onClick={updateIsApproved}
+                >
+                  <Link to="/dashboard">Dashboard</Link>
+                </span>
+              </p>
+            </div>
+          )}
           <button
             type="submit"
             className="bg-blue-500 text-white p-2 rounded-md hover-bg-blue-600"
           >
-            Submit
+            {loading ? (
+              <span>Please Wait...</span>
+            ) : (
+              <span> Update Profile</span>
+            )}
           </button>
         </form>
-        <p className="mt-4">
-          {isSuccess ? (
-            <span className="font-semibold">
-              Update successful, go to{" "}
-              <span className="cursor-pointer underline">
-                <Link to="/dashboard" onClick={updateIsApproved}>
-                  dashboard
-                </Link>
-              </span>
-            </span>
-          ) : null}
-        </p>
       </div>
     </div>
   );
