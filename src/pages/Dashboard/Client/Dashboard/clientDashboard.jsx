@@ -48,11 +48,11 @@ const clientDashboard = () => {
   };
 
   return (
-    <div className="px-10 pt-5">
+    <div className="pt-5 max-w-5xl mx-auto">
       {isLoading ? (
         <Skeleton />
       ) : (
-        <div className="px-5 py-2">
+        <div className="px-2 py-2">
           {userData && userData.isApproved ? (
             <section>
               <Dashboard />{" "}

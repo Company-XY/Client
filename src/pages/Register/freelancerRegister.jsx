@@ -58,11 +58,11 @@ const FreelancerRegister = () => {
   };
 
   return (
-    <main className="bg-cover bg-fixed px-5 md:px-10 mt-10 py-5 flex justify-center items-center w-full h-full">
+    <main className="max-w-3xl mx-auto mt-10 px-5 md:px-10 py-5 flex justify-center items-center w-full h-full">
       {isLoading ? (
         <Skeleton active={isLoading} />
       ) : (
-        <section className="w-full max-w-3xl mx-auto bg-white mt-6 p-4 md:p-8 rounded-xl md:shadow-lg">
+        <section className="w-full bg-white mt-6 p-4 md:p-8 rounded-xl md:shadow-lg">
           <h2 className="text-center font-semibold text-2xl pb-2 mb-2">
             Enter correct credentials to join Assist Africa as a Freelancer
           </h2>
@@ -157,8 +157,10 @@ const FreelancerRegister = () => {
                 } appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-800 checked:border-transparent focus:outline-none`}
               />
             </div>
-            <p className="text-red-400 py-2 my-2">{error}</p>
-            <p className="text-red-400 py-2 my-2">{passwordError}</p>
+            {error && <p className="text-red-400 py-2 my-2">{error}</p>}
+            {passwordError && (
+              <p className="text-red-400 py-2 my-2">{passwordError}</p>
+            )}
             <div className="w-full text-center grid place-items-center">
               <button
                 type="submit"

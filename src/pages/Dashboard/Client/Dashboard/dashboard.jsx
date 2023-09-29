@@ -6,7 +6,7 @@ import Messages from "./messages";
 const clientDashboard = () => {
   return (
     <>
-      <main className="p-2 flex flex-col w-full">
+      <main className="py-2 flex flex-col w-full">
         <section className="w-full rounded-lg bg-purple-200">
           <Profile />
         </section>
