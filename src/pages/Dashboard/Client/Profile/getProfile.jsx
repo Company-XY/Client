@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Avatar from "../../../../assets/feature-1.jpg";
 import axios from "axios";
+import { IoPersonSharp, IoLocation } from "react-icons/io5";
+import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
+import { BiMoney } from "react-icons/bi";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -30,6 +33,43 @@ const Profile = () => {
     }
   };
 
+  const calculateMemberDuration = () => {
+    if (userData && userData.createdAt) {
+      const createdAtDate = new Date(userData.createdAt);
+      const currentDate = new Date();
+      const durationInMilliseconds = currentDate - createdAtDate;
+
+      const seconds = Math.floor(durationInMilliseconds / 1000);
+      if (seconds < 60) {
+        return `${seconds} seconds ago`;
+      }
+
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) {
+        return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+      }
+
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) {
+        return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+      }
+
+      const days = Math.floor(hours / 24);
+      if (days < 7) {
+        return `${days} day${days > 1 ? "s" : ""} ago`;
+      }
+
+      const weeks = Math.floor(days / 7);
+      if (weeks < 4) {
+        return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+      }
+
+      const months = Math.floor(weeks / 4);
+      return `${months} month${months > 1 ? "s" : ""} ago`;
+    }
+    return "Unknown";
+  };
+
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
@@ -39,19 +79,44 @@ const Profile = () => {
   return (
     <div className="bg-snow-300 text-gray-800 p-4 flex flex-col md:flex-row">
       {userData ? (
-        <div className="w-full">
+        <div className="w-full basis-1/3">
           <div className="w-52 mx-auto">
-            <img
+            <IoPersonSharp
+              size={100}
               className="h-40 w-full object-cover rounded-full"
-              src={userData.avatar}
-              alt="Avatar"
             />
           </div>
           <div className="text-center md:text-center mt-4">
-            <h2>{userData.location}</h2>
-            <h2>Joined {userData.joinedDate}</h2>
-            <h2>{userData.recommendations} Recommendations</h2>
-            <h2>Balance: Ksh.{userData.accountBalance}</h2>
+            <h2 className="flex flex-row justify-center space-x-2">
+              <span className="grid place-items-center">
+                <IoLocation size={20} />
+              </span>
+              <span>{userData.location}</span>
+            </h2>
+            <h2 className="flex flex-row justify-center space-x-2">
+              <span className="grid place-items-center">
+                <AiOutlineMail size={20} />
+              </span>
+              <span>{userData.email}</span>
+            </h2>
+            <h2 className="flex flex-row justify-center space-x-2">
+              <span className="grid place-items-center">
+                <AiFillPhone size={20} />
+              </span>
+              <span>{userData.phone}</span>
+            </h2>
+            <h2 className="flex flex-row justify-center space-x-2">
+              <span className="grid place-items-center">
+                <BiMoney size={20} />
+              </span>
+              <span>Ksh. {userData.accountBalance}</span>
+            </h2>
+            <h2>
+              <h2>
+                <span className="font-semibold">Joined </span>
+                {calculateMemberDuration()}
+              </h2>
+            </h2>
           </div>
         </div>
       ) : (
@@ -60,7 +125,7 @@ const Profile = () => {
         </div>
       )}
 
-      <div className="w-full border-gray-300 p-4">
+      <div className="w-full border-gray-300 p-4 basis-2/3">
         {userData ? (
           <div>
             <h2 className="text-4xl font-semibold">{userData.name}</h2>
