@@ -88,27 +88,41 @@ const JobPage = () => {
   };
 
   return (
-    <div className="p-4 mt-14 max-w-5xl mx-auto">
+    <div className="py-4 mt-14 max-w-5xl mx-auto">
       <span
-        className="underline font-semibold cursor-pointer py-2 my-2"
+        className="underline font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
         Go Back
       </span>
-      <h2 className="text-2xl font-semibold mb-4 py-2">Project Details</h2>
+      <hr className="my-4" />
+      <h2 className="text-2xl font-semibold mb-2 py-2 text-center">
+        Project Details
+      </h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="bg-white p-4 border border-gray-300 rounded-lg">
+        <div className="bg-white py-4 px-2">
           <h3 className="text-lg font-semibold">{job.title}</h3>
+          <p className="flex gap-10 py-2">
+            <p className="text-gray-600">
+              <span className="font-semibold">Budget: </span>
+              {job.budget}
+            </p>
+            <p className="text-gray-600">
+              <span className="font-semibold">Bids: </span>
+              {job.bids.length}
+            </p>{" "}
+            <p className="text-gray-600">
+              <span className="font-semibold">Duration: </span>
+              {job.duration}
+            </p>{" "}
+          </p>
           <p className="text-gray-600">{job.description}</p>
-          <p className="text-gray-600">Budget: {job.budget}</p>
-          <p className="text-gray-600">Bids: {job.bids.length}</p>
-          <p className="text-gray-600">Duration: {job.duration} days</p>
           <p className="text-gray-600">Skills: {job.skills.join(", ")}</p>
           <p className="text-gray-600">Files: {job.files.length}</p>
-          <span>Click to download</span>
-          <ul>
+          <span></span>
+          <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
                 {file._id ? (
@@ -120,9 +134,7 @@ const JobPage = () => {
                   >
                     {file.title}
                   </a>
-                ) : (
-                  <span>File missing ID</span>
-                )}
+                ) : null}
               </li>
             ))}
           </ul>
