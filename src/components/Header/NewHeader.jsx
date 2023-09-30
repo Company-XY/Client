@@ -145,18 +145,25 @@ const Header = () => {
                       >
                         Your Profile
                       </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        {user.type === "Client" ? (
-                          <span>Deposit Funds</span>
-                        ) : (
-                          <span>Withdraw Funds</span>
-                        )}
-                      </a>
+                      {user.role === "Client" ? (
+                        <RouterLink
+                          to="/deposit"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                          role="menuitem"
+                          tabIndex="-1"
+                        >
+                          Deposit Funds
+                        </RouterLink>
+                      ) : (
+                        <RouterLink
+                          to="/withdraw"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                          role="menuitem"
+                          tabIndex="-1"
+                        >
+                          Withdraw Funds
+                        </RouterLink>
+                      )}
 
                       <div
                         href="#"
