@@ -30,6 +30,7 @@ const UserJobs = () => {
         );
 
         setUserJobs(filteredJobs);
+        console.log(filteredJobs)
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch user jobs:", error);
@@ -43,9 +44,9 @@ const UserJobs = () => {
   }, [userEmail, token]);
 
   const tabs = {
-    InProgress: userJobs.filter((job) => job.status === "Ongoing"),
-    Completed: userJobs.filter((job) => job.status === "Completed"),
-    Pending: userJobs.filter((job) => job.status === "Pending"),
+    InProgress: userJobs.filter((job) => job.stage === "Ongoing"),
+    Completed: userJobs.filter((job) => job.stage === "Completed"),
+    Pending: userJobs.filter((job) => job.stage === "Pending"),
   };
 
   const switchTab = (tabName) => {

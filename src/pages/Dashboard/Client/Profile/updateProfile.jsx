@@ -172,9 +172,9 @@ const UpdateProfile = () => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 className="block w-full p-2 border border-gray-300 rounded-md"
               >
-                <option value="mpesa">M-Pesa</option>
-                <option value="paypal">PayPal</option>
-                <option value="stripe">Stripe</option>
+                <option>M-Pesa</option>
+                <option>PayPal</option>
+                <option>Stripe</option>
               </select>
             </div>
             <div className="py-2 my-1">

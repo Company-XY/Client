@@ -16,6 +16,9 @@ const JobPage = () => {
   const [isBidding, setIsBidding] = useState(false);
   const navigate = useNavigate();
   const [hasPlacedBid, setHasPlacedBid] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [bidId, setBidId] = useState("");
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -25,14 +28,12 @@ const JobPage = () => {
         );
 
         setJob(response.data);
-        console.log(response.data);
         setIsLoading(false);
 
-        const userBid = response.data.bids.find(
-          (bid) => bid.user === userObject.userId
-        );
+        const userBid = response.data.bids.find((bid) => bid.email === email);
         if (userBid) {
           setHasPlacedBid(true);
+          setBidId(userBid._id);
         }
       } catch (error) {
         console.error("Failed to fetch job details:", error);
@@ -41,7 +42,7 @@ const JobPage = () => {
     };
 
     fetchJob();
-  }, [jobId, userObject.userId]);
+  }, [jobId, email]);
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
@@ -75,8 +76,52 @@ const JobPage = () => {
 
       console.log("Bid placed successfully:", response.data);
       setHasPlacedBid(true);
+      setMessage("Bid placed successfully");
     } catch (error) {
       console.error("Failed to place bid:", error);
+      setMessage({ error: error.message });
+    } finally {
+      setIsBidding(false);
+    }
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
+    if (bidAmount.trim() === "" || proposal.trim() === "") {
+      alert("Please enter both bid amount and a proposal.");
+      return;
+    }
+
+    setIsBidding(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("price", bidAmount);
+      formData.append("email", email);
+      formData.append("proposal", proposal);
+      for (const file of files) {
+        formData.append("files", file);
+      }
+
+      const response = await axios.patch(
+        `https://assist-api-okgk.onrender.com/api/v1/update-bid/${jobId}/${bidId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Bid updated successfully:", response.data);
+      setHasPlacedBid(true);
+      setIsEditing(false);
+      setMessage("Bid updated successfully");
+    } catch (error) {
+      console.error("Failed to update bid:", error);
+      setMessage({ error: error.message });
     } finally {
       setIsBidding(false);
     }
@@ -121,7 +166,6 @@ const JobPage = () => {
           <p className="text-gray-600">{job.description}</p>
           <p className="text-gray-600">Skills: {job.skills.join(", ")}</p>
           <p className="text-gray-600">Files: {job.files.length}</p>
-          <span></span>
           <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
@@ -144,8 +188,10 @@ const JobPage = () => {
       <hr />
 
       <div className="bg-white p-4 border border-gray-300 rounded-lg mt-4">
-        <h3 className="text-lg font-semibold mb-2">Place Your Bid</h3>
-        <form onSubmit={handleBidSubmit}>
+        <h3 className="text-lg font-semibold mb-2">
+          {hasPlacedBid ? "You have already placed a bid" : "Place Your Bid"}
+        </h3>
+        <form onSubmit={hasPlacedBid ? handleEdit : handleBidSubmit}>
           <div className="grid grid-cols-1 gap-4">
             <div className="flex items-center">
               <label htmlFor="bidAmount" className="text-gray-600">
@@ -160,7 +206,7 @@ const JobPage = () => {
                 onChange={(e) => setBidAmount(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
                 required
-                disabled={hasPlacedBid}
+                disabled={hasPlacedBid && !isEditing}
               />
             </div>
             <div className="flex items-center">
@@ -175,7 +221,7 @@ const JobPage = () => {
                 onChange={(e) => setProposal(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
                 required
-                disabled={hasPlacedBid}
+                disabled={hasPlacedBid && !isEditing}
               />
             </div>
             <div className="flex items-center">
@@ -189,22 +235,35 @@ const JobPage = () => {
                 multiple
                 onChange={handleFileChange}
                 className="w-full p-2 border border-gray-300 rounded-md mt-2"
-                disabled={hasPlacedBid}
+                disabled={hasPlacedBid && !isEditing}
               />
             </div>
-            <button
-              type="submit"
-              className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
-                isBidding ? "cursor-not-allowed opacity-50" : ""
-              }`}
-              disabled={isBidding || hasPlacedBid}
-            >
-              {hasPlacedBid
-                ? "Bid Placed"
-                : isBidding
-                ? "Placing Bid..."
-                : "Place Bid"}
-            </button>
+            {message && <span className="text-green-500">{message}</span>}
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
+                  isBidding ? "cursor-not-allowed opacity-50" : ""
+                }`}
+                disabled={isBidding || (hasPlacedBid && !isEditing)}
+              >
+                {hasPlacedBid
+                  ? isEditing
+                    ? "Save Changes"
+                    : "Bid Placed"
+                  : isBidding
+                  ? "Placing Bid..."
+                  : "Place Bid"}
+              </button>
+              {hasPlacedBid && !isEditing && (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="py-2 px-4 bg-blue-200 w-40 mt-4 rounded-md hover:bg-blue-400"
+                >
+                  Edit Bid
+                </button>
+              )}
+            </div>
           </div>
         </form>
       </div>
