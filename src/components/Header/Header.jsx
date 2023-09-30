@@ -3,10 +3,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { toggleDarkMode } from "../../store/Slices/darkMode";
-
 import { removeUser } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
-import light_logo from "../../assets/transparent_logo.png";
 
 const Header = () => {
   const dispatch = useDispatch();
