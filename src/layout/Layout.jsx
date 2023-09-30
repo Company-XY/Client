@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Header from "../components/Header/Header";
+import Header from "../components/Header/NewHeader";
 import Routers from "../routes/Routers";
 
 const Layout = () => {
