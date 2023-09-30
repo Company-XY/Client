@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Avatar from "../../../../assets/feature-1.jpg";
 import axios from "axios";
 import { IoPersonSharp, IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";

@@ -22,30 +22,32 @@ const UpdateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("phone", phone);
-    formData.append("location", location);
-    formData.append("bio", bio);
-    formData.append("paymentMethod", paymentMethod);
-    formData.append("paymentRate", paymentRate);
-    formData.append("experience", experience);
-    formData.append("tasks", tasks);
-    formData.append("skills", skills);
+    const userData = {
+      phone,
+      location,
+      bio,
+      paymentMethod,
+      paymentRate,
+      experience,
+      tasks,
+      skills,
+      availability,
+      contactInfo,
+    };
 
-    formData.append("availability", availability);
-    formData.append("contactInfo", contactInfo);
     setLoading(true);
+
     try {
       const userString = localStorage.getItem("user");
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          formData,
+          userData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
             },
           }
         );
@@ -94,7 +96,7 @@ const UpdateProfile = () => {
         Update Your Profile
       </h2>
       <p className="text-center leading-8">
-        To proceed to the dashboard and post projects, you need to create a
+        To proceed to the dashboard and bid on projects, you need to create a
         profile
       </p>
       <div className="bg-white p-4 rounded shadow">
@@ -167,9 +169,9 @@ const UpdateProfile = () => {
               onChange={(e) => setPaymentMethod(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="mpesa">M-Pesa</option>
-              <option value="paypal">PayPal</option>
-              <option value="stripe">Stripe</option>
+              <option>M-Pesa</option>
+              <option>PayPal</option>
+              <option>Stripe</option>
             </select>
           </label>
           <label htmlFor="paymentRate" className="block py-2">
@@ -198,10 +200,10 @@ const UpdateProfile = () => {
               onChange={(e) => setExperience(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="beginner">Less than 1 year</option>
-              <option value="intermediate">1 - 2 years</option>
-              <option value="advanced">3 - 4 years</option>
-              <option value="expert">More than 5 years</option>
+              <option>Less than 1 year</option>
+              <option>1 - 2 years</option>
+              <option>3 - 4 years</option>
+              <option>More than 5 years</option>
             </select>
           </label>
           <label htmlFor="tasks" className="block py-2">
@@ -215,27 +217,11 @@ const UpdateProfile = () => {
               onChange={(e) => setTasks(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="">Select a task</option>
-              <option value="Content Creation">Content Creation</option>
-              <option value="Crisis Communication">Crisis Communication</option>
-              <option value="Email Campaigns">Email Campaigns</option>
-              <option value="Event Planning and Promotion">
-                Event Planning and Promotion
-              </option>
-              <option value="Influencer Outreach">Influencer Outreach</option>
-              <option value="Market Research">Market Research</option>
-              <option value="Media Relations">Media Relations</option>
-              <option value="Online Reputation Management">
-                Online Reputation Management
-              </option>
-              <option value="Press Release Writing">
-                Press Release Writing
-              </option>
-              <option value="Social Media Management">
-                Social Media Management
-              </option>
-              <option value="Strategic Planning">Strategic Planning</option>
-              <option value="Task 12">Task 12</option>
+              <option>Select a task</option>
+              <option>Content Creation</option>
+              <option>Crisis Communication</option>
+              <option>Email Campaigns</option>
+              <option>Event Planning and Promotion</option>
             </select>
           </label>
           <label htmlFor="skills" className="block py-2">
@@ -251,16 +237,16 @@ const UpdateProfile = () => {
               onChange={(e) => setSkills(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="Skill 1">Skill 1</option>
-              <option value="Skill 2">Skill 2</option>
-              <option value="Skill 3">Skill 3</option>
-              <option value="Skill 4">Skill 4</option>
-              <option value="Skill 5">Skill 5</option>
-              <option value="Skill 6">Skill 6</option>
-              <option value="Skill 7">Skill 7</option>
-              <option value="Skill 8">Skill 8</option>
-              <option value="Skill 9">Skill 9</option>
-              <option value="Skill 10">Skill 10</option>
+              <option>Skill 1</option>
+              <option>Skill 2</option>
+              <option>Skill 3</option>
+              <option>Skill 4</option>
+              <option>Skill 5</option>
+              <option>Skill 6</option>
+              <option>Skill 7</option>
+              <option>Skill 8</option>
+              <option>Skill 9</option>
+              <option>Skill 10</option>
             </select>
           </label>
           <label htmlFor="availability" className="block py-2">
@@ -277,11 +263,11 @@ const UpdateProfile = () => {
               onChange={(e) => setAvailability(e.target.value)}
               className="block w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="10 hours">10 hours</option>
-              <option value="20 hours">20 hours</option>
-              <option value="30 hours">30 hours</option>
-              <option value="40 hours">40 hours</option>
-              <option value="50 hours">more than 40 hours</option>
+              <option>10 hours</option>
+              <option>20 hours</option>
+              <option>30 hours</option>
+              <option>40 hours</option>
+              <option>more than 40 hours</option>
             </select>
           </label>
           <label htmlFor="contactInfo" className="block py-2">

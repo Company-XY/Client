@@ -119,90 +119,94 @@ const MainDashboard = () => {
   };
 
   return (
-    <div className="container max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Available Projects
-      </h1>
+    <div className="max-w-4xl mx-auto p-4">
+      <div>
+        <div>
+          <h1 className="text-2xl font-bold mb-4 text-center">
+            Available Projects
+          </h1>
 
-      <div className="flex justify-center my-4 space-x-4">
-        <button
-          className={`${
-            activeTab === "all" ? "bg-blue-500" : "bg-gray-300"
-          } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
-          onClick={() => filterJobs("all")}
-        >
-          All Jobs
-        </button>
-        <button
-          className={`${
-            activeTab === "recommended" ? "bg-blue-500" : "bg-gray-300"
-          } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
-          onClick={() => filterJobs("recommended")}
-        >
-          Recommended
-        </button>
-        <button
-          className={`${
-            activeTab === "bestmatch" ? "bg-blue-500" : "bg-gray-300"
-          } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
-          onClick={() => filterJobs("bestmatch")}
-        >
-          Best Match
-        </button>
+          <div className="flex justify-center my-4 space-x-4">
+            <button
+              className={`${
+                activeTab === "all" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              onClick={() => filterJobs("all")}
+            >
+              All Jobs
+            </button>
+            <button
+              className={`${
+                activeTab === "recommended" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              onClick={() => filterJobs("recommended")}
+            >
+              Recommended
+            </button>
+            <button
+              className={`${
+                activeTab === "bestmatch" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              onClick={() => filterJobs("bestmatch")}
+            >
+              Best Match
+            </button>
+          </div>
+
+          <input
+            type="text"
+            placeholder="Search projects using title, skills, duration, or budget"
+            onChange={handleSearch}
+            className="p-2 w-full border-2 border-blue-700 rounded-lg"
+          />
+
+          <hr className="my-2" />
+          {loading ? (
+            <JobCardSkeleton />
+          ) : (
+            <div className="grid grid-cols-1 gap-2">
+              {filteredJobs.slice(0, visibleJobs).map((job) => (
+                <Link to={`/dashboard/job/${job._id}`} key={job._id}>
+                  <div className="bg-blue-100 p-4 mb-2 border border-blue-400 rounded-lg shadow-md">
+                    <div className="flex justify-between">
+                      <h3 className="text-xl font-semibold">{job.title}</h3>
+                      <span className="text-gray-700">
+                        {formatTimeAgo(job.createdAt)}
+                      </span>
+                    </div>
+                    <div className="flex justify-start gap-4 items-center">
+                      <span className="text-blue-600 hover:underline">
+                        Budget: Ksh.{job.budget}
+                      </span>
+                      <span className="text-blue-600 hover:underline">
+                        Duration: {job.duration} days
+                      </span>
+                    </div>
+                    <p className="text-gray-600 my-2">{job.description}</p>
+                    <div className="mt-4">
+                      <p className="text-gray-700">
+                        Skills: {job.skills.join(", ")}
+                      </p>
+                      <p className="text-gray-700">Bids: {job.bids.length}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {visibleJobs < filteredJobs.length && (
+            <div className="grid place-items-center">
+              <button
+                onClick={loadMoreJobs}
+                className="bg-blue-500 text-center text-white py-2 px-4 mt-4 rounded hover:bg-blue-600"
+              >
+                Load More...
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-
-      <input
-        type="text"
-        placeholder="Search projects using title, skills, duration, or budget"
-        onChange={handleSearch}
-        className="p-2 w-full border-2 border-blue-700 rounded-lg"
-      />
-
-      <hr className="my-2" />
-      {loading ? (
-        <JobCardSkeleton />
-      ) : (
-        <div className="grid grid-cols-1 gap-2">
-          {filteredJobs.slice(0, visibleJobs).map((job) => (
-            <Link to={`/dashboard/job/${job._id}`} key={job._id}>
-              <div className="bg-blue-100 p-4 mb-2 border border-blue-400 rounded-lg shadow-md">
-                <div className="flex justify-between">
-                  <h3 className="text-xl font-semibold">{job.title}</h3>
-                  <span className="text-gray-700">
-                    Posted: {formatTimeAgo(job.createdAt)}
-                  </span>
-                </div>
-                <div className="flex justify-start gap-4 items-center">
-                  <span className="text-blue-600 hover:underline">
-                    Budget: Ksh.{job.budget}
-                  </span>
-                  <span className="text-blue-600 hover:underline">
-                    Duration: {job.duration} days
-                  </span>
-                </div>
-                <p className="text-gray-600 my-2">{job.description}</p>
-                <div className="mt-4">
-                  <p className="text-gray-700">
-                    Skills: {job.skills.join(", ")}
-                  </p>
-                  <p className="text-gray-700">Bids: {job.bids.length}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-
-      {visibleJobs < filteredJobs.length && (
-        <div className="grid place-items-center">
-          <button
-            onClick={loadMoreJobs}
-            className="bg-blue-500 text-center text-white py-2 px-4 mt-4 rounded hover:bg-blue-600"
-          >
-            Load More...
-          </button>
-        </div>
-      )}
     </div>
   );
 };
