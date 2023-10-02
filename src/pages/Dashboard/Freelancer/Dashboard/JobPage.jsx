@@ -274,8 +274,12 @@ const JobPage = () => {
         (bid) => bid.email === email && bid.status === "Ongoing"
       ) ? (
         <div>
-          <Messages />
-          <Product />
+          <div className="py-2 my-1 border-2 rounded-lg">
+            <Messages />
+          </div>
+          <div className="py-2 my-1">
+            <Product />
+          </div>
         </div>
       ) : null}
     </div>

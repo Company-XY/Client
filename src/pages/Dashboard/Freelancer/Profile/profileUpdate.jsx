@@ -91,7 +91,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="mx-auto max-w-3xl p-4">
+    <div className="mx-auto max-w-3xl p-4 mt-14">
       <h2 className="text-2xl font-semibold mb-4 text-center">
         Update Your Profile
       </h2>
