@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import JobCardSkeleton from "./JobCardSkeleton";
+import Profile from "./profileSection";
 
 const MainDashboard = () => {
   const userObjectString = localStorage.getItem("user");
@@ -20,7 +21,7 @@ const MainDashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/jobs`,
+        `https://assist-api-okgk.onrender.com/api/v1/feed-jobs`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -119,9 +120,9 @@ const MainDashboard = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div>
-        <div>
+    <div className="max-w-6xl mx-auto py-4">
+      <div className="md:flex">
+        <div className="block md:basis-4/5">
           <h1 className="text-2xl font-bold mb-4 text-center">
             Available Projects
           </h1>
@@ -205,6 +206,9 @@ const MainDashboard = () => {
               </button>
             </div>
           )}
+        </div>
+        <div className="hidden md:flex basis-1/5">
+          <Profile />
         </div>
       </div>
     </div>

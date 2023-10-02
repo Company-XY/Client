@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaBell } from "react-icons/fa";
+import { BsFillPersonFill } from "react-icons/bs";
 import DarkModeToggle from "./toggle";
 
 const Header = () => {
@@ -13,6 +14,7 @@ const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [notification, setNotification] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -102,29 +104,55 @@ const Header = () => {
                   </RouterLink>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="p-1 text-blue-700 hover:text-blue focus:outline-none"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <FaBell className="block h-6 w-6" />
-                  </button>
+                  <div className="relative ml-5">
+                    <div>
+                      {" "}
+                      <button
+                        type="button"
+                        onClick={() => setNotification(!notification)}
+                        className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800"
+                        id="user-menu-button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <FaBell className="block text-blue-700 h-6 w-6" />{" "}
+                      </button>
+                    </div>
+                    <div
+                      onClick={() => setNotification(!notification)}
+                      className={`absolute right-0 z-10 mt-2 w-64 h-52 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                        notification ? "block" : "hidden"
+                      }`}
+                      role="menu"
+                      aria-orientation="vertical"
+                      aria-labelledby="user-menu-button"
+                      tabIndex="-1"
+                    >
+                      <div className="py-2 px-4 w-full h-full grid place-items-center">
+                        <span className="font-semibold text-center">
+                          No notifications at the moment
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <div className="relative ml-5">
                     <div>
                       <button
                         type="button"
                         onClick={() => setOpen(!open)}
-                        className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800"
                         id="user-menu-button"
                         aria-expanded="false"
                         aria-haspopup="true"
                       >
                         <span className="sr-only">Open user menu</span>
-                        <img
+                        {/*<img
                           className="h-8 w-8 rounded-full"
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOj12 &auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           alt=""
-                        />
+                    />*/}
+                        <BsFillPersonFill className="text-blue-700" size={30} />
                       </button>
                     </div>
                     <div
@@ -137,14 +165,25 @@ const Header = () => {
                       aria-labelledby="user-menu-button"
                       tabIndex="-1"
                     >
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        Your Profile
-                      </a>
+                      {user.role === "Client" ? (
+                        <RouterLink
+                          to="/client/profile"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                          role="menuitem"
+                          tabIndex="-1"
+                        >
+                          Update Profile
+                        </RouterLink>
+                      ) : (
+                        <RouterLink
+                          to="/freelancer/profile"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                          role="menuitem"
+                          tabIndex="-1"
+                        >
+                          Update Profile
+                        </RouterLink>
+                      )}
                       {user.role === "Client" ? (
                         <RouterLink
                           to="/deposit"
