@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Messages from "./jobMessages";
+import Product from "./product";
 
 const JobPage = () => {
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
-  const token = userObject.token;
   const email = userObject.email;
   const { jobId } = useParams();
   const [job, setJob] = useState({});
@@ -30,6 +31,8 @@ const JobPage = () => {
         setJob(response.data);
         setIsLoading(false);
 
+        console.log(job);
+
         const userBid = response.data.bids.find((bid) => bid.email === email);
         if (userBid) {
           setHasPlacedBid(true);
@@ -42,7 +45,7 @@ const JobPage = () => {
     };
 
     fetchJob();
-  }, [jobId, email]);
+  }, [jobId, email, hasPlacedBid]);
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +72,6 @@ const JobPage = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -110,7 +112,6 @@ const JobPage = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -160,7 +161,7 @@ const JobPage = () => {
             </p>{" "}
             <p className="text-gray-600">
               <span className="font-semibold">Duration: </span>
-              {job.duration}
+              {job.duration} days
             </p>{" "}
           </p>
           <p className="text-gray-600">{job.description}</p>
@@ -267,6 +268,17 @@ const JobPage = () => {
           </div>
         </form>
       </div>
+
+      {job.stage === "Ongoing" &&
+      hasPlacedBid &&
+      job.bids.find(
+        (bid) => bid.email === email && bid.status === "Ongoing"
+      ) ? (
+        <div>
+          <Messages />
+          <Product />
+        </div>
+      ) : null}
     </div>
   );
 };

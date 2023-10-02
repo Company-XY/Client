@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Messages from "./jobMessages";
 
 const JobPage = () => {
   const { jobId } = useParams();
@@ -18,7 +19,7 @@ const JobPage = () => {
 
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
-        { status: "Ongoing" }
+        { stage: "Ongoing" }
       );
       setAwarded(true);
       console.log("Bid and job awarded successfully.");
@@ -70,7 +71,7 @@ const JobPage = () => {
           </p>
           <p className="text-gray-600">
             <span className="font-semibold">Status: </span>
-            {job.status}
+            {job.stage}
           </p>
           <p className="text-gray-600">
             <span className="font-semibold">Duration: </span>
@@ -85,7 +86,7 @@ const JobPage = () => {
             Files
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
-                {file._id ? (
+                {file.__id ? (
                   <a
                     href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
                     target="_blank"
@@ -98,69 +99,83 @@ const JobPage = () => {
               </li>
             ))}
           </ul>
-          <div>
-            {job.bids ? (
-              <div>
-                <h2 className="text-gray-600 mt-4">
-                  {awarded ? "Awarded Bid" : "Bids"}
-                </h2>
-                {job.bids
-                  .filter((bid) => !awarded || bid.status === "Ongoing")
-                  .map((bid) => (
-                    <div
-                      key={bid._id}
-                      className="bg-gray-100 p-4 mt-4 border border-gray-300 rounded-md"
-                    >
-                      <h3 className="text-lg font-semibold">
-                        Bid by {bid.name}
-                      </h3>
-                      <p className="text-gray-600">
-                        <span className="font-semibold">Proposal: </span>
-                        {bid.proposal}
-                      </p>
-                      <p className="text-gray-600">
-                        <span className="font-semibold">Budget: </span>
-                        {bid.budget}
-                      </p>
-                      {bid.files && bid.files.length > 0 && (
-                        <div>
-                          <h3 className="text-sm font-semibold">Bid Files:</h3>
-                          {bid.files.map((file) => (
-                            <div key={file._id}>
-                              <a
-                                href={file.fileUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:underline"
-                              >
-                                {file.title}
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <button
-                        onClick={() => handleAwardProject(bid._id)}
-                        disabled={awarded}
-                        className={`py-2 px-4 w-40 bg-blue-400 rounded-lg ${
-                          awarded
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "hover:bg-blue-600 cursor-pointer"
-                        } my-2`}
+          {job.stage === "Pending" && (
+            <div>
+              {job.bids ? (
+                <div>
+                  <h2 className="text-gray-600 mt-4">
+                    {awarded ? "Awarded Bid" : "Bids"}
+                  </h2>
+                  {job.bids
+                    .filter((bid) => !awarded || bid.status === "Ongoing")
+                    .map((bid) => (
+                      <div
+                        key={bid._id}
+                        className="bg-gray-100 p-4 mt-4 border border-gray-300 rounded-md"
                       >
-                        {awarded ? (
-                          <span>Awarded</span>
-                        ) : (
-                          <span>Award Project</span>
+                        <h3 className="text-lg font-semibold">
+                          Bid by {bid.email}
+                        </h3>
+                        <p className="text-gray-600">
+                          <span className="font-semibold">Proposal: </span>
+                          {bid.proposal}
+                        </p>
+                        <p className="text-gray-600">
+                          <span className="font-semibold">Budget: </span>
+                          {bid.price}
+                        </p>
+                        {bid.files && bid.files.length > 0 && (
+                          <div>
+                            <h3 className="text-sm font-semibold">
+                              Bid Files:
+                            </h3>
+                            {bid.files.map((file) => (
+                              <div key={file._id}>
+                                <a
+                                  href={file.fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:underline"
+                                >
+                                  {file.title}
+                                </a>
+                              </div>
+                            ))}
+                          </div>
                         )}
-                      </button>
-                    </div>
-                  ))}
+                        <button
+                          onClick={() => handleAwardProject(bid._id)}
+                          disabled={awarded}
+                          className={`py-2 px-4 w-40 bg-blue-400 rounded-lg ${
+                            awarded
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "hover:bg-blue-600 cursor-pointer"
+                          } my-2`}
+                        >
+                          {awarded ? (
+                            <span>Awarded</span>
+                          ) : (
+                            <span>Award Project</span>
+                          )}
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <p className="font-semibold">No bids available for this job.</p>
+              )}
+            </div>
+          )}
+          {job.stage === "Ongoing" && (
+            <div>
+              Project Ongoing. Bid Awarded to:{" "}
+              <span className="font-semibold ">{job.bids[0].email}</span>
+              <div className="py-2 px-10">
+                <Messages />
               </div>
-            ) : (
-              <p className="font-semibold">No bids available for this job.</p>
-            )}
-          </div>
+            </div>
+          )}
+          {job.stage === "Completed" && <div>{job.product}</div>}
         </div>
       )}
     </div>

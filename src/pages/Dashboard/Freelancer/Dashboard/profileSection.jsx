@@ -77,7 +77,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="border-l h-96 mt-32 mx-4"></div>
+      <div className="border-l h-[50vh] mt-32 mx-4"></div>
       {userData ? (
         <div className="mt-32 py-4 w-full h-fit">
           <div className="w-full">
