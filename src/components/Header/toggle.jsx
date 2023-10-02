@@ -17,9 +17,9 @@ const DarkModeToggle = () => {
   return (
     <button
       onClick={handleDarkModeToggle}
-      className="hidden md:flex text-blue-800 dark:text-white hover:bg-blue-50 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 dark:hover-bg-blue-700 focus:outline-none dark:focus-ring-blue-800"
+      className="hidden md:flex text-blue-800 dark:text-white dark:bg-gray-800 hover:bg-blue-50 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 dark:hover-bg-blue-200"
     >
-      {darkIcon ? <BsMoonStarsFill size={20} /> : <BsFillSunFill size={20} />}
+      {darkIcon ? <BsMoonStarsFill size={21} /> : <BsFillSunFill size={24} />}
     </button>
   );
 };

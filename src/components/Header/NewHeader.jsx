@@ -79,26 +79,26 @@ const Header = () => {
                   </button>
                 </div>
                 <div className="flex-shrink-0 flex items-center">
-                  <span className="text-blue-700 cursor-pointer hover:scale-105 font-bold text-base sm:text-lg md:text-xl ml-14">
+                  <span className="text-blue-700 dark:text-blue-100 cursor-pointer hover:scale-105 font-bold text-base sm:text-lg md:text-2xl ml-14">
                     Assist Africa
                   </span>
                 </div>
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-4 dark:text-blue-100">
                   <RouterLink
                     to="/"
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
                   >
                     Home
                   </RouterLink>
                   <RouterLink
                     to="/dashboard"
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
                   >
                     Dashboard
                   </RouterLink>
                   <RouterLink
                     to="/blog"
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
                   >
                     Resource Center
                   </RouterLink>
@@ -110,18 +110,21 @@ const Header = () => {
                       <button
                         type="button"
                         onClick={() => setNotification(!notification)}
-                        className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800"
+                        className="flex rounded-full text-sm focus:outline-none "
                         id="user-menu-button"
                         aria-expanded="false"
                         aria-haspopup="true"
                       >
                         <span className="sr-only">View notifications</span>
-                        <FaBell className="block text-blue-700 h-6 w-6" />{" "}
+                        <FaBell
+                          size={24}
+                          className="text-blue-700 dark:text-blue-100 grid place-items-center"
+                        />{" "}
                       </button>
                     </div>
                     <div
                       onClick={() => setNotification(!notification)}
-                      className={`absolute right-0 z-10 mt-2 w-64 h-52 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      className={`absolute right-0 z-10 mt-2 w-64 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                         notification ? "block" : "hidden"
                       }`}
                       role="menu"
@@ -129,10 +132,16 @@ const Header = () => {
                       aria-labelledby="user-menu-button"
                       tabIndex="-1"
                     >
-                      <div className="py-2 px-4 w-full h-full grid place-items-center">
-                        <span className="font-semibold text-center">
-                          No notifications at the moment
-                        </span>
+                      <div className="py-2 px-4 w-full h-full">
+                        <div className="py-1 px-1">
+                          <h2 className="font-semibold text-center">
+                            Notifications
+                          </h2>
+                          <hr className="my-2" />
+                          <span className="text-center font-light italic my-2">
+                            No notifications at the moment
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -141,7 +150,7 @@ const Header = () => {
                       <button
                         type="button"
                         onClick={() => setOpen(!open)}
-                        className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800"
+                        className="flex rounded-full text-sm"
                         id="user-menu-button"
                         aria-expanded="false"
                         aria-haspopup="true"
@@ -152,7 +161,10 @@ const Header = () => {
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOj12 &auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           alt=""
                     />*/}
-                        <BsFillPersonFill className="text-blue-700" size={30} />
+                        <BsFillPersonFill
+                          className="text-blue-700 grid place-items-center dark:text-blue-100"
+                          size={30}
+                        />
                       </button>
                     </div>
                     <div

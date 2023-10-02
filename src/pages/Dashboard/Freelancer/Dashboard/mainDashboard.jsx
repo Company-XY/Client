@@ -9,9 +9,10 @@ const MainDashboard = () => {
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
   const token = userObject.token;
+  const userEmail = userObject.email; // User's email
 
   const [jobs, setJobs] = useState([]);
-  const [visibleJobs, setVisibleJobs] = useState(15);
+  const [visibleJobs, setVisibleJobs] = useState(10);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,8 +21,9 @@ const MainDashboard = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
+
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/feed-jobs`,
+        "https://assist-api-okgk.onrender.com/api/v1/jobs",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,8 +38,9 @@ const MainDashboard = () => {
       });
 
       setJobs(sortedJobs);
-      setFilteredJobs(sortedJobs);
       setLoading(false);
+      const pendingJobs = sortedJobs.filter((job) => job.stage === "Pending");
+      setFilteredJobs(pendingJobs);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
       setLoading(false);
@@ -52,22 +55,6 @@ const MainDashboard = () => {
 
   const loadMoreJobs = () => {
     setVisibleJobs((prevVisibleJobs) => prevVisibleJobs + 10);
-  };
-
-  const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    const filtered = jobs.filter((job) => {
-      return (
-        job.title.toLowerCase().includes(query) ||
-        job.skills.join(", ").toLowerCase().includes(query) ||
-        job.budget.toString().includes(query) ||
-        job.duration.toString().includes(query)
-      );
-    });
-
-    setFilteredJobs(filtered);
   };
 
   const formatTimeAgo = (createdAt) => {
@@ -106,15 +93,53 @@ const MainDashboard = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = jobs.filter((job) => {
+      return (
+        job.title.toLowerCase().includes(query) ||
+        job.skills.join(", ").toLowerCase().includes(query) ||
+        job.budget.toString().includes(query) ||
+        job.duration.toString().includes(query)
+      );
+    });
+
+    setFilteredJobs(filtered);
+  };
+
+  const filterActiveBids = () => {
+    const activeBids = jobs.filter(
+      (job) =>
+        job.stage === "Ongoing" &&
+        job.bids.some(
+          (bid) => bid.email === userEmail && bid.stage === "Ongoing"
+        )
+    );
+    setFilteredJobs(activeBids);
+  };
+
   const filterJobs = (tab) => {
     if (tab === "recommended") {
-      // Filter jobs for the "Recommended" tab based on your criteria
-      // Update the filteredJobs state accordingly
+      // Filter jobs for the "Recommended" tab based on our criteria
     } else if (tab === "bestmatch") {
-      // Filter jobs for the "Best Match" tab based on your criteria
-      // Update the filteredJobs state accordingly
+      // Filter jobs for the "Best Match" tab based on our criteria
+    } else if (tab === "mybids") {
+      // Filter jobs for the "My Bids" tab
+      const myBids = jobs.filter(
+        (job) =>
+          job.stage === "Pending" &&
+          job.bids.some((bid) => bid.email === userEmail)
+      );
+      setFilteredJobs(myBids);
+    } else if (tab === "activeBids") {
+      // Filter jobs for the "Active Bids" tab
+      filterActiveBids();
     } else {
-      setFilteredJobs(jobs);
+      // For all other tabs, display all jobs where the stage is "Pending"
+      const pendingJobs = jobs.filter((job) => job.stage === "Pending");
+      setFilteredJobs(pendingJobs);
     }
     setActiveTab(tab);
   };
@@ -126,7 +151,6 @@ const MainDashboard = () => {
           <h1 className="text-2xl font-bold mb-4 text-center">
             Available Projects
           </h1>
-
           <div className="flex justify-center my-4 space-x-4">
             <button
               className={`${
@@ -139,7 +163,7 @@ const MainDashboard = () => {
             <button
               className={`${
                 activeTab === "recommended" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
               onClick={() => filterJobs("recommended")}
             >
               Recommended
@@ -147,10 +171,26 @@ const MainDashboard = () => {
             <button
               className={`${
                 activeTab === "bestmatch" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
               onClick={() => filterJobs("bestmatch")}
             >
               Best Match
+            </button>
+            <button
+              className={`${
+                activeTab === "mybids" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              onClick={() => filterJobs("mybids")}
+            >
+              My Bids
+            </button>
+            <button
+              className={`${
+                activeTab === "activeBids" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              onClick={() => filterJobs("activeBids")}
+            >
+              Active Bids
             </button>
           </div>
 
@@ -200,7 +240,7 @@ const MainDashboard = () => {
             <div className="grid place-items-center">
               <button
                 onClick={loadMoreJobs}
-                className="bg-blue-500 text-center text-white py-2 px-4 mt-4 rounded hover:bg-blue-600"
+                className="bg-blue-500 text-center text-white py-2 px-4 mt-4 rounded hover.bg-blue-600"
               >
                 Load More...
               </button>
