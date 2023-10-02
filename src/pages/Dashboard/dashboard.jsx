@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import Client from "./Client/Dashboard/clientDashboard";
 import Freelancer from "./Freelancer/Dashboard/freelancerDashboard";
-//import Skeleton from "../Loading";
 import Skeleton from "../Loading2";
 import Admin from "./Admins/Admins";
 
@@ -49,7 +48,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-10 mt-5 pt-4">
+    <div className="mt-5 pt-2 px-10">
       {isLoading ? (
         <Skeleton active={isLoading} />
       ) : (
