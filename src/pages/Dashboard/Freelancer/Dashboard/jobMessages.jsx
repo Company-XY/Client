@@ -27,6 +27,10 @@ const MessagingUI = () => {
 
   return (
     <div className="bg-gray-100 flex flex-col py-2 px-10 h-fit">
+      <h2 className="text-center font-semibold">
+        You can communicate with the Client for any further clarification
+      </h2>
+      <hr />
       <div className="flex-1 p-4 overflow-y-auto">
         {messages.map((message, index) => (
           <div

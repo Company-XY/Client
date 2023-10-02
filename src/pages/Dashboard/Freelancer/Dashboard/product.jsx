@@ -30,7 +30,7 @@ const FileUpload = () => {
           type="file"
           accept=".pdf, .doc, .docx"
           onChange={handleFileChange}
-          className="border-2 rounded-md border-blue-700 w-full py-2 border-dashed"
+          className="border-2 rounded-md border-blue-700 w-full py-2 border-dashed px-4"
         />
       </div>
       {selectedFile && (

@@ -131,14 +131,7 @@ const JobPage = () => {
                             </h3>
                             {bid.files.map((file) => (
                               <div key={file._id}>
-                                <a
-                                  href={file.fileUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="hover:underline"
-                                >
-                                  {file.title}
-                                </a>
+                                <span>{file.title}</span>
                               </div>
                             ))}
                           </div>
