@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,13 +21,16 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-4">
-      <h2 className="text-2xl font-semibold mb-4">File Upload</h2>
+    <div className="bg-blue-100 p-4 rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-center">
+        Submit Project
+      </h2>
       <div className="mb-4">
         <input
           type="file"
           accept=".pdf, .doc, .docx"
           onChange={handleFileChange}
+          className="border-2 rounded-md border-blue-700 w-full py-2 border-dashed"
         />
       </div>
       {selectedFile && (
@@ -40,7 +43,7 @@ const FileUpload = () => {
         onClick={handleUpload}
         className="bg-blue-500 text-white px-4 py-2 rounded-lg"
       >
-        Upload File
+        Submit
       </button>
     </div>
   );
