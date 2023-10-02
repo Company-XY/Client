@@ -268,7 +268,6 @@ const JobPage = () => {
           </div>
         </form>
       </div>
-
       {job.stage === "Ongoing" &&
       hasPlacedBid &&
       job.bids.find(

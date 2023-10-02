@@ -114,7 +114,7 @@ const MainDashboard = () => {
       (job) =>
         job.stage === "Ongoing" &&
         job.bids.some(
-          (bid) => bid.email === userEmail && bid.stage === "Ongoing"
+          (bid) => bid.email === userEmail && bid.status === "Ongoing"
         )
     );
     setFilteredJobs(activeBids);
