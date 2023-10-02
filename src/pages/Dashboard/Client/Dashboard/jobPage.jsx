@@ -47,19 +47,22 @@ const JobPage = () => {
   }, [jobId, awarded]);
 
   return (
-    <div className="p-4 mt-14 max-w-4xl mx-auto">
-      <p
-        className="underline font-semibold my-2 cursor-pointer"
+    <div className="py-4 mt-14 max-w-5xl mx-auto">
+      <span
+        className="underline font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
         Go Back
-      </p>
-      <h2 className="text-2xl font-semibold mb-4">Project Details</h2>
+      </span>
+      <hr className="my-4" />
+      <h2 className="text-2xl font-semibold mb-2 py-2 text-center">
+        Project Details
+      </h2>{" "}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="bg-white p-4 border border-gray-300 rounded-lg">
-          <h3 className="text-2xl font-semibold">{job.title}</h3>
+        <div className="bg-white py-4 px-2">
+          <h3 className="text-lg font-semibold">{job.title}</h3>
           <p className="text-gray-600">{job.description}</p>
           <p className="text-gray-600">
             <span className="font-semibold">Budget: </span>
@@ -77,27 +80,24 @@ const JobPage = () => {
             <span className="font-semibold">Skills: </span>
             {job.skills.join(", ")}
           </p>
-          <p className="text-gray-600">
-            {job.files && job.files.length > 0 ? (
-              <div>
-                <h3 className="text-lg font-semibold">Files:</h3>
-                {job.files.map((file) => (
-                  <div key={file._id}>
-                    <a
-                      href={file.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {file.title}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-600">No files available for this job.</p>
-            )}
-          </p>
+          <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
+            {" "}
+            Files
+            {job.files.map((file, index) => (
+              <li key={index} className="hover:underline">
+                {file._id ? (
+                  <a
+                    href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    download
+                  >
+                    {file.title}
+                  </a>
+                ) : null}
+              </li>
+            ))}
+          </ul>
           <div>
             {job.bids ? (
               <div>
@@ -112,7 +112,7 @@ const JobPage = () => {
                       className="bg-gray-100 p-4 mt-4 border border-gray-300 rounded-md"
                     >
                       <h3 className="text-lg font-semibold">
-                        Bid by {bid.user_email}
+                        Bid by {bid.name}
                       </h3>
                       <p className="text-gray-600">
                         <span className="font-semibold">Proposal: </span>

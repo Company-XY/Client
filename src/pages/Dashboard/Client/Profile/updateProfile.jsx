@@ -80,8 +80,8 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-[80vh] mt-32">
-      <div className="w-full max-w-screen-md p-4">
+    <div className="flex items-center justify-center h-[80vh] mt-40 sm:mt-32">
+      <div className="w-full max-w-screen-md p-4 px-5 sm:px-0">
         <h2 className="text-2xl font-semibold mb-2 text-center">
           Update Your Profile
         </h2>
