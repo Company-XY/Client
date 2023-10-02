@@ -77,9 +77,9 @@ const Profile = () => {
 
   return (
     <>
-      <div className="border-l h-[50vh] mt-32 mx-4"></div>
+      <div className="border-l h-[50vh] mt-20 mx-4"></div>
       {userData ? (
-        <div className="mt-32 py-4 w-full h-fit">
+        <div className="mt-20 py-4 w-full h-fit">
           <div className="w-full">
             <IoPersonSharp className="w-24 h-24 rounded-full mx-auto mb-4" />
             <h2 className="text-xl font-bold text-center">{userData.name}</h2>

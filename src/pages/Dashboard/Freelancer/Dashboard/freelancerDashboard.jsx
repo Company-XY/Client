@@ -53,7 +53,7 @@ const freelancerDashboard = () => {
       {isLoading ? (
         <Skeleton active={isLoading} />
       ) : (
-        <div className="px-5 py-2">
+        <div className="px-5 py-2 mt-10">
           {userData && userData.isApproved ? (
             <>
               <MainDashboard />
