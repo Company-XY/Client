@@ -30,7 +30,7 @@ const UserJobs = () => {
         );
 
         setUserJobs(filteredJobs);
-        console.log(filteredJobs)
+        console.log(filteredJobs);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch user jobs:", error);
@@ -45,6 +45,7 @@ const UserJobs = () => {
 
   const tabs = {
     InProgress: userJobs.filter((job) => job.stage === "Ongoing"),
+    InProgress: userJobs.filter((job) => job.stage === "UnderReview"),
     Completed: userJobs.filter((job) => job.stage === "Completed"),
     Pending: userJobs.filter((job) => job.stage === "Pending"),
   };
@@ -79,6 +80,14 @@ const UserJobs = () => {
               onClick={() => switchTab("InProgress")}
             >
               In Progress
+            </button>
+            <button
+              className={`border p-2 rounded-lg ${
+                activeButton === "UnderReview" ? "bg-blue-700" : ""
+              }`}
+              onClick={() => switchTab("UnderReview")}
+            >
+              Under Review
             </button>
             <button
               className={`border p-2 rounded-lg ${

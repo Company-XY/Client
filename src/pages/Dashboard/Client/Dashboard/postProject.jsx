@@ -62,12 +62,12 @@ const PostProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user_email = userEmail;
+    const email = userEmail;
 
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("user_email", user_email);
+    formData.append("user_email", email);
     formData.append("name", userName);
     formData.append("Services", Services);
     formData.append("description", description);
