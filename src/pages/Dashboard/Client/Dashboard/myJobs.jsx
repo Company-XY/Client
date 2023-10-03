@@ -7,6 +7,10 @@ const UserJobs = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentTab, setCurrentTab] = useState("Pending");
   const [activeButton, setActiveButton] = useState("Pending");
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
+  const [count3, setCount3] = useState(0);
+  const [count4, setCount4] = useState(0);
 
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
@@ -30,7 +34,6 @@ const UserJobs = () => {
         );
 
         setUserJobs(filteredJobs);
-        console.log(filteredJobs);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch user jobs:", error);
@@ -43,9 +46,16 @@ const UserJobs = () => {
     }
   }, [userEmail, token]);
 
+  useEffect(() => {
+    setCount1(userJobs.filter((job) => job.stage === "Pending").length);
+    setCount2(userJobs.filter((job) => job.stage === "Ongoing").length);
+    setCount3(userJobs.filter((job) => job.stage === "UnderReview").length);
+    setCount4(userJobs.filter((job) => job.stage === "Completed").length);
+  }, [userJobs]);
+
   const tabs = {
     InProgress: userJobs.filter((job) => job.stage === "Ongoing"),
-    InProgress: userJobs.filter((job) => job.stage === "UnderReview"),
+    UnderReview: userJobs.filter((job) => job.stage === "UnderReview"),
     Completed: userJobs.filter((job) => job.stage === "Completed"),
     Pending: userJobs.filter((job) => job.stage === "Pending"),
   };
@@ -71,7 +81,7 @@ const UserJobs = () => {
               }`}
               onClick={() => switchTab("Pending")}
             >
-              Pending
+              Pending ({count1})
             </button>
             <button
               className={`border p-2 rounded-lg ${
@@ -79,7 +89,7 @@ const UserJobs = () => {
               }`}
               onClick={() => switchTab("InProgress")}
             >
-              In Progress
+              In Progress ({count2})
             </button>
             <button
               className={`border p-2 rounded-lg ${
@@ -87,7 +97,7 @@ const UserJobs = () => {
               }`}
               onClick={() => switchTab("UnderReview")}
             >
-              Under Review
+              Under Review ({count3})
             </button>
             <button
               className={`border p-2 rounded-lg ${
@@ -95,7 +105,7 @@ const UserJobs = () => {
               }`}
               onClick={() => switchTab("Completed")}
             >
-              Completed
+              Completed ({count4})
             </button>
           </div>
 

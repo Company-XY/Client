@@ -172,7 +172,7 @@ const JobPage = () => {
               <li key={index} className="hover:underline">
                 {file._id ? (
                   <a
-                    href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                    href={`https://assist-api-okgk.onrender.com/api/v1/jobs/download/${jobId}/${file._id}`}
                     target="_blank"
                     rel="noreferrer"
                     download
