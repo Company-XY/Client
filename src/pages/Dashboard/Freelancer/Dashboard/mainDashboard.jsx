@@ -17,6 +17,11 @@ const MainDashboard = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
+  const [count3, setCount3] = useState(0);
+  const [count4, setCount4] = useState(0);
+  const [count5, setCount5] = useState(0);
 
   const fetchJobs = async () => {
     try {
@@ -41,6 +46,7 @@ const MainDashboard = () => {
       setLoading(false);
       const pendingJobs = sortedJobs.filter((job) => job.stage === "Pending");
       setFilteredJobs(pendingJobs);
+      setCount1(pendingJobs.length);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
       setLoading(false);
@@ -118,6 +124,7 @@ const MainDashboard = () => {
         )
     );
     setFilteredJobs(activeBids);
+    setCount5(activeBids.length);
   };
 
   const filterJobs = (tab) => {
@@ -133,6 +140,7 @@ const MainDashboard = () => {
           job.bids.some((bid) => bid.email === userEmail)
       );
       setFilteredJobs(myBids);
+      setCount4(myBids.length);
     } else if (tab === "activeBids") {
       // Filter jobs for the "Active Bids" tab
       filterActiveBids();
@@ -158,7 +166,7 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("all")}
             >
-              All Jobs
+              All Jobs ({count1})
             </button>
             <button
               className={`${
@@ -182,7 +190,7 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
               onClick={() => filterJobs("mybids")}
             >
-              My Bids
+              My Bids ({count4})
             </button>
             <button
               className={`${
@@ -190,7 +198,7 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
               onClick={() => filterJobs("activeBids")}
             >
-              Active Bids
+              Active Bids ({count5})
             </button>
           </div>
 
