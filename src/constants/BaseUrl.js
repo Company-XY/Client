@@ -1,1 +1,1 @@
-BASE_URL = "https://assist-api-okgk.onrender.com/api/v1"
+"https://assist-api-okgk.onrender.com/api/v1"

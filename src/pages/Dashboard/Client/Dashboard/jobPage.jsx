@@ -168,7 +168,8 @@ const JobPage = () => {
               </div>
             </div>
           )}
-          {job.stage === "Completed" && <div>{job.product}</div>}
+          {job.stage === "UnderReview" ||
+            (job.stage === "Completed" && <div>{job.product}</div>)}
         </div>
       )}
     </div>

@@ -19,6 +19,7 @@ const PostProject = () => {
   const userId = userObject._id;
   const token = userObject.token;
   const userEmail = userObject.email;
+  const userName = userObject.name;
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const maxFiles = 5;
@@ -67,6 +68,7 @@ const PostProject = () => {
 
     formData.append("title", title);
     formData.append("user_email", user_email);
+    formData.append("name", userName);
     formData.append("Services", Services);
     formData.append("description", description);
     formData.append("skills", skills);
