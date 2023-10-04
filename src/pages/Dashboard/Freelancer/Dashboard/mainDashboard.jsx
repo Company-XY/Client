@@ -9,7 +9,7 @@ const MainDashboard = () => {
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
   const token = userObject.token;
-  const userEmail = userObject.email; // User's email
+  const userEmail = userObject.email;
 
   const [jobs, setJobs] = useState([]);
   const [visibleJobs, setVisibleJobs] = useState(10);
