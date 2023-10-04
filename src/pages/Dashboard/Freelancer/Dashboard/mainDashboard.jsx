@@ -118,7 +118,9 @@ const MainDashboard = () => {
   const filterActiveBids = () => {
     const activeBids = jobs.filter(
       (job) =>
-        job.stage === "Ongoing" &&
+        (job.stage === "Ongoing" ||
+          job.stage === "UnderReview" ||
+          job.stage === "Disputed") &&
         job.bids.some(
           (bid) => bid.email === userEmail && bid.status === "Ongoing"
         )
@@ -127,11 +129,15 @@ const MainDashboard = () => {
     setCount5(activeBids.length);
   };
 
+  const filterCompletedJobs = () => {
+    const completedJobs = jobs.filter((job) => job.stage === "Completed");
+    setFilteredJobs(completedJobs);
+    setCount4(completedJobs.length);
+  };
+
   const filterJobs = (tab) => {
     if (tab === "recommended") {
-      // Filter jobs for the "Recommended" tab based on our criteria
-    } else if (tab === "bestmatch") {
-      // Filter jobs for the "Best Match" tab based on our criteria
+      // Filter jobs for the "Recommended" tab based on your criteria
     } else if (tab === "mybids") {
       // Filter jobs for the "My Bids" tab
       const myBids = jobs.filter(
@@ -144,6 +150,9 @@ const MainDashboard = () => {
     } else if (tab === "activeBids") {
       // Filter jobs for the "Active Bids" tab
       filterActiveBids();
+    } else if (tab === "completedJobs") {
+      // Filter jobs for the "Completed Jobs" tab
+      filterCompletedJobs();
     } else {
       // For all other tabs, display all jobs where the stage is "Pending"
       const pendingJobs = jobs.filter((job) => job.stage === "Pending");
@@ -170,22 +179,6 @@ const MainDashboard = () => {
             </button>
             <button
               className={`${
-                activeTab === "recommended" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
-              onClick={() => filterJobs("recommended")}
-            >
-              Recommended
-            </button>
-            <button
-              className={`${
-                activeTab === "bestmatch" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
-              onClick={() => filterJobs("bestmatch")}
-            >
-              Best Match
-            </button>
-            <button
-              className={`${
                 activeTab === "mybids" ? "bg-blue-500" : "bg-gray-300"
               } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
               onClick={() => filterJobs("mybids")}
@@ -199,6 +192,14 @@ const MainDashboard = () => {
               onClick={() => filterJobs("activeBids")}
             >
               Active Bids ({count5})
+            </button>
+            <button
+              className={`${
+                activeTab === "completedJobs" ? "bg-blue-500" : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              onClick={() => filterJobs("completedJobs")}
+            >
+              Completed Jobs ({count4})
             </button>
           </div>
 

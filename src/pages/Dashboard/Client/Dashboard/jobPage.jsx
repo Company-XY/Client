@@ -28,6 +28,31 @@ const JobPage = () => {
     }
   };
 
+  const handleDisputeProject = async () => {
+    try {
+      await axios.patch(
+        `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
+        { stage: "Disputed" }
+      );
+      setDisputed(true);
+      console.log("Project disputed successfully.");
+    } catch (error) {
+      console.error("Failed to dispute the project:", error);
+    }
+  };
+
+  const handleApproveProject = async () => {
+    try {
+      await axios.patch(
+        `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
+        { stage: "Completed" }
+      );
+      console.log("Project approved successfully.");
+    } catch (error) {
+      console.error("Failed to approve the project:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -45,7 +70,7 @@ const JobPage = () => {
     };
 
     fetchJob();
-  }, [jobId, awarded]);
+  }, [jobId, awarded, disputed]);
 
   return (
     <div className="py-4 mt-14 max-w-5xl mx-auto">
@@ -168,15 +193,48 @@ const JobPage = () => {
               </div>
             </div>
           )}
-          {job.stage === "UnderReview" ||
-            (job.stage === "Completed" && (
+          {job.stage === "UnderReview" || job.stage === "Completed" ? (
+            <div>
               <div>
-                {job.product}
-                <div className="py-2 px-10">
-                  <Messages />
-                </div>
+                <h3 className="text-lg font-semibold">Product:</h3>
+                <p className="text-gray-600">Review: {job.product.review}</p>
+                {job.product.files && job.product.files.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-semibold">Product Files:</h3>
+                    {job.product.files.map((file) => (
+                      <div key={file._id}>
+                        <a
+                          href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          download
+                        >
+                          {file.title}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
+              {/*<div className="py-2 px-10">
+                <Messages />
+                    </div>*/}
+            </div>
+          ) : null}
+          <div className="flex gap-4 mt-4">
+            <button
+              onClick={handleApproveProject}
+              className="py-2 px-4 bg-blue-200 rounded-lg "
+            >
+              Approve
+            </button>
+            <button
+              onClick={handleDisputeProject}
+              className="py-2 px-4 bg-blue-200 rounded-lg "
+            >
+              Dispute
+            </button>
+          </div>
         </div>
       )}
     </div>
