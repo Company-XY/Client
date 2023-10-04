@@ -9,6 +9,7 @@ const JobPage = () => {
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [awarded, setAwarded] = useState(false);
+  const [disputed, setDisputed] = useState(false);
 
   const handleAwardProject = async (bidId) => {
     try {
@@ -104,8 +105,11 @@ const JobPage = () => {
           </p>
           <p className="text-gray-600">
             <span className="font-semibold">Skills: </span>
-            {job.skills.join(", ")}
+            {job.skills && job.skills.length > 0
+              ? job.skills.join(", ")
+              : "No skills specified"}
           </p>
+
           <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
             {" "}
             Files
@@ -221,20 +225,22 @@ const JobPage = () => {
                     </div>*/}
             </div>
           ) : null}
-          <div className="flex gap-4 mt-4">
-            <button
-              onClick={handleApproveProject}
-              className="py-2 px-4 bg-blue-200 rounded-lg "
-            >
-              Approve
-            </button>
-            <button
-              onClick={handleDisputeProject}
-              className="py-2 px-4 bg-blue-200 rounded-lg "
-            >
-              Dispute
-            </button>
-          </div>
+          {job.stage === "UnderReview" && (
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={handleApproveProject}
+                className="py-2 px-4 bg-blue-200 rounded-lg "
+              >
+                Approve
+              </button>
+              <button
+                onClick={handleDisputeProject}
+                className="py-2 px-4 bg-blue-200 rounded-lg "
+              >
+                Dispute
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
