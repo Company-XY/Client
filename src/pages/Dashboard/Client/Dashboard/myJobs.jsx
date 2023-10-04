@@ -33,6 +33,11 @@ const UserJobs = () => {
           (job) => job.user_email === userEmail
         );
 
+        // Sort the filteredJobs by createdAt in descending order (most recent first)
+        filteredJobs.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
         setUserJobs(filteredJobs);
         setIsLoading(false);
       } catch (error) {

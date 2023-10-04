@@ -17,11 +17,12 @@ const MainDashboard = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(0);
-  const [count3, setCount3] = useState(0);
-  const [count4, setCount4] = useState(0);
-  const [count5, setCount5] = useState(0);
+  const [tabCounts, setTabCounts] = useState({
+    all: 0,
+    mybids: 0,
+    activeBids: 0,
+    completedJobs: 0,
+  });
 
   const fetchJobs = async () => {
     try {
@@ -46,11 +47,42 @@ const MainDashboard = () => {
       setLoading(false);
       const pendingJobs = sortedJobs.filter((job) => job.stage === "Pending");
       setFilteredJobs(pendingJobs);
-      setCount1(pendingJobs.length);
+      setTabCounts({ ...tabCounts, all: pendingJobs.length });
     } catch (error) {
       console.error("Failed to fetch user data:", error);
       setLoading(false);
     }
+  };
+
+  const countTabJobs = () => {
+    const myBids = jobs.filter(
+      (job) =>
+        job.stage === "Pending" &&
+        job.bids.some((bid) => bid.email === userEmail)
+    );
+
+    const activeBids = jobs.filter(
+      (job) =>
+        (job.stage === "Ongoing" ||
+          job.stage === "UnderReview" ||
+          job.stage === "Disputed") &&
+        job.bids.some(
+          (bid) => bid.email === userEmail && bid.status === "Ongoing"
+        )
+    );
+
+    const completedJobs = jobs.filter(
+      (job) =>
+        job.stage === "Completed" &&
+        job.bids.some((bid) => bid.email === userEmail)
+    );
+
+    setTabCounts({
+      ...tabCounts,
+      mybids: myBids.length,
+      activeBids: activeBids.length,
+      completedJobs: completedJobs.length,
+    });
   };
 
   useEffect(() => {
@@ -58,6 +90,10 @@ const MainDashboard = () => {
       fetchJobs();
     }
   }, [userId, token]);
+
+  useEffect(() => {
+    countTabJobs();
+  }, [jobs, userEmail]);
 
   const loadMoreJobs = () => {
     setVisibleJobs((prevVisibleJobs) => prevVisibleJobs + 10);
@@ -126,37 +162,34 @@ const MainDashboard = () => {
         )
     );
     setFilteredJobs(activeBids);
-    setCount5(activeBids.length);
+    setTabCounts({ ...tabCounts, activeBids: activeBids.length });
   };
 
   const filterCompletedJobs = () => {
-    const completedJobs = jobs.filter((job) => job.stage === "Completed");
+    const completedJobs = jobs.filter(
+      (job) =>
+        job.stage === "Completed" &&
+        job.bids.some((bid) => bid.email === userEmail)
+    );
     setFilteredJobs(completedJobs);
-    setCount4(completedJobs.length);
+    setTabCounts({ ...tabCounts, completedJobs: completedJobs.length });
   };
 
   const filterJobs = (tab) => {
-    if (tab === "recommended") {
-      // Filter jobs for the "Recommended" tab based on your criteria
+    if (tab === "all") {
+      const pendingJobs = jobs.filter((job) => job.stage === "Pending");
+      setFilteredJobs(pendingJobs);
     } else if (tab === "mybids") {
-      // Filter jobs for the "My Bids" tab
       const myBids = jobs.filter(
         (job) =>
           job.stage === "Pending" &&
           job.bids.some((bid) => bid.email === userEmail)
       );
       setFilteredJobs(myBids);
-      setCount4(myBids.length);
     } else if (tab === "activeBids") {
-      // Filter jobs for the "Active Bids" tab
       filterActiveBids();
     } else if (tab === "completedJobs") {
-      // Filter jobs for the "Completed Jobs" tab
       filterCompletedJobs();
-    } else {
-      // For all other tabs, display all jobs where the stage is "Pending"
-      const pendingJobs = jobs.filter((job) => job.stage === "Pending");
-      setFilteredJobs(pendingJobs);
     }
     setActiveTab(tab);
   };
@@ -175,31 +208,31 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("all")}
             >
-              All Jobs ({count1})
+              All Jobs ({tabCounts.all})
             </button>
             <button
               className={`${
                 activeTab === "mybids" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("mybids")}
             >
-              My Bids ({count4})
+              My Bids ({tabCounts.mybids})
             </button>
             <button
               className={`${
                 activeTab === "activeBids" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("activeBids")}
             >
-              Active Bids ({count5})
+              Active Bids ({tabCounts.activeBids})
             </button>
             <button
               className={`${
                 activeTab === "completedJobs" ? "bg-blue-500" : "bg-gray-300"
-              } text-gray-800 py-2 px-4 rounded hover.bg-blue-600`}
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("completedJobs")}
             >
-              Completed Jobs ({count4})
+              Completed Jobs ({tabCounts.completedJobs})
             </button>
           </div>
 
