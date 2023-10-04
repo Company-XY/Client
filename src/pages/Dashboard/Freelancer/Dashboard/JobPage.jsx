@@ -165,6 +165,7 @@ const JobPage = () => {
             </p>{" "}
           </p>
           <p className="text-gray-600">{job.description}</p>
+          <p className="text-gray-600">Status: {job.stage}</p>
           <p className="text-gray-600">Skills: {job.skills.join(", ")}</p>
           <p className="text-gray-600">Files: {job.files.length}</p>
           <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
