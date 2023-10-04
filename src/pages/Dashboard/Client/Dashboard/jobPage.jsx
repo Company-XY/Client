@@ -10,9 +10,11 @@ const JobPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [awarded, setAwarded] = useState(false);
   const [disputed, setDisputed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleAwardProject = async (bidId) => {
     try {
+      setLoading(true);
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/update-bid/${jobId}/${bidId}`,
         { status: "Ongoing" }
@@ -23,34 +25,42 @@ const JobPage = () => {
         { stage: "Ongoing" }
       );
       setAwarded(true);
+      setLoading(false);
       console.log("Bid and job awarded successfully.");
     } catch (error) {
       console.error("Failed to award the project:", error);
+      setLoading(false);
     }
   };
 
   const handleDisputeProject = async () => {
     try {
+      setLoading(true);
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
         { stage: "Disputed" }
       );
       setDisputed(true);
+      setLoading(false);
       console.log("Project disputed successfully.");
     } catch (error) {
       console.error("Failed to dispute the project:", error);
+      setLoading(false);
     }
   };
 
   const handleApproveProject = async () => {
     try {
+      setLoading(true);
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
         { stage: "Completed" }
       );
       console.log("Project approved successfully.");
+      setLoading(false);
     } catch (error) {
       console.error("Failed to approve the project:", error);
+      setLoading(false);
     }
   };
 
@@ -175,9 +185,23 @@ const JobPage = () => {
                           } my-2`}
                         >
                           {awarded ? (
-                            <span>Awarded</span>
+                            <span>
+                              {" "}
+                              {loading ? (
+                                <span>Please Wait</span>
+                              ) : (
+                                <span>Awarded</span>
+                              )}
+                            </span>
                           ) : (
-                            <span>Award Project</span>
+                            <span>
+                              {" "}
+                              {loading ? (
+                                <span>Please Wait</span>
+                              ) : (
+                                <span>Award Project</span>
+                              )}
+                            </span>
                           )}
                         </button>
                       </div>
@@ -231,13 +255,13 @@ const JobPage = () => {
                 onClick={handleApproveProject}
                 className="py-2 px-4 bg-blue-200 rounded-lg "
               >
-                Approve
+                {loading ? <span>Please Wait</span> : <span>Approve</span>}
               </button>
               <button
                 onClick={handleDisputeProject}
                 className="py-2 px-4 bg-blue-200 rounded-lg "
               >
-                Dispute
+                {loading ? <span>Please Wait</span> : <span>Dispute</span>}
               </button>
             </div>
           )}

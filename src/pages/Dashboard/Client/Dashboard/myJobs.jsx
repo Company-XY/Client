@@ -44,7 +44,7 @@ const UserJobs = () => {
     if (userEmail && token) {
       fetchUserJobs();
     }
-  }, [userEmail, token]);
+  }, [userEmail, token, currentTab]);
 
   useEffect(() => {
     setCount1(userJobs.filter((job) => job.stage === "Pending").length);

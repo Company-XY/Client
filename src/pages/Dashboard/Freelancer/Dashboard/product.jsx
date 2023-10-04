@@ -7,6 +7,7 @@ const FileUpload = () => {
 
   const [review, setReview] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -25,7 +26,7 @@ const FileUpload = () => {
       for (const file of selectedFiles) {
         formData.append("files", file);
       }
-
+      setLoading(true);
       const response = await axios.post(
         `https://assist-api-okgk.onrender.com/api/v1/create-product/${jobId}`,
         formData,
@@ -38,12 +39,14 @@ const FileUpload = () => {
       );
 
       console.log(formData);
+      setLoading(false);
       console.log("Product details submitted successfully.", response.data);
     } catch (error) {
       console.error(
         "Error submitting product details. Please try again.",
         error
       );
+      setLoading(false);
     }
   };
 
@@ -88,7 +91,7 @@ const FileUpload = () => {
         }`}
         disabled={isSubmitDisabled}
       >
-        Submit
+        {loading ? <span>Please Wait</span> : <span>Submit</span>}
       </button>
     </div>
   );
