@@ -119,15 +119,13 @@ const JobPage = () => {
               ? job.skills.join(", ")
               : "No skills specified"}
           </p>
-
+          <p className="text-gray-600">Files: {job.files.length}</p>
           <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
-            {" "}
-            Files
             {job.files.map((file, index) => (
               <li key={index} className="hover:underline">
-                {file.__id ? (
+                {file._id ? (
                   <a
-                    href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                    href={`https://assist-api-okgk.onrender.com/api/v1/jobs/download/${jobId}/${file._id}`}
                     target="_blank"
                     rel="noreferrer"
                     download
