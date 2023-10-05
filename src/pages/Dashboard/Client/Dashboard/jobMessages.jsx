@@ -1,69 +1,69 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
-const MessagingUI = () => {
-  const [messages, setMessages] = useState([
-    { text: "Any further instructions that you may need?", sender: "client" },
-    {
-      text: "What should be the format for documentation?",
-      sender: "freelancer",
-    },
-  ]);
+const socket = io("http://localhost:8080/api/v1/chat");
 
+const Messages = () => {
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = () => {
-    if (newMessage) {
-      setMessages([...messages, { text: newMessage, sender: "client" }]);
+  useEffect(() => {
+    socket.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const sendMessage = () => {
+    if (newMessage.trim() !== "") {
+      socket.emit("message", newMessage);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
       setNewMessage("");
-      // Simulate a reply from the freelancer (for demonstration purposes)
-      setTimeout(() => {
-        setMessages([
-          ...messages,
-          { text: "Thanks for the message!", sender: "freelancer" },
-        ]);
-      }, 1000);
     }
   };
 
   return (
-    <div className="bg-gray-100 flex flex-col h-fit">
-      <div className="flex-1 p-4 overflow-y-auto">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`${
-              message.sender === "client" ? "justify-end" : "justify-start"
-            } mb-4 flex`}
-          >
-            <div
-              className={`${
-                message.sender === "client" ? "bg-blue-500" : "bg-green-500"
-              } p-3 text-white rounded-lg`}
-            >
-              {message.text}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="p-4">
-        <div className="flex items-center">
-          <input
-            type="text"
-            className="flex-1 p-2 mr-2 border rounded-lg"
-            placeholder="Type your message..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 text-white p-2 rounded-lg"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
+    <div className="flex mt-12 bg-gray-100">
+      {/* Main message content */}
+      <main className="w-full p-4">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold">Messages</h2>
         </div>
-      </div>
+        <div className="flex flex-col border border-gray-300 rounded-lg">
+          {/* Messages container */}
+          <div className="flex-grow p-4 overflow-y-auto">
+            {messages.map((message, index) => (
+              <div key={index} className="flex justify-start mb-4">
+                <div className="rounded-lg p-2 bg-blue-200">
+                  <p>{message}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* input */}
+          <div className="p-4 border-t border-gray-300">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              className="w-full border border-gray-300 rounded-full px-4 py-2"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <button
+              onClick={sendMessage}
+              className="mt-2 bg-purple-800 text-white rounded-full px-4 py-2 hover-bg-purple-600"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
 
-export default MessagingUI;
+export default Messages;
