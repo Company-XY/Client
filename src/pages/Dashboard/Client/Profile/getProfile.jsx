@@ -141,25 +141,6 @@ const Profile = () => {
             <h2 className="text-lg font-normal mt-4">Rating: Loading...</h2>
           </div>
         )}
-
-        <div className="grid grid-cols-2 mt-8">
-          <div>
-            <h2 className="font-semibold">Open Projects</h2>
-            <p>{userData ? userData.openProjects : "Loading..."}</p>
-          </div>
-          <div>
-            <h2 className="font-semibold">Active Projects</h2>
-            <p>{userData ? userData.activeProjects : "Loading..."}</p>
-          </div>
-          <div>
-            <h2 className="font-semibold">Past Projects</h2>
-            <p>{userData ? userData.pastProjects : "Loading..."}</p>
-          </div>
-          <div>
-            <h2 className="font-semibold">Total Projects</h2>
-            <p>{userData ? userData.totalProjects : "Loading..."}</p>
-          </div>
-        </div>
       </div>
     </div>
   );
