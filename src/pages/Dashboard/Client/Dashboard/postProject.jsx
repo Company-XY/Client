@@ -166,7 +166,7 @@ const PostProject = () => {
           <div className="flex flex-col mb-4">
             <label>What skills are you looking for</label>
             <input
-              type="number"
+              type="text"
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
               className="w-full border rounded-lg py-2 px-4"
