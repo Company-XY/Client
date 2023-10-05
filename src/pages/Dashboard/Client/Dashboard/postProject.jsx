@@ -155,18 +155,13 @@ const PostProject = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label>What is your budget</label>
-            <select
+            <label>What is your estimated budget</label>
+            <input
+              type="number"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
               className="w-full border rounded-lg py-2 px-4"
-            >
-              <option>Below 5000</option>
-              <option>5000 - 15000</option>
-              <option>15000 - 35000</option>
-              <option>35000 - 55000</option>
-              <option>Over 55000</option>
-            </select>
+            />
           </div>
           <div className="flex flex-col mb-4">
             <label>What experience are you looking for</label>
