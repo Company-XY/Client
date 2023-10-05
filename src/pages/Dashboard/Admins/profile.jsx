@@ -39,14 +39,13 @@ function Profile() {
           <div className="w-52 mx-auto">
             <img
               className="h-40 w-full object-cover rounded-full"
-              src={userData.avatar}
+              src=""
               alt="Avatar"
             />
           </div>
           <div className="text-center md:text-center mt-4">
             <h2>{userData.location}</h2>
             <h2>Joined {userData.joinedDate}</h2>
-            <h2>{userData.recommendations} Recommendations</h2>
           </div>
         </div>
       ) : (
