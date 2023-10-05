@@ -11,6 +11,8 @@ const JobPage = () => {
   const [awarded, setAwarded] = useState(false);
   const [disputed, setDisputed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(1);
 
   const handleAwardProject = async (bidId) => {
     try {
@@ -58,6 +60,8 @@ const JobPage = () => {
       );
       console.log("Project approved successfully.");
       setLoading(false);
+
+      handleReview({ preventDefault: () => {} });
     } catch (error) {
       console.error("Failed to approve the project:", error);
       setLoading(false);
@@ -82,6 +86,20 @@ const JobPage = () => {
 
     fetchJob();
   }, [jobId, awarded, disputed]);
+
+  const handleReview = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.patch(
+        `https://assist-api-okgk.onrender.com/api/v1/review/${jobId}`,
+        { review, rating }
+      );
+
+      console.log("Review and rating submitted successfully.", response);
+    } catch (error) {
+      console.error("Failed to submit review and rating:", error);
+    }
+  };
 
   return (
     <div className="py-4 mt-14 max-w-5xl mx-auto">
@@ -223,17 +241,18 @@ const JobPage = () => {
             <div>
               <div>
                 <h3 className="text-lg font-semibold">Product:</h3>
-                <p className="text-gray-600">Review: {job.product.review}</p>
+                <p className="text-gray-600">Message: {job.product.review}</p>
                 {job.product.files && job.product.files.length > 0 && (
                   <div>
                     <h3 className="text-sm font-semibold">Product Files:</h3>
                     {job.product.files.map((file) => (
                       <div key={file._id}>
                         <a
-                          href={`https://assist-api-okgk.onrender.com/api/v1/download/${jobId}/${file._id}`}
+                          href={`https://assist-api-okgk.onrender.com/api/v1/product/download/${jobId}/${file._id}`}
                           target="_blank"
                           rel="noreferrer"
                           download
+                          className="underline font-semibold"
                         >
                           {file.title}
                         </a>
@@ -242,25 +261,65 @@ const JobPage = () => {
                   </div>
                 )}
               </div>
-              {/*<div className="py-2 px-10">
-                <Messages />
-                    </div>*/}
             </div>
           ) : null}
           {job.stage === "UnderReview" && (
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={handleApproveProject}
-                className="py-2 px-4 bg-blue-200 rounded-lg "
-              >
-                {loading ? <span>Please Wait</span> : <span>Approve</span>}
-              </button>
-              <button
-                onClick={handleDisputeProject}
-                className="py-2 px-4 bg-blue-200 rounded-lg "
-              >
-                {loading ? <span>Please Wait</span> : <span>Dispute</span>}
-              </button>
+            <div className="flex flex-col gap-4 mt-4">
+              <form className="flex flex-col gap-1">
+                <div className="mb-4">
+                  <label htmlFor="review" className="text-lg font-semibold">
+                    Add A Review
+                  </label>
+                  <textarea
+                    id="review"
+                    name="review"
+                    placeholder="Enter your review..."
+                    className="w-full border-2 rounded-md border-blue-700 py-2 px-4"
+                    onChange={(e) => setReview(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="rating" className="text-lg font-semibold">
+                    Add a rating (1-5)
+                  </label>
+                  <p>Rate the job in a scale of 1 - 5</p>
+                  <input
+                    type="number"
+                    id="rating"
+                    name="rating"
+                    placeholder="Rating"
+                    min="1"
+                    max="5"
+                    step="1"
+                    className="w-full border-2 rounded-md border-blue-700 py-2 px-4"
+                    onChange={(e) => setRating(e.target.value)}
+                  />
+                </div>
+              </form>
+              <div className="flex space-x-10">
+                <button
+                  onClick={handleApproveProject}
+                  className={`py-2 px-4 w-40 bg-blue-200 rounded-lg ${
+                    loading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-blue-300"
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? <span>Please Wait</span> : <span>Approve</span>}
+                </button>
+                <button
+                  onClick={handleDisputeProject}
+                  className={`py-2 px-4 w-40 bg-red-200 rounded-lg ${
+                    loading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-red-300"
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? <span>Please Wait</span> : <span>Dispute</span>}
+                </button>
+              </div>
             </div>
           )}
         </div>

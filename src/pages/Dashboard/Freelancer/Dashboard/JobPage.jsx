@@ -45,7 +45,7 @@ const JobPage = () => {
     };
 
     fetchJob();
-  }, [jobId, email, hasPlacedBid]);
+  }, [jobId, email, hasPlacedBid, message]);
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
@@ -189,86 +189,95 @@ const JobPage = () => {
 
       <hr />
 
-      <div className="bg-white p-4 border border-gray-300 rounded-lg mt-4">
-        <h3 className="text-lg font-semibold mb-2">
-          {hasPlacedBid ? "You have already placed a bid" : "Place Your Bid"}
-        </h3>
-        <form onSubmit={hasPlacedBid ? handleEdit : handleBidSubmit}>
-          <div className="grid grid-cols-1 gap-4">
-            <div className="flex items-center">
-              <label htmlFor="bidAmount" className="text-gray-600">
-                Bid Amount
-              </label>
-              <input
-                type="number"
-                id="bidAmount"
-                name="bidAmount"
-                placeholder="Enter your bid amount"
-                value={bidAmount}
-                onChange={(e) => setBidAmount(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md mt-2"
-                required
-                disabled={hasPlacedBid && !isEditing}
-              />
-            </div>
-            <div className="flex items-center">
-              <label htmlFor="proposal" className="text-gray-600">
-                Bid Proposal
-              </label>
-              <textarea
-                id="proposal"
-                name="proposal"
-                placeholder="Enter your bid proposal"
-                value={proposal}
-                onChange={(e) => setProposal(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md mt-2"
-                required
-                disabled={hasPlacedBid && !isEditing}
-              />
-            </div>
-            <div className="flex items-center">
-              <label htmlFor="files" className="text-gray-600">
-                Attach Files
-              </label>
-              <input
-                type="file"
-                id="files"
-                name="files"
-                multiple
-                onChange={handleFileChange}
-                className="w-full p-2 border border-gray-300 rounded-md mt-2"
-                disabled={hasPlacedBid && !isEditing}
-              />
-            </div>
-            {message && <span className="text-green-500">{message}</span>}
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
-                  isBidding ? "cursor-not-allowed opacity-50" : ""
-                }`}
-                disabled={isBidding || (hasPlacedBid && !isEditing)}
-              >
-                {hasPlacedBid
-                  ? isEditing
-                    ? "Save Changes"
-                    : "Bid Placed"
-                  : isBidding
-                  ? "Placing Bid..."
-                  : "Place Bid"}
-              </button>
-              {hasPlacedBid && !isEditing && (
+      {job.stage === "UnderReview" ? (
+        <div className="grid place-items-center mt-4 w-full bg-green-200 h-fit rounded-lg">
+          <span className="font-semibold my-4 py-2 text-xl">
+            Job Submitted and Under Review
+          </span>
+        </div>
+      ) : (
+        <div className="bg-white p-4 border border-gray-300 rounded-lg mt-4">
+          <h3 className="text-lg font-semibold mb-2">
+            {hasPlacedBid ? "You have already placed a bid" : "Place Your Bid"}
+          </h3>
+          <form onSubmit={hasPlacedBid ? handleEdit : handleBidSubmit}>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex items-center">
+                <label htmlFor="bidAmount" className="text-gray-600">
+                  Bid Amount
+                </label>
+                <input
+                  type="number"
+                  id="bidAmount"
+                  name="bidAmount"
+                  placeholder="Enter your bid amount"
+                  value={bidAmount}
+                  onChange={(e) => setBidAmount(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-md mt-2"
+                  required
+                  disabled={hasPlacedBid && !isEditing}
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="proposal" className="text-gray-600">
+                  Bid Proposal
+                </label>
+                <textarea
+                  id="proposal"
+                  name="proposal"
+                  placeholder="Enter your bid proposal"
+                  value={proposal}
+                  onChange={(e) => setProposal(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-md mt-2"
+                  required
+                  disabled={hasPlacedBid && !isEditing}
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="files" className="text-gray-600">
+                  Attach Files
+                </label>
+                <input
+                  type="file"
+                  id="files"
+                  name="files"
+                  multiple
+                  onChange={handleFileChange}
+                  className="w-full p-2 border border-gray-300 rounded-md mt-2"
+                  disabled={hasPlacedBid && !isEditing}
+                />
+              </div>
+              {message && <span className="text-green-500">{message}</span>}
+              <div className="flex gap-3">
                 <button
-                  onClick={() => setIsEditing(true)}
-                  className="py-2 px-4 bg-blue-200 w-40 mt-4 rounded-md hover:bg-blue-400"
+                  type="submit"
+                  className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
+                    isBidding ? "cursor-not-allowed opacity-50" : ""
+                  }`}
+                  disabled={isBidding || (hasPlacedBid && !isEditing)}
                 >
-                  Edit Bid
+                  {hasPlacedBid
+                    ? isEditing
+                      ? "Save Changes"
+                      : "Bid Placed"
+                    : isBidding
+                    ? "Placing Bid..."
+                    : "Place Bid"}
                 </button>
-              )}
+                {hasPlacedBid && !isEditing && (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="py-2 px-4 bg-blue-200 w-40 mt-4 rounded-md hover:bg-blue-400"
+                  >
+                    Edit Bid
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
+
       {job.stage === "Ongoing" &&
       hasPlacedBid &&
       job.bids.find(
