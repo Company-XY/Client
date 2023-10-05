@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IoPersonSharp, IoLocation } from "react-icons/io5";
+import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
+import { BiMoney } from "react-icons/bi";
 
-function Profile() {
+const Profile = () => {
   const [userData, setUserData] = useState(null);
 
   const userObjectString = localStorage.getItem("user");
+
   const userObject = JSON.parse(userObjectString);
+
   const userId = userObject._id;
   const token = userObject.token;
 
@@ -21,9 +26,47 @@ function Profile() {
       );
 
       setUserData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
+  };
+
+  const calculateMemberDuration = () => {
+    if (userData && userData.createdAt) {
+      const createdAtDate = new Date(userData.createdAt);
+      const currentDate = new Date();
+      const durationInMilliseconds = currentDate - createdAtDate;
+
+      const seconds = Math.floor(durationInMilliseconds / 1000);
+      if (seconds < 60) {
+        return `${seconds} seconds ago`;
+      }
+
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) {
+        return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+      }
+
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) {
+        return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+      }
+
+      const days = Math.floor(hours / 24);
+      if (days < 7) {
+        return `${days} day${days > 1 ? "s" : ""} ago`;
+      }
+
+      const weeks = Math.floor(days / 7);
+      if (weeks < 4) {
+        return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+      }
+
+      const months = Math.floor(weeks / 4);
+      return `${months} month${months > 1 ? "s" : ""} ago`;
+    }
+    return "Unknown";
   };
 
   useEffect(() => {
@@ -33,43 +76,30 @@ function Profile() {
   }, [userId, token]);
 
   return (
-    <div className="bg-snow-300 text-gray-800 p-4 flex flex-col md:flex-row">
+    <>
       {userData ? (
-        <div className="w-full">
-          <div className="w-52 mx-auto">
-            <img
-              className="h-40 w-full object-cover rounded-full"
-              src={userData.avatar}
-              alt="Avatar"
-            />
-          </div>
-          <div className="text-center md:text-center mt-4">
-            <h2>{userData.location}</h2>
-            <h2>Joined {userData.joinedDate}</h2>
-            <h2>{userData.recommendations} Recommendations</h2>
+        <div className="mt-20 py-4 w-1/3 h-fit flex justify-start">
+          <div className="w-full">
+            <IoPersonSharp className="w-24 h-24 rounded-full mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-center">{userData.name}</h2>
+            <p className="text-gray-600 text-center mb-2">{userData.email}</p>
+            <p className="text-gray-600 text-center mb-2">{userData.phone}</p>
+            <p className="text-gray-600 text-center mb-2">
+              {userData.location}
+            </p>
+            <p className="text-gray-600 text-center mb-2">
+              Joined: {calculateMemberDuration()}
+            </p>
+            <p className="text-gray-600 text-center mb-2">
+              Projects Completed: 0
+            </p>
           </div>
         </div>
       ) : (
-        <div className="w-full text-center">
-          <p>Loading user profile...</p>
-        </div>
+        <span>Loading</span>
       )}
-
-      <div className="w-full border-gray-300 p-4">
-        {userData ? (
-          <div>
-            <h2 className="text-4xl font-semibold">{userData.name}</h2>
-          </div>
-        ) : (
-          <div>
-            <h2 className="text-4xl font-semibold">Loading...</h2>
-            <h2 className="text-xl font-semibold mt-4">Loading...</h2>
-            <h2 className="text-lg font-normal mt-4">Rating: Loading...</h2>
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
-}
+};
 
 export default Profile;
