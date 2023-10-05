@@ -259,7 +259,7 @@ const MainDashboard = () => {
                     </div>
                     <div className="flex justify-start gap-4 items-center">
                       <span className="text-blue-600 hover:underline">
-                        Budget: Ksh.{job.budget}
+                        Estimated Budget: Ksh.{job.budget}
                       </span>
                       <span className="text-blue-600 hover:underline">
                         Duration: {job.duration} days
