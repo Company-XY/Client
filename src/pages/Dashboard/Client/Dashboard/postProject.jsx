@@ -164,6 +164,15 @@ const PostProject = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
+            <label>What skills are you looking for</label>
+            <input
+              type="number"
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
+              className="w-full border rounded-lg py-2 px-4"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
             <label>What experience are you looking for</label>
             <select className="w-full border rounded-lg py-2 px-4">
               <option>0-1 year</option>
