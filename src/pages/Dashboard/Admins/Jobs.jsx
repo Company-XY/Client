@@ -1,17 +1,15 @@
-// Consultations.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { formatDistanceToNow } from "date-fns";
 
 const Consultations = () => {
   const [consultations, setConsultations] = useState([]);
-  const [visibleConsultations, setVisibleConsultations] = useState(10);
 
   useEffect(() => {
     axios
       .get("http://assist-api-okgk.onrender.com/api/v1/consultations")
       .then((response) => {
         setConsultations(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -56,13 +54,13 @@ const Consultations = () => {
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      {consultations.slice(0, visibleConsultations).map((consultation) => (
+      {consultations.slice(0, 10).map((consultation) => (
         <div
           className="bg-blue-100 p-4 mb-2 border border-blue-400 rounded-lg shadow-md"
           key={consultation._id}
         >
           <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-xl font-semibold text-gray-900">
               {consultation.businessName}
             </h3>
             <span className="text-gray-700">

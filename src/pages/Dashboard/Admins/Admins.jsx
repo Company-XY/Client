@@ -8,21 +8,15 @@ function AdminDashboard() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   return (
-    <div
-      className={`bg-${
-        darkMode ? "gray" : "blue"
-      }-900 text-white mt-16 h-[90vh]`}
-    >
-      <div className="h-[20%] w-full p-4">
+    <div className="mx-auto">
+      <div className="">
         <Profile />
       </div>
-
-      {/* Main Content Section */}
-      <div className="flex space-x-4 justify-between h-3/4">
-        <div className="flex-1 basis-2/3 bg-gray-800 p-4 rounded-lg">
+      <div className="flex">
+        <div className="basis-2/3">
           <MyJobs />
         </div>
-        <div className="flex-1 basis-1/3 bg-gray-800 p-4 rounded-lg mb-4">
+        <div className="basis-1/3">
           <Chat />
         </div>
       </div>

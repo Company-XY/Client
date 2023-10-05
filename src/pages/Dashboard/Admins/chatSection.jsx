@@ -37,7 +37,7 @@ function ChatSection() {
   };
 
   return (
-    <div className="flex mt-12 bg-gray-100">
+    <div className="flex bg-gray-100">
       <main className="w-full p-4">
         <div className="mb-4">
           <h2 className="text-xl font-semibold">Messages</h2>
