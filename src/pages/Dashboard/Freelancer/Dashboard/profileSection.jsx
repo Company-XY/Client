@@ -94,6 +94,12 @@ const Profile = () => {
             <p className="text-gray-600 text-center mb-2">
               Projects Completed: 0
             </p>
+            <p className="text-gray-700 text-center">
+              Balance:{" "}
+              <span className="font-semibold">
+                Ksh.{userData.accountBalance}
+              </span>
+            </p>
             <div className="text-center">
               <span className="text-gray-500">Rating: </span>
               <span className="text-xl text-blue-400">{userData.rating}</span>
