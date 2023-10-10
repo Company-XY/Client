@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -23,9 +23,6 @@ import UpdateProfile from "../pages/Dashboard/Client/Profile/updateProfile";
 import ProfileUpdate from "../pages/Dashboard/Freelancer/Profile/profileUpdate";
 
 function Routers() {
-  const userToken = localStorage.getItem("userToken");
-  const userLoggedIn = userToken ? true : false;
-
   return (
     <Routes>
       <Route index element={<Home />} />
@@ -33,33 +30,23 @@ function Routers() {
       <Route path="/register" element={<Register />} />
       <Route path="/register/client" element={<ClientRegister />} />
       <Route path="/register/freelancer" element={<FreelancerRegister />} />
-
-      {userLoggedIn && (
-        <>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/client/profile" element={<UpdateProfile />} />
-          <Route path="/freelancer/profile" element={<ProfileUpdate />} />
-          <Route path="/dashboard/admin" element={<Admins />} />
-          <Route path="/dashboard/client/post" element={<PostProject />} />
-          <Route path="/dashboard/client/book" element={<BookConsultation />} />
-          <Route
-            path="/dashboard/client/book/details"
-            element={<FillDetails />}
-          />
-          <Route path="/dashboard/client/book/call" element={<Call />} />
-          <Route path="/dashboard/client/review" element={<Review />} />
-          <Route path="/dashboard/job/:jobId" element={<JobPage2 />} />
-          <Route path="/dashboard/client/job/:jobId" element={<JobPage />} />
-          <Route path="/deposit" element={<Deposit />} />
-        </>
-      )}
-
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/client/profile" element={<UpdateProfile />} />
+      <Route path="/freelancer/profile" element={<ProfileUpdate />} />
+      <Route path="/dashboard/admin" element={<Admins />} />
+      <Route path="/dashboard/client/post" element={<PostProject />} />
+      <Route path="/dashboard/client/book" element={<BookConsultation />} />
+      <Route path="/dashboard/client/book/details" element={<FillDetails />} />
+      <Route path="/dashboard/client/book/call" element={<Call />} />
+      <Route path="/dashboard/client/review" element={<Review />} />
+      <Route path="/dashboard/job/:jobId" element={<JobPage2 />} />
+      <Route path="/dashboard/client/job/:jobId" element={<JobPage />} />
+      <Route path="/dashboard/freelancer/profile/:id" element={<Profile2 />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/reset" element={<Reset />} />
       <Route path="/password/:token" element={<Password />} />
-      {userLoggedIn && <Route path="/withdraw" element={<Withdraw />} />}
-
-      {!userLoggedIn && <Route path="/*" element={<Navigate to="/" />} />}
+      <Route path="/deposit" element={<Deposit />} />
+      <Route path="/withdraw" element={<Withdraw />} />
     </Routes>
   );
 }
