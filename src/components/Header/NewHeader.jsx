@@ -85,12 +85,6 @@ const Header = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-4 dark:text-blue-100">
                   <RouterLink
-                    to="/"
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
-                  >
-                    Home
-                  </RouterLink>
-                  <RouterLink
                     to="/dashboard"
                     className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
                   >
@@ -241,12 +235,6 @@ const Header = () => {
                 className="flex flex-col px-2 pt-2 pb-3 space-y-2"
                 onClick={toggleMobileMenu}
               >
-                <RouterLink
-                  to="/"
-                  className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
-                >
-                  Home
-                </RouterLink>
                 <RouterLink
                   to="/dashboard"
                   className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
