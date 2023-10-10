@@ -14,12 +14,32 @@ const Deposit = () => {
 
     try {
       setLoading(true);
+
+      const userId = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user"))._id
+        : null;
+
+      if (!userId) {
+        console.error("User ID not found");
+        setLoading(false);
+        setSuccess(false);
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "x-user-id": userId,
+        },
+      };
+
       const response = await axios.post(
         "https://assist-api-okgk.onrender.com/api/v1/deposit",
         {
           phone,
           amount,
-        }
+        },
+        config
       );
 
       console.log("Deposit successful", response.data);
@@ -33,7 +53,7 @@ const Deposit = () => {
   };
 
   const handleGoBack = (e) => {
-    e.preventDefault;
+    e.preventDefault();
     navigate("/dashboard");
   };
 
