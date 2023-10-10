@@ -105,17 +105,24 @@ const Deposit = () => {
               placeholder="1000"
             />
           </div>
+          {success && (
+            <p className="py-2 my-1 bg-gray-200 text-green-600 rounded-lg text-center">
+              Complete the deposit by entering your pin on your device, once
+              complete click{" "}
+              <span
+                className="underline cursor-pointer"
+                onClick={() => navigate("/dashboard")}
+              >
+                here
+              </span>
+            </p>
+          )}
           <button
             type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded-md"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md mt-2"
           >
             {loading ? <span>Please Wait...</span> : <span>Deposit</span>}
           </button>
-          {success && (
-            <p className="py-2">
-              Complete the deposit by entering your pin on your device
-            </p>
-          )}
         </form>
       </div>
     </div>

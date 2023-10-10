@@ -18,13 +18,15 @@ const JobPage = () => {
     try {
       setLoading(true);
       await axios.patch(
-        `https://assist-api-okgk.onrender.com/api/v1/update-bid/${jobId}/${bidId}`,
+        `https://assist-api-okgk.onrender.com/api/v1/award-bid/${jobId}/${bidId}`,
         { status: "Ongoing" }
       );
 
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
-        { stage: "Ongoing" }
+        {
+          stage: "Ongoing",
+        }
       );
       setAwarded(true);
       setLoading(false);
@@ -40,7 +42,9 @@ const JobPage = () => {
       setLoading(true);
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
-        { stage: "Disputed" }
+        {
+          stage: "Disputed",
+        }
       );
       setDisputed(true);
       setLoading(false);
@@ -56,7 +60,9 @@ const JobPage = () => {
       setLoading(true);
       await axios.patch(
         `https://assist-api-okgk.onrender.com/api/v1/jobs/${jobId}`,
-        { stage: "Completed" }
+        {
+          stage: "Completed",
+        }
       );
       console.log("Project approved successfully.");
       setLoading(false);
