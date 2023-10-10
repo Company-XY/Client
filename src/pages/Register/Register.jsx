@@ -9,13 +9,24 @@ const Register = () => {
           Welcome to Assist Africa
         </h2>
         <p className="leading-8 px-10 text-center m-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          consectetur enim reiciendis eveniet debitis! Minima totam quos labore
-          sequi magnam ducimus beatae tempora consequatur officia quaerat
-          eveniet sit, animi et! Lorem ipsum dolor sit amet consectetur,
-          adipisicing elit. Adipisci, sint doloribus provident tempora corporis
-          exercitationem nam vel sed rem eius sit deserunt sunt. Dolore ut error
-          sunt aliquam dolorum repellat.
+          Join us today, and experience a seamless and rewarding journey where
+          freelancers and clients come together to achieve excellence. In our
+          vibrant and dynamic community, opportunities are boundless. Whether
+          you're a talented freelancer looking to showcase your skills and grow
+          your career, or a client seeking top-tier expertise to bring your
+          projects to life, our platform is your gateway to success. Our
+          user-friendly interface and intuitive features make the hiring process
+          a breeze. Easily connect with skilled professionals, review their
+          portfolios, and collaborate on projects that matter to you. Our secure
+          and transparent payment system ensures that freelancers are
+          compensated fairly for their hard work, fostering trust and long-term
+          partnerships. As a client, you'll have access to a pool of diverse
+          talents, each eager to bring your vision to reality. And as a
+          freelancer, you'll find a steady stream of exciting projects that
+          align with your passion. Join our ever-growing community today and
+          experience the perfect synergy between freelancers and clients, where
+          excellence is the norm, and success is the destination. The journey
+          begins here
         </p>
         <section className="flex flex-col gap-6 justify-center md:flex-row md:justify-evenly">
           <Link to="/register/client">

@@ -289,9 +289,11 @@ const Header = () => {
                   </button>
                 </div>
                 <div className="flex-shrink-0 flex items-center">
-                  <span className="text-blue-700 cursor-pointer hover:scale-105 font-bold text-base sm:text-lg md:text-xl ml-14">
-                    Assist Africa
-                  </span>
+                  <RouterLink to="/">
+                    <span className="text-blue-700 cursor-pointer hover:scale-105 font-bold text-base sm:text-lg md:text-xl ml-14">
+                      Assist Africa
+                    </span>
+                  </RouterLink>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
                   <ScrollLink
@@ -331,7 +333,7 @@ const Header = () => {
                   <div className="flex space-x-4 text-sm font-medium">
                     <RouterLink
                       to="/register"
-                      className="hidden sm:grid place-items-center py-1 px-3 bg-white border-2 rounded-lg border-blue-600 hover:text-blue-700 font-semibold"
+                      className="hidden sm:grid place-items-center py-1 px-3 bg-white hover:bg-blue-700 rounded-lg hover:text-white font-semibold"
                     >
                       Get Started
                     </RouterLink>
