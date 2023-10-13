@@ -16,7 +16,7 @@ const Reset = () => {
       setLoading(true);
       setMessage("");
       const response = await axios.post(
-        "https://auth-server-0bsp.onrender.com/api/v1/reset",
+        "https://assist-api-okgk.onrender.com/api/v1/reset",
         { email }
       );
       setSucess(true);

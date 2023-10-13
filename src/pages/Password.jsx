@@ -23,7 +23,7 @@ const Password = () => {
     } else {
       try {
         const response = await axios.post(
-          `https://auth-server-0bsp.onrender.com/api/v1/reset/password`,
+          `https://assist-api-okgk.onrender.com/api/v1/reset/password`,
           { resetToken: token, newPassword: password }
         );
         if (response.status === 200) {
