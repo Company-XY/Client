@@ -52,6 +52,7 @@ const UpdateProfile = () => {
 
   const updateIsApproved = async () => {
     try {
+      setLoading(false);
       const userString = localStorage.getItem("user");
       if (userString) {
         const { _id, token } = JSON.parse(userString);
@@ -66,6 +67,7 @@ const UpdateProfile = () => {
         );
         console.log("isApproved status updated successfully:", response);
         setIsSuccess(true);
+        setLoading(false);
         handleReload();
       } else {
         console.error("User data not found in localStorage");
@@ -89,7 +91,7 @@ const UpdateProfile = () => {
           To proceed to the dashboard and post projects, you need to create a
           profile
         </p>
-        <div className="bg-white py-4 rounded shadow-md">
+        <div className="bg-white pt-4 rounded shadow-md">
           <form onSubmit={handleSubmit}>
             <div className="py-2 my-1">
               <label htmlFor="phone" className="block font-semibold mb-2">
@@ -192,28 +194,30 @@ const UpdateProfile = () => {
               />
             </div>
             {isSuccess && (
-              <div className="text-green-500 py-2 bg-gray-200 px-4 rounded-lg text-center">
-                <p>
-                  Update successful, click to proceed to{" "}
-                  <span
-                    className="cursor-pointer underline text-green-700"
-                    onClick={updateIsApproved}
-                  >
-                    <Link to="/dashboard">Dashboard</Link>
-                  </span>
-                </p>
+              <div className="text-green-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
+                <p>Update successful</p>
               </div>
             )}
-            <button
-              type="submit"
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
-            >
-              {loading ? (
-                <span>Please Wait...</span>
-              ) : (
-                <span> Update Profile</span>
+            <div className="flex justify-between px-2">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
+              >
+                {loading ? (
+                  <span>Please Wait...</span>
+                ) : (
+                  <span> Update Profile</span>
+                )}
+              </button>
+              {isSuccess && (
+                <button
+                  onClick={updateIsApproved}
+                  className="bg-green-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
+                >
+                  Proceed
+                </button>
               )}
-            </button>
+            </div>
           </form>
         </div>
       </div>
