@@ -90,8 +90,10 @@ const JobPage = () => {
   const handleEdit = async (e) => {
     e.preventDefault();
 
+    setMessage("");
+
     if (bidAmount.trim() === "" || proposal.trim() === "") {
-      alert("Please enter both bid amount and a proposal.");
+      setMessage("Please fill all the inputs.");
       return;
     }
 
@@ -136,10 +138,12 @@ const JobPage = () => {
   return (
     <div className="py-4 mt-14 max-w-5xl mx-auto">
       <span
-        className="underline font-semibold cursor-pointer py-2 my-6"
+        className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        Go Back
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600">
+          Go Back
+        </span>
       </span>
       <hr className="my-4" />
       <h2 className="text-2xl font-semibold mb-2 py-2 text-center">
@@ -153,7 +157,7 @@ const JobPage = () => {
           <p className="flex gap-10 py-2">
             <p className="text-gray-600">
               <span className="font-semibold">Budget: </span>
-              {job.budget}
+              Ksh.{job.budget}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Bids: </span>
@@ -163,9 +167,12 @@ const JobPage = () => {
               <span className="font-semibold">Duration: </span>
               {job.duration} days
             </p>{" "}
+            <p className="text-gray-600">
+              <span className="font-semibold">Status: </span>
+              {job.stage}
+            </p>{" "}
           </p>
           <p className="text-gray-600">{job.description}</p>
-          <p className="text-gray-600">Status: {job.stage}</p>
           <p className="text-gray-600">Skills: {job.skills.join(", ")}</p>
           <p className="text-gray-600">Files: {job.files.length}</p>
           <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
@@ -202,10 +209,14 @@ const JobPage = () => {
           </h3>
           <form onSubmit={hasPlacedBid ? handleEdit : handleBidSubmit}>
             <div className="grid grid-cols-1 gap-4">
-              <div className="flex items-center">
-                <label htmlFor="bidAmount" className="text-gray-600">
+              <div className="flex flex-col items-start">
+                <label
+                  htmlFor="bidAmount"
+                  className="text-gray-800 font-semibold"
+                >
                   Bid Amount
                 </label>
+                <p>What is your budget to deliver on the project</p>
                 <input
                   type="number"
                   id="bidAmount"
@@ -218,10 +229,16 @@ const JobPage = () => {
                   disabled={hasPlacedBid && !isEditing}
                 />
               </div>
-              <div className="flex items-center">
-                <label htmlFor="proposal" className="text-gray-600">
+              <div className="flex flex-col items-start">
+                <label
+                  htmlFor="proposal"
+                  className="text-gray-800 font-semibold"
+                >
                   Bid Proposal
                 </label>
+                <p>
+                  Provide a brief detail of how well you can handle the project.
+                </p>
                 <textarea
                   id="proposal"
                   name="proposal"
@@ -233,10 +250,14 @@ const JobPage = () => {
                   disabled={hasPlacedBid && !isEditing}
                 />
               </div>
-              <div className="flex items-center">
-                <label htmlFor="files" className="text-gray-600">
+              <div className="flex flex-col items-start">
+                <label htmlFor="files" className="text-gray-800 font-semibold">
                   Attach Files
                 </label>
+                <p>
+                  Provide files to make your bid standout, attach previous
+                  projects done, CV, or any other supporting document
+                </p>
                 <input
                   type="file"
                   id="files"
@@ -248,30 +269,40 @@ const JobPage = () => {
                 />
               </div>
               {message && <span className="text-green-500">{message}</span>}
-              <div className="flex gap-3">
-                <button
-                  type="submit"
-                  className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
-                    isBidding ? "cursor-not-allowed opacity-50" : ""
-                  }`}
-                  disabled={isBidding || (hasPlacedBid && !isEditing)}
-                >
-                  {hasPlacedBid
-                    ? isEditing
-                      ? "Save Changes"
-                      : "Bid Placed"
-                    : isBidding
-                    ? "Placing Bid..."
-                    : "Place Bid"}
-                </button>
-                {hasPlacedBid && !isEditing && (
+              <div className="flex justify-between">
+                <div className="flex justify-start space-x-5">
                   <button
-                    onClick={() => setIsEditing(true)}
-                    className="py-2 px-4 bg-blue-200 w-40 mt-4 rounded-md hover:bg-blue-400"
+                    type="submit"
+                    className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
+                      isBidding ? "cursor-not-allowed opacity-50" : ""
+                    }`}
+                    disabled={isBidding || (hasPlacedBid && !isEditing)}
                   >
-                    Edit Bid
+                    {hasPlacedBid
+                      ? isEditing
+                        ? "Save Changes"
+                        : "Bid Placed"
+                      : isBidding
+                      ? "Placing Bid..."
+                      : "Place Bid"}
                   </button>
-                )}
+                  {hasPlacedBid && !isEditing && (
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="py-2 px-4 bg-blue-200 w-40 mt-4 rounded-md hover:bg-blue-400"
+                    >
+                      Edit Bid
+                    </button>
+                  )}
+                </div>
+                <span
+                  className="rounded-md mt-4 w-40 cursor-pointer"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  <span className="px-4 py-2 rounded-md w-40 bg-blue-300 hover:bg-blue-600">
+                    Go Back
+                  </span>
+                </span>
               </div>
             </div>
           </form>

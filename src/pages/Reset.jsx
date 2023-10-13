@@ -6,18 +6,26 @@ import { FaUserShield } from "react-icons/fa";
 const Reset = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [success, setSucess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+      setMessage("");
       const response = await axios.post(
         "https://auth-server-0bsp.onrender.com/api/v1/reset",
         { email }
       );
-      setMessage(response.data.message);
+      setSucess(true);
+      setLoading(false);
+      console.log(response);
     } catch (error) {
       setMessage("User Not Found");
+      setSucess(false);
+      setLoading(false);
     }
   };
 
@@ -43,14 +51,21 @@ const Reset = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <p className="py-2 my-2">{message}</p>
+          <p className=" text-red-600">{message}</p>
+          {success && (
+            <p className=" text-green-600">
+              Check your email for the reset link
+            </p>
+          )}
           <div className="w-full text-center grid place-items-center mt-2 pt-2">
             <button
               type="submit"
               className="bg-white w-full flex justify-center items-center text-blue-500 py-2 px-6 rounded-full text-lg md:text-xl font-semibold hover:bg-blue-600 hover:text-white focus:ring-2 focus:ring-blue-500 transition duration-300"
             >
               <span className="flex text-center">
-                <span className="items-center">Reset Password</span>
+                <span className="items-center">
+                  {loading ? "Please Wait" : "Reset Password"}
+                </span>
               </span>
             </button>
           </div>

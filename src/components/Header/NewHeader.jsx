@@ -13,8 +13,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [scrolling, setScrolling] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [notification, setNotification] = useState(false);
+  const [open, setOpen] = useState(false); //To control the dropwdon list for profile
+  const [notification, setNotification] = useState(false); // to control the notification modal
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -128,9 +128,22 @@ const Header = () => {
                     >
                       <div className="py-2 px-4 w-full h-full">
                         <div className="py-1 px-1">
-                          <h2 className="font-semibold text-center">
-                            Notifications
-                          </h2>
+                          <div className="flex justify-between px-2">
+                            <h2 className="font-semibold text-center">
+                              Notifications
+                            </h2>
+                            <p className="cursor-pointer flex justify-between">
+                              <span className="grid place-items-center">
+                                Close
+                              </span>
+                              <span className="text-center mt-1">
+                                <FaTimes
+                                  size={16}
+                                  className="text-center ml-1"
+                                />
+                              </span>
+                            </p>
+                          </div>
                           <hr className="my-2" />
                           <span className="text-center font-light italic my-2">
                             No notifications at the moment
