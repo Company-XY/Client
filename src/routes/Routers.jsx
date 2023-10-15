@@ -21,6 +21,7 @@ import Profile2 from "../pages/Dashboard/Freelancer/Profile/getProfile";
 import Withdraw from "../pages/Dashboard/Freelancer/Dashboard/withdraw";
 import UpdateProfile from "../pages/Dashboard/Client/Profile/updateProfile";
 import ProfileUpdate from "../pages/Dashboard/Freelancer/Profile/profileUpdate";
+import FreelancerProfilePage from "../pages/Dashboard/Freelancer/Profile/profile/index";
 
 function Routers() {
   return (
@@ -42,6 +43,7 @@ function Routers() {
       <Route path="/dashboard/job/:jobId" element={<JobPage2 />} />
       <Route path="/dashboard/client/job/:jobId" element={<JobPage />} />
       <Route path="/dashboard/freelancer/profile/:id" element={<Profile2 />} />
+      <Route path="/freelancer/:id" element={<FreelancerProfilePage />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/reset" element={<Reset />} />
       <Route path="/password/:token" element={<Password />} />

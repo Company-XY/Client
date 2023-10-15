@@ -96,6 +96,14 @@ const Header = () => {
                   >
                     Resource Center
                   </RouterLink>
+                  {user.role === "Freelancer" ? (
+                    <RouterLink
+                      to={`/freelancer/${user._id}`}
+                      className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
+                    >
+                      Profile
+                    </RouterLink>
+                  ) : null}
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <div className="relative ml-5">
