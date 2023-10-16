@@ -30,7 +30,6 @@ const UpdateProfile = () => {
       paymentRate,
       experience,
       tasks,
-      skills,
       availability,
       contactInfo,
     };
@@ -226,31 +225,6 @@ const UpdateProfile = () => {
               <option>Event Planning and Promotion</option>
             </select>
           </label>
-          <label htmlFor="skills" className="block py-2">
-            <span className="font-semibold">Skills:</span>
-            <p className="font-normal">
-              What skills do you possess as a virtual assistant?
-            </p>
-            <select
-              id="skills"
-              name="skills"
-              required
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-              className="block w-full p-2 border border-gray-300 rounded-md"
-            >
-              <option>Skill 1</option>
-              <option>Skill 2</option>
-              <option>Skill 3</option>
-              <option>Skill 4</option>
-              <option>Skill 5</option>
-              <option>Skill 6</option>
-              <option>Skill 7</option>
-              <option>Skill 8</option>
-              <option>Skill 9</option>
-              <option>Skill 10</option>
-            </select>
-          </label>
           <label htmlFor="availability" className="block py-2">
             <span className="font-semibold">Availability:</span>
             <p className="font-normal">
@@ -284,20 +258,6 @@ const UpdateProfile = () => {
               required
               value={contactInfo}
               onChange={(e) => setContactInfo(e.target.value)}
-              className="block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </label>
-          <label htmlFor="sampleWork" className="block py-2">
-            <span className="font-semibold">Sample Work:</span>
-            <p className="font-normal">
-              Upload up to 5 samples of your previous work
-            </p>
-            <input
-              type="file"
-              id="sampleWork"
-              name="sampleWork"
-              multiple
-              onChange={(e) => setSampleWorkFiles([...e.target.files])}
               className="block w-full p-2 border border-gray-300 rounded-md"
             />
           </label>
