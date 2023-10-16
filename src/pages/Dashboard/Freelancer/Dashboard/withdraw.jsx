@@ -69,24 +69,19 @@ const Withdraw = () => {
     }
   };
 
-  const handleGoBack = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
-  };
-
   return (
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
       <span
         className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600">
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
           Go Back
         </span>
       </span>
       <div className="bg-white rounded-lg w-2/3 shadow-md py-4 my-2 px-2">
         <h2 className="text-2xl text-blue-600 mb-4 text-center">
-          Withdraw to your Mpesa
+          Get Paid to your Mpesa
         </h2>
         <div className="bg-blue-200 rounded-lg h-20 grid place-items-center my-2 cursor-pointer">
           <p className="font-semibold text-xl">

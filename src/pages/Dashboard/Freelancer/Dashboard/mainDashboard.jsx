@@ -204,7 +204,7 @@ const MainDashboard = () => {
           <div className="flex justify-center my-4 space-x-4">
             <button
               className={`${
-                activeTab === "all" ? "bg-blue-500" : "bg-gray-300"
+                activeTab === "all" ? "bg-blue-700 text-white" : "bg-gray-300"
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("all")}
             >
@@ -212,7 +212,9 @@ const MainDashboard = () => {
             </button>
             <button
               className={`${
-                activeTab === "mybids" ? "bg-blue-500" : "bg-gray-300"
+                activeTab === "mybids"
+                  ? "bg-blue-700 text-white"
+                  : "bg-gray-300"
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("mybids")}
             >
@@ -220,7 +222,9 @@ const MainDashboard = () => {
             </button>
             <button
               className={`${
-                activeTab === "activeBids" ? "bg-blue-500" : "bg-gray-300"
+                activeTab === "activeBids"
+                  ? "bg-blue-700 text-white"
+                  : "bg-gray-300"
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("activeBids")}
             >
@@ -228,7 +232,9 @@ const MainDashboard = () => {
             </button>
             <button
               className={`${
-                activeTab === "completedJobs" ? "bg-blue-500" : "bg-gray-300"
+                activeTab === "completedJobs"
+                  ? "bg-blue-700 text-white"
+                  : "bg-gray-300"
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("completedJobs")}
             >

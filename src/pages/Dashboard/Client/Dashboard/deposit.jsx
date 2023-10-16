@@ -52,18 +52,15 @@ const Deposit = () => {
     }
   };
 
-  const handleGoBack = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
-  };
-
   return (
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
       <span
-        className="py-2 hover:underline hover:font-semibold cursor-pointer"
-        onClick={handleGoBack}
+        className="font-semibold cursor-pointer py-2 my-6"
+        onClick={() => navigate("/dashboard")}
       >
-        Go Back
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+          Go Back
+        </span>
       </span>
       <div className="bg-white rounded-lg w-2/3 shadow-md py-4 my-2 px-2">
         <h2 className="text-2xl text-blue-600 mb-4 text-center">
