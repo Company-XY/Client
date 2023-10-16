@@ -4,7 +4,7 @@ const skills = () => {
   return (
     <>
       <main className="bg-blue-100 rounded-md p-2">
-        <h2 className="font-semibold">Certifications</h2>
+        <h2 className="font-semibold">Skills</h2>
         <hr className="border-t-2 border-blue-700" />
         <section className="w-full h-52 flex flex-col justify-between">
           <div className="text-center pt-4">

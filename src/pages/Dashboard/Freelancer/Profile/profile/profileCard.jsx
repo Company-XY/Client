@@ -77,11 +77,11 @@ const profileCard = () => {
 
   return (
     <>
-      <main className="w-full bg-blue-100 rounded-md">
+      <main className="w-full bg-blue-100 rounded-md h-80">
         <section className="flex">
           <div className="basis-1/3">
             <div className="w-full">
-              <IoPersonSharp className="w-24 h-24 rounded-full mx-auto" />
+              <IoPersonSharp className="w-36 h-40 rounded-full mx-auto" />
               <h2 className="text-xl font-bold text-center">Name</h2>
               <p className="text-gray-600 text-center">Email</p>
             </div>

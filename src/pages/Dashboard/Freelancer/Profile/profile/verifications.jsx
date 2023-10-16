@@ -3,6 +3,7 @@ import { IoPersonSharp, IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { BsFillPatchCheckFill } from "react-icons/bs";
+import axios from "axios";
 
 const verifications = () => {
   const [userData, setUserData] = useState(null);
