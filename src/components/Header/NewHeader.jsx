@@ -268,6 +268,14 @@ const Header = () => {
                 >
                   Resource Center
                 </RouterLink>
+                {user.role === "Freelancer" ? (
+                  <RouterLink
+                    to={`/freelancer/${user._id}`}
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
+                  >
+                    Profile
+                  </RouterLink>
+                ) : null}
                 <span>
                   <DarkModeToggle />
                 </span>
@@ -280,7 +288,10 @@ const Header = () => {
           {" "}
           <nav className="bg-gray-100">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="relative flex items-center justify-between h-16">
+              <div
+                onClick={toggleMobileMenu}
+                className="relative flex items-center justify-between h-16"
+              >
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   <button
                     type="button"
