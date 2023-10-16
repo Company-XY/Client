@@ -75,7 +75,40 @@ const profileCard = () => {
     }
   }, [userId, token]);
 
-  return <main>Profile Card</main>;
+  return (
+    <>
+      <main className="w-full bg-blue-100 rounded-md">
+        <section className="flex">
+          <div className="basis-1/3">
+            <div className="w-full">
+              <IoPersonSharp className="w-24 h-24 rounded-full mx-auto" />
+              <h2 className="text-xl font-bold text-center">Name</h2>
+              <p className="text-gray-600 text-center">Email</p>
+            </div>
+          </div>
+          <div className="basis-1/3 pt-8">
+            <p className="text-gray-600 ">Phone Number</p>
+            <p className="text-gray-600 ">Location</p>
+            <p className="text-gray-600 ">
+              Joined: {calculateMemberDuration()}
+            </p>
+            <p className="text-gray-700 ">
+              Balance: <span className="font-semibold">Ksh.0</span>
+            </p>
+            <div className="">
+              <span className="text-gray-500">Rating: </span>
+            </div>
+          </div>
+          <div className="basis-1/3 pt-8">
+            <p>Jobs Completed</p>
+            <p>Jobs Disputed</p>
+            <p>Jobs Declined</p>
+            <p>Total Jobs</p>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 };
 
 export default profileCard;

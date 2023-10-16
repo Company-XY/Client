@@ -40,7 +40,7 @@ const verifications = () => {
     <main className="bg-blue-100 rounded-md p-2">
       <h2 className="font-semibold">Verifications</h2>
       <hr className="border-t-2 border-blue-700" />
-      <div className="p-1">
+      <div className="p-1 h-40">
         <div className="py-1 flex justify-between">
           <span className="flex space-x-2">
             <span className="grid place-items-center">
