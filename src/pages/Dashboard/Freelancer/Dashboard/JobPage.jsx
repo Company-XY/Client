@@ -141,7 +141,7 @@ const JobPage = () => {
         className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600">
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
           Go Back
         </span>
       </span>
@@ -273,7 +273,7 @@ const JobPage = () => {
                 <div className="flex justify-start space-x-5">
                   <button
                     type="submit"
-                    className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 hover:bg-blue-600 ${
+                    className={`bg-blue-500 text-white p-2 rounded-md mt-4 w-40 items-center hover:bg-blue-600 ${
                       isBidding ? "cursor-not-allowed opacity-50" : ""
                     }`}
                     disabled={isBidding || (hasPlacedBid && !isEditing)}
@@ -295,14 +295,12 @@ const JobPage = () => {
                     </button>
                   )}
                 </div>
-                <span
-                  className="rounded-md mt-4 w-40 cursor-pointer"
+                <button
+                  className="bg-blue-300 font-semibold hover:text-white p-2 rounded-md mt-4 w-40 items-center hover:bg-blue-600"
                   onClick={() => navigate("/dashboard")}
                 >
-                  <span className="px-4 py-2 rounded-md w-40 bg-blue-300 hover:bg-blue-600">
-                    Go Back
-                  </span>
-                </span>
+                  Go Back
+                </button>
               </div>
             </div>
           </form>

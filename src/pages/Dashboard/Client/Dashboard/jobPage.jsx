@@ -110,10 +110,12 @@ const JobPage = () => {
   return (
     <div className="py-4 mt-14 max-w-5xl mx-auto">
       <span
-        className="underline font-semibold cursor-pointer py-2 my-6"
+        className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        Go Back
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+          Go Back
+        </span>
       </span>
       <hr className="my-4" />
       <h2 className="text-2xl font-semibold mb-2 py-2 text-center">

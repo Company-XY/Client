@@ -53,15 +53,17 @@ const Call = () => {
 
   return (
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
+      <span
+        className="font-semibold cursor-pointer py-2 my-6"
+        onClick={() => navigate("/dashboard")}
+      >
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+          Go Back
+        </span>
+      </span>
       <h2 className="text-3xl font-semibold mb-4 mx-auto text-center">
         Fill In Details To Get Guidance
       </h2>
-      <span
-        className="underline font-semibold cursor-pointer py-2 my-2"
-        onClick={handleGoBack}
-      >
-        Go Back
-      </span>
       <form
         onSubmit={handleSubmit}
         className="py-4 px-4 w-full bg-white rounded-lg my-2 shadow-md"

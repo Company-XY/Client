@@ -101,15 +101,17 @@ const PostProject = () => {
 
   return (
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
+      <span
+        className="font-semibold cursor-pointer py-2 my-6"
+        onClick={() => navigate("/dashboard")}
+      >
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+          Go Back
+        </span>
+      </span>
       <h1 className="font-semibold text-2xl text-center py-2">
         Post a Project
       </h1>
-      <span
-        className="py-2 my-1 hover:underline hover:font-semibold cursor-pointer"
-        onClick={() => navigate("/dashboard")}
-      >
-        Go Back
-      </span>
       <div className="h-fit w-full border-2 rounded-lg">
         <form onSubmit={handleSubmit} className="py-4 px-4 w-full">
           <div className="flex flex-col mb-4">

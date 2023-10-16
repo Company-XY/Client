@@ -198,7 +198,7 @@ const UpdateProfile = () => {
                 <p>Update successful</p>
               </div>
             )}
-            <div className="flex justify-between px-2">
+            <div className="flex justify-evenly px-2">
               <button
                 type="submit"
                 className="bg-blue-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"

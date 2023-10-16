@@ -9,9 +9,7 @@ const bookConsultation = () => {
   const handleCall = () => {
     navigate("/dashboard/client/book/call");
   };
-  const handleGoBack = () => {
-    navigate("/dashboard");
-  };
+
   return (
     <div className="mt-14 grid place-items-center">
       <div className="mt-24 h-[80vh] w-2/3">
@@ -38,12 +36,14 @@ const bookConsultation = () => {
             Book a Call
           </button>
         </section>
-        <p
-          onClick={handleGoBack}
-          className="font-semibold hover:underline cursor-pointer"
+        <span
+          className="font-semibold cursor-pointer py-2 my-6"
+          onClick={() => navigate("/dashboard")}
         >
-          Go Back
-        </p>
+          <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+            Go Back
+          </span>
+        </span>
       </div>
     </div>
   );

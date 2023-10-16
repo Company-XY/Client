@@ -82,7 +82,7 @@ const UserJobs = () => {
           <div className="flex space-x-6 py-2 my-1 text-center">
             <button
               className={`border p-2 rounded-lg ${
-                activeButton === "Pending" ? "bg-blue-700" : ""
+                activeButton === "Pending" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("Pending")}
             >
@@ -90,7 +90,7 @@ const UserJobs = () => {
             </button>
             <button
               className={`border p-2 rounded-lg ${
-                activeButton === "InProgress" ? "bg-blue-700" : ""
+                activeButton === "InProgress" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("InProgress")}
             >
@@ -98,7 +98,7 @@ const UserJobs = () => {
             </button>
             <button
               className={`border p-2 rounded-lg ${
-                activeButton === "UnderReview" ? "bg-blue-700" : ""
+                activeButton === "UnderReview" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("UnderReview")}
             >
@@ -106,7 +106,7 @@ const UserJobs = () => {
             </button>
             <button
               className={`border p-2 rounded-lg ${
-                activeButton === "Completed" ? "bg-blue-700" : ""
+                activeButton === "Completed" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("Completed")}
             >
