@@ -4,8 +4,10 @@ import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { BsFillPatchCheckFill } from "react-icons/bs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const verifications = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   const userObjectString = localStorage.getItem("user");
@@ -38,7 +40,7 @@ const verifications = () => {
   }, [userId]);
 
   return (
-    <main className="bg-blue-100 rounded-md p-2 mr-4">
+    <main className="bg-blue-100 rounded-md p-2">
       <h2 className="font-semibold">Verifications</h2>
       <hr className="border-t-2 border-blue-700" />
       <div className="p-1 h-40">
@@ -67,12 +69,17 @@ const verifications = () => {
             </span>
             <span>Email Address</span>
           </span>
-          {userData?.emailVerified ? ( 
+          {userData?.emailVerified ? (
             <span className="hover:text-blue-500 cursor-pointer">
               <BsFillPatchCheckFill size={22} className="text-green-700" />
             </span>
           ) : (
-            <span className="hover:text-blue-700 cursor-pointer">Verify</span>
+            <span
+              onClick={() => navigate("/verify/email")}
+              className="hover:text-blue-700 cursor-pointer"
+            >
+              Verify
+            </span>
           )}
         </div>
         <div className="py-1 flex justify-between">
@@ -82,9 +89,18 @@ const verifications = () => {
             </span>
             <span>Phone Number</span>
           </span>
-          <span className="hover:text-blue-500 cursor-pointer">
-            <BsFillPatchCheckFill size={22} className="text-green-700" />
-          </span>
+          {userData?.phoneVerified ? (
+            <span className="hover:text-blue-500 cursor-pointer">
+              <BsFillPatchCheckFill size={22} className="text-green-700" />
+            </span>
+          ) : (
+            <span
+              onClick={() => navigate("/verify/phone")}
+              className="hover:text-blue-700 cursor-pointer"
+            >
+              Verify
+            </span>
+          )}
         </div>
       </div>
     </main>
