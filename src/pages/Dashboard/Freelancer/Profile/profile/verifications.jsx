@@ -12,8 +12,8 @@ const verifications = () => {
 
   const userObject = JSON.parse(userObjectString);
 
-  const userId = userObject._id;
-  const token = userObject.token;
+  const userId = userObject?._id;
+  const token = userObject?.token;
 
   const fetchUserData = async () => {
     try {
@@ -67,7 +67,13 @@ const verifications = () => {
             </span>
             <span>Email Address</span>
           </span>
-          <span className="hover:text-blue-700 cursor-pointer">Verify</span>
+          {userData?.emailVerified ? ( 
+            <span className="hover:text-blue-500 cursor-pointer">
+              <BsFillPatchCheckFill size={22} className="text-green-700" />
+            </span>
+          ) : (
+            <span className="hover:text-blue-700 cursor-pointer">Verify</span>
+          )}
         </div>
         <div className="py-1 flex justify-between">
           <span className="flex space-x-2">
