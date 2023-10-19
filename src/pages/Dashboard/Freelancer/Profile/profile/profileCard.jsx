@@ -77,7 +77,7 @@ const profileCard = () => {
 
   return (
     <>
-      <main className="w-full bg-blue-100 rounded-md h-80">
+      <main className="bg-blue-100 rounded-md h-80 ml-8">
         <section className="flex">
           <div className="basis-1/3">
             <div className="w-full">

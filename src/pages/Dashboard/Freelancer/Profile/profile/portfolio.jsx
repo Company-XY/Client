@@ -3,7 +3,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 const portfolio = () => {
   return (
     <>
-      <main className="bg-blue-100 rounded-md p-2">
+      <main className="bg-blue-100 rounded-md p-2 ml-8">
         <h2 className="flex justify-between px-4 my-1">
           <span className="font-semibold text-center text-lg">
             Portfolio Items
