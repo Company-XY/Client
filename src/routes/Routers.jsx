@@ -22,6 +22,8 @@ import Withdraw from "../pages/Dashboard/Freelancer/Dashboard/withdraw";
 import UpdateProfile from "../pages/Dashboard/Client/Profile/updateProfile";
 import ProfileUpdate from "../pages/Dashboard/Freelancer/Profile/profileUpdate";
 import FreelancerProfilePage from "../pages/Dashboard/Freelancer/Profile/profile/index";
+import VerifyEmail from "../pages/Dashboard/Freelancer/Profile/profile/verifyEmail";
+import VerifyPhone from "../pages/Dashboard/Freelancer/Profile/profile/verifyPhone";
 
 function Routers() {
   return (
@@ -49,6 +51,8 @@ function Routers() {
       <Route path="/password/:token" element={<Password />} />
       <Route path="/deposit" element={<Deposit />} />
       <Route path="/withdraw" element={<Withdraw />} />
+      <Route path="/verify/email" element={<VerifyEmail />} />
+      <Route path="/verify/phone" element={<VerifyPhone />} />
     </Routes>
   );
 }

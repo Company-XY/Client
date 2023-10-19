@@ -6,7 +6,7 @@ import Certification from "./certifications";
 
 const index = () => {
   return (
-    <main className="mx-auto max-w-auto mt-20 flex flex-col sm:flex-row space-x-10">
+    <main className="mx-auto max-w-6xl mt-20 flex flex-col sm:flex-row space-x-10">
       <section className="basis-2/3 flex flex-col space-y-4 mr-4 mt-4">
         <div>
           <Profile />
