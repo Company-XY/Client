@@ -4,6 +4,8 @@ import Skills from "./skills";
 import Portfolio from "./portfolio";
 import Certification from "./certifications";
 
+
+//max width to be updated to auto
 const index = () => {
   return (
     <main className="mx-auto max-w-6xl mt-20 flex flex-col sm:flex-row space-x-10">
