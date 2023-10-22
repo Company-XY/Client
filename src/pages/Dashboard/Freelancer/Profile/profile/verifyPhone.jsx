@@ -38,15 +38,15 @@ const VerifyPhone = () => {
   }, []);
 
   const handleRequest = () => {
-    const phone = userData?.phone;
+    const phoneNumber = userData?.phone;
     const userObject = JSON.parse(localStorage.getItem("user"));
     const token = userObject?.token;
 
     setLoading(true);
     axios
       .post(
-        "https://assist-api-okgk.onrender.com/api/v1/verify/email",
-        { phone },
+        "https://assist-api-okgk.onrender.com/api/v1/verify/phone",
+        { phoneNumber },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const VerifyPhone = () => {
 
   const handleVerify = (e) => {
     e.preventDefault();
-    const phone = userData?.phone;
+    const phoneNumber = userData?.phone;
     const userObject = JSON.parse(localStorage.getItem("user"));
     const token = userObject?.token;
 
@@ -71,8 +71,8 @@ const VerifyPhone = () => {
 
     axios
       .post(
-        "https://assist-api-okgk.onrender.com/api/v1/verify/email/code",
-        { phone, code },
+        "https://assist-api-okgk.onrender.com/api/v1/verify/phone/code",
+        { phoneNumber, code },
         {
           headers: {
             Authorization: `Bearer ${token}`,
