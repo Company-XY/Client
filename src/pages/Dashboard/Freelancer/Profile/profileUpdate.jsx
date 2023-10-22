@@ -18,6 +18,7 @@ const UpdateProfile = () => {
   const [isApprovedUpdated, setIsApprovedUpdated] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +36,7 @@ const UpdateProfile = () => {
     };
 
     setLoading(true);
+    setError(null);
 
     try {
       const userString = localStorage.getItem("user");
@@ -50,13 +52,16 @@ const UpdateProfile = () => {
             },
           }
         );
-        console.log("Profile updated successfully:", response.data);
         setIsSuccess(true);
         setLoading(false);
       }
     } catch (error) {
-      console.error("Failed to update profile:", error);
       setLoading(false);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError(error.message);
+      }
     }
   };
 
@@ -266,6 +271,12 @@ const UpdateProfile = () => {
               <p>Update successful</p>
             </div>
           )}
+          {error && (
+            <div className="text-red-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
+              <p>{error}</p>
+            </div>
+          )}
+
           <div className="flex justify-between px-2">
             <button
               type="submit"

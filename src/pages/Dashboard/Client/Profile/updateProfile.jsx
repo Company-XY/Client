@@ -11,12 +11,14 @@ const UpdateProfile = () => {
   const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const userString = localStorage.getItem("user");
     setLoading(true);
+    setError(null);
     if (userString) {
       const { _id, token } = JSON.parse(userString);
 
@@ -39,13 +41,16 @@ const UpdateProfile = () => {
           }
         )
         .then((response) => {
-          console.log("Profile updated successfully:", response.data);
           setIsSuccess(true);
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Failed to update profile:", error);
           setLoading(false);
+          if (error.response) {
+            setError(error.response.data.message);
+          } else {
+            setError(error.message);
+          }
         });
     }
   };
@@ -196,6 +201,11 @@ const UpdateProfile = () => {
             {isSuccess && (
               <div className="text-green-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
                 <p>Update successful</p>
+              </div>
+            )}
+            {error && (
+              <div className="text-red-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
+                <p>{error}</p>
               </div>
             )}
             <div className="flex justify-evenly px-2">
