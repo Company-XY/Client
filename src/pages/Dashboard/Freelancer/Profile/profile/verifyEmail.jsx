@@ -47,6 +47,7 @@ const VerifyEmail = () => {
     const token = userObject?.token;
 
     setLoading(true);
+    setIsLoading(true);
     axios
       .post(
         "https://assist-api-okgk.onrender.com/api/v1/verify/email",
@@ -59,9 +60,11 @@ const VerifyEmail = () => {
       )
       .then(() => {
         setCodeSent(true);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to send the verification code:", error);
+        setIsLoading(false);
       });
   };
 
@@ -72,7 +75,7 @@ const VerifyEmail = () => {
     const token = userObject?.token;
 
     setVerificationError(null);
-
+    setIsLoading(true);
     axios
       .post(
         "https://assist-api-okgk.onrender.com/api/v1/verify/email/code",
@@ -85,16 +88,28 @@ const VerifyEmail = () => {
       )
       .then(() => {
         setSuccess(true);
+        setIsLoading(false);
       })
       .catch((error) => {
         setVerificationError("Invalid code. Please try again.");
         console.error("Failed to verify the code:", error);
+        setIsLoading(false);
       });
   };
 
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <section className="w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 border-2 rounded-lg py-4 px-6 bg-white">
+        <div className="text-center my-4 py-2">
+          <span
+            className="font-semibold cursor-pointer py-2 my-6"
+            onClick={() => navigate(`/freelancer/${userId}`)}
+          >
+            <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+              Go Back
+            </span>
+          </span>
+        </div>
         <main className="px-5">
           <h2 className="font-semibold text-2xl text-gray-700 mb-2 text-center">
             Email Verification
@@ -161,7 +176,7 @@ const VerifyEmail = () => {
                         onClick={handleRequest}
                         className="bg-blue-700 text-white py-2 px-4 rounded-md hover-bg-blue-200"
                       >
-                        Request Code
+                        {isLoading ? "Please Wait" : "Request Code"}
                       </button>
                     </div>
                   </div>
