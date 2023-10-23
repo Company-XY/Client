@@ -7,6 +7,7 @@ const VerifyEmail = () => {
   const [codeSent, setCodeSent] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
   const [verificationError, setVerificationError] = useState(null);
   const userObjectString = localStorage.getItem("user");
@@ -19,6 +20,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
           {
@@ -29,8 +31,10 @@ const VerifyEmail = () => {
         );
 
         setUserData(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
+        setIsLoading(false);
       }
     };
 
@@ -137,7 +141,7 @@ const VerifyEmail = () => {
                           onClick={handleVerify}
                           className="bg-blue-700 text-white py-2 px-4 rounded-md hover-bg-blue-200"
                         >
-                          Verify Email
+                          {isLoading ? "Please Wait" : "Verify Email"}
                         </button>
                       </div>
                     </form>
