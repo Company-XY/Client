@@ -18,6 +18,7 @@ const UpdateProfile = () => {
   const [isApprovedUpdated, setIsApprovedUpdated] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -67,7 +68,7 @@ const UpdateProfile = () => {
 
   const updateIsApproved = async () => {
     try {
-      setLoading(false);
+      setIsLoading(true);
       const userString = localStorage.getItem("user");
       if (userString) {
         const { _id, token } = JSON.parse(userString);
@@ -82,13 +83,15 @@ const UpdateProfile = () => {
         );
         console.log("isApproved status updated successfully:", response);
         setIsSuccess(true);
-        setLoading(false);
+        setIsLoading(false);
         handleReload();
       } else {
         console.error("User data not found in localStorage");
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Failed to update isApproved status:", error);
+      setIsLoading(false);
     }
   };
 
@@ -293,7 +296,7 @@ const UpdateProfile = () => {
                 onClick={updateIsApproved}
                 className="bg-green-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
               >
-                Proceed
+                {isLoading ? "Please Wait" : "Proceed"}
               </button>
             )}
           </div>
