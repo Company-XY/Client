@@ -30,7 +30,6 @@ const CreateProfile = () => {
       formData.append("contactInfo", contactInfo);
       formData.append("paymentMethod", paymentMethod);
 
-
       axios
         .patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
@@ -64,8 +63,7 @@ const CreateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          { isApproved: true },
+          `https://assist-api-okgk.onrender.com/api/v1/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import Avatar from "../../../../assets/feature-1.jpg";
 import axios from "axios";
-import { IoPersonSharp, IoLocation } from "react-icons/io5";
+import { IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 
@@ -81,10 +80,13 @@ const Profile = () => {
       {userData ? (
         <div className="w-full basis-1/3">
           <div className="w-52 mx-auto">
-            <IoPersonSharp
-              size={100}
-              className="h-40 w-full object-cover rounded-full"
-            />
+            <div className="w-3/4 h-3/4 relative">
+              <img
+                className="w-36 h-36 rounded-full"
+                src={userData.avatar.imageUrl}
+                alt="Profile"
+              />
+            </div>
           </div>
           <div className="text-center md:text-center mt-4">
             <h2 className="flex flex-row justify-center space-x-2">
