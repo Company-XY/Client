@@ -81,7 +81,13 @@ const Profile = () => {
       {userData ? (
         <div className="mt-20 py-4 w-full h-fit">
           <div className="w-full">
-            <IoPersonSharp className="w-24 h-24 rounded-full mx-auto mb-4" />
+            <div>
+              <img
+                className="w-24 h-24 rounded-full mx-auto mb-4"
+                src={userData.avatar.imageUrl}
+                alt="Profile"
+              />
+            </div>
             <h2 className="text-xl font-bold text-center">{userData.name}</h2>
             <p className="text-gray-600 text-center mb-2">{userData.email}</p>
             <p className="text-gray-600 text-center mb-2">{userData.phone}</p>

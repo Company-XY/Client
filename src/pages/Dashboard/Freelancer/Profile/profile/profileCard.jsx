@@ -4,13 +4,11 @@ import { IoPersonSharp, IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 
-const profileCard = () => {
+const ProfileCard = () => {
   const [userData, setUserData] = useState(null);
 
   const userObjectString = localStorage.getItem("user");
-
   const userObject = JSON.parse(userObjectString);
-
   const userId = userObject._id;
   const token = userObject.token;
 
@@ -76,39 +74,56 @@ const profileCard = () => {
   }, [userId, token]);
 
   return (
-    <>
-      <main className="bg-blue-100 rounded-md h-80 ml-8">
+    <main className="bg-blue-100 rounded-md h-80 ml-8 p-4">
+      {userData ? (
         <section className="flex">
-          <div className="basis-1/3">
-            <div className="w-full">
-              <IoPersonSharp className="w-36 h-40 rounded-full mx-auto" />
-              <h2 className="text-xl font-bold text-center">Name</h2>
-              <p className="text-gray-600 text-center">Email</p>
+          <div className="w-1/3 flex flex-col items-center">
+            <div className="w-3/4 h-3/4 relative">
+              <img
+                className="w-36 h-36 rounded-full"
+                src={userData.avatar.imageUrl}
+                alt="Profile"
+              />
             </div>
+
+            <h2 className="text-xl font-bold mt-2">{userData.name}</h2>
           </div>
-          <div className="basis-1/3 pt-8">
-            <p className="text-gray-600 ">Phone Number</p>
-            <p className="text-gray-600 ">Location</p>
-            <p className="text-gray-600 ">
-              Joined: {calculateMemberDuration()}
+          <div className="w-2/3 p-4">
+            <div className="mb-4">
+              <div className="flex items-center">
+                <AiOutlineMail className="mr-2" />
+                <p className="text-gray-600">{userData.email}</p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex items-center">
+                <AiFillPhone className="mr-2" />
+                <p className="text-gray-600">{userData.phone}</p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex items-center">
+                <IoLocation className="mr-2" />
+                <p className="text-gray-600">{userData.location}</p>
+              </div>
+            </div>
+            <p className="text-gray-600">Joined: {calculateMemberDuration()}</p>
+            <p className="text-gray-700">
+              Balance:{" "}
+              <span className="font-semibold">
+                Ksh. {userData.accountBalance}
+              </span>
             </p>
-            <p className="text-gray-700 ">
-              Balance: <span className="font-semibold">Ksh.0</span>
-            </p>
-            <div className="">
+            <div className="mt-4">
               <span className="text-gray-500">Rating: </span>
             </div>
           </div>
-          <div className="basis-1/3 pt-8">
-            <p>Jobs Completed</p>
-            <p>Jobs Disputed</p>
-            <p>Jobs Declined</p>
-            <p>Total Jobs</p>
-          </div>
         </section>
-      </main>
-    </>
+      ) : (
+        <span>Loading</span>
+      )}
+    </main>
   );
 };
 
-export default profileCard;
+export default ProfileCard;
