@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const UpdateProfile = () => {
+const CreateProfile = () => {
   const [phone, setPhone] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
   const [location, setLocation] = useState("");
@@ -29,6 +29,7 @@ const UpdateProfile = () => {
       formData.append("bio", bio);
       formData.append("contactInfo", contactInfo);
       formData.append("paymentMethod", paymentMethod);
+
 
       axios
         .patch(
@@ -93,10 +94,11 @@ const UpdateProfile = () => {
     <div className="mx-auto max-w-3xl p-4 mt-14">
       <div className="w-full max-w-screen-md p-4 px-5 sm:px-0">
         <h2 className="text-2xl font-semibold mb-2 text-center">
-          Update Your Client Profile
+          Create Your Client Profile
         </h2>
         <p className="text-center leading-8">
-          Update your profile to attract more and better freelancers
+          To proceed to the dashboard and post projects, you need to create a
+          profile
         </p>
         <div className="bg-white pt-4 rounded shadow-md">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -237,4 +239,4 @@ const UpdateProfile = () => {
   );
 };
 
-export default UpdateProfile;
+export default CreateProfile;

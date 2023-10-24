@@ -194,7 +194,7 @@ const Header = () => {
                     >
                       {user.role === "Client" ? (
                         <RouterLink
-                          to="/client/profile"
+                          to="/client/update_profile"
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
                           tabIndex="-1"
@@ -203,7 +203,7 @@ const Header = () => {
                         </RouterLink>
                       ) : (
                         <RouterLink
-                          to="/freelancer/profile"
+                          to="/freelancer/update_profile"
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
                           tabIndex="-1"

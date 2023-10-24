@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 const UpdateProfile = () => {
@@ -15,7 +14,6 @@ const UpdateProfile = () => {
   const [sampleWorkFiles, setSampleWorkFiles] = useState([]);
   const [availability, setAvailability] = useState("");
   const [contactInfo, setContactInfo] = useState("");
-  const [isApprovedUpdated, setIsApprovedUpdated] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
