@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -24,17 +24,17 @@ const UpdateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = {
-      phone,
-      location,
-      bio,
-      paymentMethod,
-      paymentRate,
-      experience,
-      tasks,
-      availability,
-      contactInfo,
-    };
+    const formData = new FormData();
+    formData.append("phone", phone);
+    formData.append("avatar", avatarFile);
+    formData.append("location", location);
+    formData.append("bio", bio);
+    formData.append("paymentMethod", paymentMethod);
+    formData.append("paymentRate", paymentRate);
+    formData.append("experience", experience);
+    formData.append("tasks", tasks);
+    formData.append("availability", availability);
+    formData.append("contactInfo", contactInfo);
 
     setLoading(true);
     setError(null);
@@ -45,11 +45,11 @@ const UpdateProfile = () => {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          userData,
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
           }
         );
