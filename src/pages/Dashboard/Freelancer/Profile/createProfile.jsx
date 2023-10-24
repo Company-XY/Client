@@ -71,8 +71,7 @@ const CreateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          { isApproved: true },
+          `https://assist-api-okgk.onrender.com/api/v1/profileapproval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
