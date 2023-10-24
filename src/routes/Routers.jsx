@@ -19,8 +19,12 @@ import JobPage2 from "../pages/Dashboard/Freelancer/Dashboard/JobPage";
 import Deposit from "../pages/Dashboard/Client/Dashboard/deposit";
 import Profile2 from "../pages/Dashboard/Freelancer/Profile/getProfile";
 import Withdraw from "../pages/Dashboard/Freelancer/Dashboard/withdraw";
+//Creating Client CreateProfile and Update Profile files
+import CreateProfile from "../pages/Dashboard/Client/Profile/createProfile";
 import UpdateProfile from "../pages/Dashboard/Client/Profile/updateProfile";
-import ProfileUpdate from "../pages/Dashboard/Freelancer/Profile/profileUpdate";
+//Creating Freelancer CreateProfile and UpdateProfile files
+import CreateProfile1 from "../pages/Dashboard/Freelancer/Profile/createProfile";
+import UpdateProfile1 from "../pages/Dashboard/Freelancer/Profile/updateProfile";
 import FreelancerProfilePage from "../pages/Dashboard/Freelancer/Profile/profile/index";
 import VerifyEmail from "../pages/Dashboard/Freelancer/Profile/profile/verifyEmail";
 import VerifyPhone from "../pages/Dashboard/Freelancer/Profile/profile/verifyPhone";
@@ -34,8 +38,10 @@ function Routers() {
       <Route path="/register/client" element={<ClientRegister />} />
       <Route path="/register/freelancer" element={<FreelancerRegister />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/client/profile" element={<UpdateProfile />} />
-      <Route path="/freelancer/profile" element={<ProfileUpdate />} />
+      <Route path="/client/profile" element={<CreateProfile />} />
+      <Route path="/client/update_profile" element={<UpdateProfile />} />
+      <Route path="/freelancer/profile" element={<CreateProfile1 />} />
+      <Route path="/freelancer/update_profile" element={<UpdateProfile1 />} />
       <Route path="/dashboard/admin" element={<Admins />} />
       <Route path="/dashboard/client/post" element={<PostProject />} />
       <Route path="/dashboard/client/book" element={<BookConsultation />} />
