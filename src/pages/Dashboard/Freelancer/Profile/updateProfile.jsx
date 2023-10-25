@@ -24,7 +24,6 @@ const UpdateProfile = () => {
 
     const formData = new FormData();
     formData.append("phone", phone);
-    formData.append("avatar", avatarFile);
     formData.append("location", location);
     formData.append("bio", bio);
     formData.append("paymentMethod", paymentMethod);
@@ -53,6 +52,45 @@ const UpdateProfile = () => {
         );
         setIsSuccess(true);
         setLoading(false);
+        handleAvatarSubmit();
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError(error.message);
+      }
+    }
+  };
+
+  const handleAvatarSubmit = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const formData = new FormData();
+    formData.append("avatar", avatarFile);
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const { _id, token } = JSON.parse(userString);
+        const response = await axios.patch(
+          `https://assist-api-okgk.onrender.com/api/v1/profile/avatar/${_id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json", 
+            },
+          }
+        );
+        setIsSuccess(true);
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
@@ -71,8 +109,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          { isApproved: true },
+          `https://assist-api-okgk.onrender.com/api/v1/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -100,12 +137,9 @@ const UpdateProfile = () => {
   return (
     <div className="mx-auto max-w-3xl p-4 mt-14">
       <h2 className="text-2xl font-semibold mb-4 text-center">
-        Update Your Profile
+        Update Your Freelancer Profile
       </h2>
-      <p className="text-center leading-8">
-        To proceed to the dashboard and bid on projects, you need to create a
-        profile
-      </p>
+      <p className="text-center leading-8">Update your profile</p>
       <div className="bg-white pt-4 rounded shadow">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label htmlFor="phone" className="block py-2">

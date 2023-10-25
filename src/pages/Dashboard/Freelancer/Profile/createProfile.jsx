@@ -24,7 +24,6 @@ const CreateProfile = () => {
 
     const formData = new FormData();
     formData.append("phone", phone);
-    formData.append("avatar", avatarFile);
     formData.append("location", location);
     formData.append("bio", bio);
     formData.append("paymentMethod", paymentMethod);
@@ -47,12 +46,52 @@ const CreateProfile = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json", 
+            },
+          }
+        );
+        setIsSuccess(true);
+        setLoading(false);
+        handleAvatarSubmit();
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError(error.message);
+      }
+    }
+  };
+
+  const handleAvatarSubmit = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const formData = new FormData();
+    formData.append("avatar", avatarFile);
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const { _id, token } = JSON.parse(userString);
+        const response = await axios.patch(
+          `https://assist-api-okgk.onrender.com/api/v1/profile/avatar/${_id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }
         );
         setIsSuccess(true);
         setLoading(false);
+        console.log("Avatar Uploaded Successfully", response.data);
       }
     } catch (error) {
       setLoading(false);
