@@ -22,17 +22,6 @@ const CreateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("phone", phone);
-    formData.append("location", location);
-    formData.append("bio", bio);
-    formData.append("paymentMethod", paymentMethod);
-    formData.append("paymentRate", paymentRate);
-    formData.append("experience", experience);
-    formData.append("tasks", tasks);
-    formData.append("availability", availability);
-    formData.append("contactInfo", contactInfo);
-
     setLoading(true);
     setError(null);
 
@@ -42,15 +31,24 @@ const CreateProfile = () => {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          formData,
+          {
+            phone,
+            location,
+            bio,
+            paymentMethod,
+            paymentRate,
+            experience,
+            tasks,
+            availability,
+            contactInfo,
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json", 
+              "Content-Type": "application/json",
             },
           }
         );
-        setIsSuccess(true);
         setLoading(false);
         handleAvatarSubmit();
       }
@@ -145,7 +143,7 @@ const CreateProfile = () => {
         profile
       </p>
       <div className="bg-white pt-4 rounded shadow">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <form onSubmit={handleSubmit}>
           <label htmlFor="phone" className="block py-2">
             <span className="font-semibold">Phone:</span>
             <p className="font-normal">Enter your phone number</p>
