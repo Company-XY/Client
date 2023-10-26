@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../../../store/Slices/userSlice";
-import Profile from "../Profile/updateProfile";
+import Profile from "../Profile/createProfile";
 import Dashboard from "./dashboard";
 import Skeleton from "../../../Loading";
 

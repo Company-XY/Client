@@ -22,26 +22,18 @@ const UpdateProfile = () => {
     if (userString) {
       const { _id, token } = JSON.parse(userString);
 
-      const formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("location", location);
-      formData.append("bio", bio);
-      formData.append("contactInfo", contactInfo);
-      formData.append("paymentMethod", paymentMethod);
-
       axios
         .patch(
           `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          formData,
+          { phone, location, bio, contactInfo, paymentMethod },
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
             },
           }
         )
         .then((response) => {
-          setIsSuccess(true);
           setLoading(false);
           handleAvatarSubmit();
         })
@@ -77,7 +69,7 @@ const UpdateProfile = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
           }
         );
@@ -101,8 +93,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
-          { isApproved: true },
+          `https://assist-api-okgk.onrender.com/api/v1/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
