@@ -89,6 +89,7 @@ const UpdateProfile = () => {
         );
         setIsSuccess(true);
         setLoading(false);
+        updateIsApproved();
       }
     } catch (error) {
       setLoading(false);

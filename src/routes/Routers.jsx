@@ -28,6 +28,7 @@ import UpdateProfile1 from "../pages/Dashboard/Freelancer/Profile/updateProfile"
 import FreelancerProfilePage from "../pages/Dashboard/Freelancer/Profile/profile/index";
 import VerifyEmail from "../pages/Dashboard/Freelancer/Profile/profile/verifyEmail";
 import VerifyPhone from "../pages/Dashboard/Freelancer/Profile/profile/verifyPhone";
+import Trial from "../pages/Trial";
 
 function Routers() {
   return (
@@ -59,6 +60,7 @@ function Routers() {
       <Route path="/withdraw" element={<Withdraw />} />
       <Route path="/verify/email" element={<VerifyEmail />} />
       <Route path="/verify/phone" element={<VerifyPhone />} />
+      <Route path="/trial" element={<Trial />} />
     </Routes>
   );
 }
