@@ -80,7 +80,7 @@ const PostProject = () => {
 
     try {
       const jobResponse = await axios.post(
-        "http://localhost:8080/api/v1/jobs/post",
+        "https://assist-api-5y59.onrender.com/api/v1/jobs/post",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ const PostProject = () => {
       });
 
       const filesResponse = await axios.patch(
-        `http://localhost:8080/api/v1/jobs/${jobId}/files`,
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files`,
         formDataFiles,
         {
           headers: {

@@ -73,7 +73,7 @@ const JobPage = () => {
     const fetchJob = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/jobs/${jobId}`
+          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`
         );
 
         setJob(response.data);
@@ -95,7 +95,7 @@ const JobPage = () => {
   const handleBidFiles = async (bidId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/job/${jobId}/bids/${bidId}/files`,
+        `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${bidId}/files`,
         files
       );
 
@@ -124,7 +124,7 @@ const JobPage = () => {
       formData.append("proposal", proposal);
 
       const response = await axios.post(
-        `http://localhost:8080/api/v1/jobs/${jobId}/create`,
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/create`,
         formData,
         {
           headers: {

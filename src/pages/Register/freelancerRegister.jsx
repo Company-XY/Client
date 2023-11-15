@@ -28,7 +28,7 @@ const FreelancerRegister = () => {
     if (password === password2) {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/v1/register/freelancer",
+          "https://assist-api-5y59.onrender.com/api/v1/register/freelancer",
           {
             type,
             name,

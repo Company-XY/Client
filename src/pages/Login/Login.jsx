@@ -21,7 +21,7 @@ const Login = () => {
     setIsLoading(true);
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/login", {
+      const response = await axios.post("https://assist-api-5y59.onrender.com/api/v1/login", {
         email,
         password,
       });

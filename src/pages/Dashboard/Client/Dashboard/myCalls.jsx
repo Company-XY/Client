@@ -14,7 +14,7 @@ const MyCalls = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8080/api/v1/consultations/calls`,
+        `https://assist-api-5y59.onrender.com/api/v1/consultations/calls`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

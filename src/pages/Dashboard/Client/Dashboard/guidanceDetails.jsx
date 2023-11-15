@@ -32,7 +32,7 @@ const Details = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/consultations/details/create",
+        "https://assist-api-5y59.onrender.com/api/v1/consultations/details/create",
         detailsData,
         {
           headers: {

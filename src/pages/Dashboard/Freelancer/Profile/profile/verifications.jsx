@@ -20,7 +20,7 @@ const verifications = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `https://assist-api-5y59.onrender.com/api/v1/profile/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
