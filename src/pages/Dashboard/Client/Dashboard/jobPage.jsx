@@ -28,7 +28,7 @@ const JobPage = () => {
       setSelectedBidError(null);
       setSelectedBidLoading(true);
       await axios.patch(
-        `http://localhost:8080/api/v1/jobs/${jobId}/bids/${bidId}/award`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/bids/${bidId}/award`
       );
 
       setAwarded(true);
@@ -43,7 +43,7 @@ const JobPage = () => {
     const fetchJob = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/v1/jobs/${jobId}`
+          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`
         );
 
         setJob(response.data);
@@ -60,7 +60,7 @@ const JobPage = () => {
     e.preventDefault();
     try {
       const response = await axios.patch(
-        `https://assist-api-okgk.onrender.com/api/v1/review/${jobId}`,
+        `https://assist-api-5y59.onrender.com/api/v1/review/${jobId}`,
         { review, rating }
       );
 
@@ -73,7 +73,7 @@ const JobPage = () => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/jobs/${jobId}/approve`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/approve`
       );
       setSuccess(true);
       setLoading(false);
@@ -85,7 +85,7 @@ const JobPage = () => {
   const handleDisputeProject = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/jobs/${jobId}/dispute`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/dispute`
       );
     } catch (error) {
       console.log(error);

@@ -24,7 +24,7 @@ const UpdateProfile = () => {
 
       axios
         .patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/profile/${_id}`,
           { phone, location, bio, contactInfo, paymentMethod },
           {
             headers: {
@@ -64,7 +64,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/avatar/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/profile/avatar/${_id}`,
           formData,
           {
             headers: {
@@ -94,7 +94,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/approval/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

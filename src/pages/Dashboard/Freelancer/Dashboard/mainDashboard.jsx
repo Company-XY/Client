@@ -28,7 +28,7 @@ const MainDashboard = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get("http://localhost:8080/api/v1/jobs", {
+      const response = await axios.get("https://assist-api-5y59.onrender.com/api/v1/jobs", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

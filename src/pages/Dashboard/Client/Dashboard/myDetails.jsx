@@ -14,7 +14,7 @@ const MyDetails = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8080/api/v1/consultations/details`,
+        `https://assist-api-5y59.onrender.com/api/v1/consultations/details`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

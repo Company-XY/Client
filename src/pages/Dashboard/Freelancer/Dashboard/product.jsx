@@ -27,7 +27,7 @@ const FileUpload = () => {
       }
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:8080/api/v1/jobs/${jobId}/submit`,
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/submit`,
         formData,
         {
           headers: {

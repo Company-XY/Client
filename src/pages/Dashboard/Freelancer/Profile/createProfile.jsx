@@ -30,7 +30,7 @@ const CreateProfile = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/users/update/profile/${_id}`,
+        `https://assist-api-5y59.onrender.com/api/v1/users/update/profile/${_id}`,
         {
           phone,
           location,
@@ -67,7 +67,7 @@ const CreateProfile = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/users/profile/avatar/${_id}`,
+        `https://assist-api-5y59.onrender.com/api/v1/users/profile/avatar/${_id}`,
         formData,
         {
           headers: {
@@ -96,7 +96,7 @@ const CreateProfile = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/users/profile/samples/${_id}`,
+        `https://assist-api-5y59.onrender.com/api/v1/users/profile/samples/${_id}`,
         formData,
         {
           headers: {
@@ -117,7 +117,7 @@ const CreateProfile = () => {
     try {
       setIsLoading(true);
       const response = await axios.patch(
-        `http://localhost:8080/api/v1/users/profile/approval/${_id}`,
+        `https://assist-api-5y59.onrender.com/api/v1/users/profile/approval/${_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -27,7 +27,7 @@ const Withdraw = () => {
   const fetchUserData = async (userId, token) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/user/${userId}`,
+        `https://assist-api-5y59.onrender.com/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const Withdraw = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8080/api/v1/withdraw",
+        "https://assist-api-5y59.onrender.com/api/v1/withdraw",
         {
           phone,
           amount,

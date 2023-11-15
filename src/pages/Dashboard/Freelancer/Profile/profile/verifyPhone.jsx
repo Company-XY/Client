@@ -20,7 +20,7 @@ const VerifyPhone = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+          `https://assist-api-5y59.onrender.com/api/v1/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const VerifyPhone = () => {
     setLoading(true);
     axios
       .post(
-        "https://assist-api-okgk.onrender.com/api/v1/verify/phone",
+        "https://assist-api-5y59.onrender.com/api/v1/verify/phone",
         { phoneNumber },
         {
           headers: {
@@ -71,7 +71,7 @@ const VerifyPhone = () => {
 
     axios
       .post(
-        "https://assist-api-okgk.onrender.com/api/v1/verify/phone/code",
+        "https://assist-api-5y59.onrender.com/api/v1/verify/phone/code",
         { phoneNumber, code },
         {
           headers: {

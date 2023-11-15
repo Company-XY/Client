@@ -34,7 +34,7 @@ const Deposit = () => {
       };
 
       const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/deposit",
+        "https://assist-api-5y59.onrender.com/api/v1/deposit",
         {
           phone,
           amount,

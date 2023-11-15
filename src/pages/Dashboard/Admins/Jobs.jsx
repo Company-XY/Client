@@ -6,7 +6,7 @@ const Consultations = () => {
 
   useEffect(() => {
     axios
-      .get("http://assist-api-okgk.onrender.com/api/v1/consultations")
+      .get("https://assist-api-5y59.onrender.com/api/v1/consultations")
       .then((response) => {
         setConsultations(response.data);
         console.log(response.data);

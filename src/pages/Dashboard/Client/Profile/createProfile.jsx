@@ -23,7 +23,7 @@ const CreateProfile = () => {
 
       axios
         .patch(
-          `http://localhost:8080/api/v1/users/update/profile/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/users/update/profile/${_id}`,
           { phone, location, bio, contactInfo, paymentMethod },
           {
             headers: {
@@ -63,7 +63,7 @@ const CreateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `http://localhost:8080/api/v1/users/profile/avatar/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/users/profile/avatar/${_id}`,
           formData,
           {
             headers: {
@@ -91,7 +91,7 @@ const CreateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `http://localhost:8080/api/v1/users/profile/approval/${_id}`,
+          `https://assist-api-5y59.onrender.com/api/v1/users/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
