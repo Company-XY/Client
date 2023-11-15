@@ -20,7 +20,7 @@ const Error404 = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-300">
+    <div className="min-h-screen flex items-center justify-center bg-blue-200">
       <div className="bg-white rounded-lg p-8 shadow-md w-96">
         <h1 className="text-2xl font-bold mb-2">Under Construction</h1>
         <p className="text-gray-700 mb-4">
