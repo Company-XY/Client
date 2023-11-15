@@ -4,9 +4,11 @@ import axios from "axios";
 
 const FileUpload = () => {
   const { jobId } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user.token;
+  const userEmail = user.user_email;
 
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -17,21 +19,15 @@ const FileUpload = () => {
   };
 
   const handleSubmit = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token;
-    const userEmail = user.user_email;
-    setReview("file submitted by freelancer");
-
     try {
       const formData = new FormData();
       formData.append("email", userEmail);
-      formData.append("review", review);
       for (const file of selectedFiles) {
         formData.append("files", file);
       }
       setLoading(true);
       const response = await axios.post(
-        `https://assist-api-okgk.onrender.com/api/v1/create-product/${jobId}`,
+        `http://localhost:8080/api/v1/jobs/${jobId}/submit`,
         formData,
         {
           headers: {
@@ -82,15 +78,17 @@ const FileUpload = () => {
         </div>
       )}
       {success && <div>{message}</div>}
-      <button
-        onClick={handleSubmit}
-        className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
-          isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        disabled={isSubmitDisabled}
-      >
-        {loading ? <span>Please Wait</span> : <span>Submit</span>}
-      </button>
+      {!success && (
+        <button
+          onClick={handleSubmit}
+          className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
+            isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={isSubmitDisabled}
+        >
+          {loading ? <span>Please Wait</span> : <span>Submit</span>}
+        </button>
+      )}
     </div>
   );
 };

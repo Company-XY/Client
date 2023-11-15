@@ -2,6 +2,7 @@ import Profile from "../Profile/getProfile";
 import Jobs from "./myJobs";
 import Actions from "./clientActions";
 import Messages from "./messages";
+import Consultations from "./consultations";
 
 const clientDashboard = () => {
   return (
@@ -17,6 +18,10 @@ const clientDashboard = () => {
           <div className="basis-2/3 md:w-2/3 w-full">
             <div className="overflow-hidden">
               <Jobs />
+            </div>
+            <hr />
+            <div className="overflow-hidden">
+              <Consultations />
             </div>
           </div>
           <div className="basis-1/3 md:w-2/3 w-full">

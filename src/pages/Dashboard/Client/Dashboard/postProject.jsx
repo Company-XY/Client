@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Select from "react-select";
 
 const PostProject = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [Services, setServices] = useState("");
+  const [services, setServices] = useState("");
   const [skills, setSkills] = useState("");
   const [budget, setBudget] = useState("");
   const [duration, setDuration] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const userObjectString = localStorage.getItem("user");
 
   const userObject = JSON.parse(userObjectString);
@@ -20,6 +22,7 @@ const PostProject = () => {
   const token = userObject.token;
   const userEmail = userObject.email;
   const userName = userObject.name;
+  const role = userObject.role;
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const maxFiles = 5;
@@ -59,30 +62,44 @@ const PostProject = () => {
     );
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const email = userEmail;
-
-    const formData = new FormData();
-
-    formData.append("title", title);
-    formData.append("user_email", email);
-    formData.append("name", userName);
-    formData.append("Services", Services);
-    formData.append("description", description);
-    formData.append("skills", skills);
-    formData.append("budget", budget);
-    formData.append("duration", duration);
-
-    for (let i = 0; i < uploadedFiles.length; i++) {
-      formData.append("files", uploadedFiles[i]);
-    }
     setIsLoading(true);
+
+    const formData = {
+      role,
+      title,
+      user_email: userEmail,
+      name: userName,
+      services,
+      description,
+      skills,
+      budget,
+      duration,
+    };
+
     try {
-      const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/jobs",
+      const jobResponse = await axios.post(
+        "http://localhost:8080/api/v1/jobs/post",
         formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const jobId = jobResponse.data._id;
+      const formDataFiles = new FormData();
+
+      uploadedFiles.forEach((file) => {
+        formDataFiles.append("files", file);
+      });
+
+      const filesResponse = await axios.patch(
+        `http://localhost:8080/api/v1/jobs/${jobId}/files`,
+        formDataFiles,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -90,11 +107,11 @@ const PostProject = () => {
           },
         }
       );
-      console.log(response.data);
+
       setIsLoading(false);
-      navigate("/dashboard");
+      setSuccess(true);
     } catch (error) {
-      setError(error);
+      console.error("Error submitting form:", error);
       setIsLoading(false);
     }
   };
@@ -105,7 +122,7 @@ const PostProject = () => {
         className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover-text-white">
           Go Back
         </span>
       </span>
@@ -113,11 +130,11 @@ const PostProject = () => {
         Post a Project
       </h1>
       <div className="h-fit w-full border-2 rounded-lg">
-        <form onSubmit={handleSubmit} className="py-4 px-4 w-full">
+        <form onSubmit={handleFormSubmit} className="py-4 px-4 w-full">
           <div className="flex flex-col mb-4">
-            <label>Title of the project</label>
+            <label className="font-semibold my-1">Title of the project</label>
             <input
-              className="w-full border rounded-lg py-2 px-4"
+              className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
               type="text"
               value={title}
               placeholder="Title"
@@ -125,58 +142,139 @@ const PostProject = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label htmlFor="prService">Select PR Service:</label>
+            <label htmlFor="prService" className="font-semibold my-1">
+              Select the service you are looking for:
+            </label>
             <select
-              value={Services}
+              value={services}
               onChange={(e) => setServices(e.target.value)}
-              className="w-full border rounded-lg py-2 px-4"
+              className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
             >
-              <option>Thought Leadership</option>
-              <option>Content Creation</option>
-              <option>Strategic Communication</option>
+              <option value="">Select a PR Service</option>
+              <option value="Media Relations">Media Relations</option>
+              <option value="Press Release Writing & Distribution">
+                Press Release Writing & Distribution
+              </option>
+              <option value="Crisis Management">Crisis Management</option>
+              <option value="Event Management">Event Management</option>
+              <option value="Speaker Placement">Speaker Placement</option>
+              <option value="Social Media Management">
+                Social Media Management
+              </option>
+              <option value="Influencer Marketing">Influencer Marketing</option>
+              <option value="Online Reputation Management">
+                Online Reputation Management
+              </option>
+              <option value="Content Creation & Marketing">
+                Content Creation & Marketing
+              </option>
+              <option value="SEO for Public Relations">
+                SEO for Public Relations
+              </option>
+              <option value="Brand Messaging & Positioning">
+                Brand Messaging & Positioning
+              </option>
+              <option value="Public Affairs & Government Relations">
+                Public Affairs & Government Relations
+              </option>
+              <option value="Corporate Communications">
+                Corporate Communications
+              </option>
+              <option value="Thought Leadership Programs">
+                Thought Leadership Programs
+              </option>
+              <option value="Community Relations">Community Relations</option>
             </select>
           </div>
+
           <div className="flex flex-col mb-4">
-            <label>Describe the project and what you want done</label>
+            <label className="font-semibold my-1">
+              Describe the project and what you want done
+            </label>
             <textarea
               value={description}
-              className="w-full border rounded-lg py-2 px-4"
+              className="w-full border rounded-lg py-2 px-4 h-32 focus:ring focus:ring-blue-500 focus:outline-none"
               type="text"
               placeholder="Details..."
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label>How long should the project take (Days)</label>
+            <label className="font-semibold my-1">
+              How long should the project take (Days)
+            </label>
             <input
               value={duration}
-              className="w-full border rounded-lg py-2 px-4"
+              className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
               type="number"
+              min={1}
               placeholder="Timeline"
               onChange={(e) => setDuration(e.target.value)}
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label>What is your estimated budget</label>
+            <label className="font-semibold my-1">
+              What is your estimated budget for the project
+            </label>
             <input
-              type="number"
               value={budget}
+              className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
+              type="number"
+              min={1}
+              placeholder="Budget"
               onChange={(e) => setBudget(e.target.value)}
-              className="w-full border rounded-lg py-2 px-4"
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label>What skills are you looking for</label>
-            <input
-              type="text"
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-              className="w-full border rounded-lg py-2 px-4"
-            />
+            <label htmlFor="skills" className="block py-2 font-semibold">
+              What skills are needed to handle the project well (use the
+              dropdown):
+              <Select
+                id="skills"
+                name="skills"
+                isMulti
+                value={skills}
+                onChange={(selectedOptions) => setSkills(selectedOptions)}
+                options={[
+                  { value: "Press Pitching", label: "Press Pitching" },
+                  { value: "Media Networking", label: "Media Networking" },
+                  { value: "Strategic Thinking", label: "Strategic Thinking" },
+                  {
+                    value: "Crisis Communication",
+                    label: "Crisis Communication",
+                  },
+                  { value: "Event Coordination", label: "Event Coordination" },
+                  { value: "Copywriting", label: "Copywriting" },
+                  {
+                    value: "Social Media Management",
+                    label: "Social Media Management",
+                  },
+                  {
+                    value: "Influencer Relations",
+                    label: "Influencer Relations",
+                  },
+                  {
+                    value: "Online Reputation Management",
+                    label: "Online Reputation Management",
+                  },
+                  { value: "Content Creation", label: "Content Creation" },
+                  { value: "SEO Optimization", label: "SEO Optimization" },
+                  { value: "Brand Messaging", label: "Brand Messaging" },
+                  {
+                    value: "Community Engagement",
+                    label: "Community Engagement",
+                  },
+                  { value: "Public Speaking", label: "Public Speaking" },
+                  { value: "Data Analytics", label: "Data Analytics" },
+                ]}
+              />
+            </label>
           </div>
           <div className="flex flex-col mb-4">
-            <label>What experience are you looking for</label>
-            <select className="w-full border rounded-lg py-2 px-4">
+            <label className="font-semibold my-1">
+              What experience are you looking for
+            </label>
+            <select className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none">
               <option>0-1 year</option>
               <option>1-3 years</option>
               <option>3-5 years</option>
@@ -185,21 +283,31 @@ const PostProject = () => {
             </select>
           </div>
           <div className="flex flex-col mb-4">
-            <label>Upload up to 5 relevant files</label>
+            <label className="font-semibold my-1">
+              Upload up to 5 relevant files
+            </label>
             <input
               multiple
-              className="w-full border rounded-lg py-2 px-3"
+              className="w-full border rounded-lg py-2 px-3 focus:ring focus:ring-blue-500 focus:outline-none"
               type="file"
               onChange={handleFileChange}
             />
           </div>
           {renderUploadedFiles()}
-          <button
-            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:bg-blue-800"
-            type="submit"
-          >
-            {isLoading ? <span>Please Wait</span> : <span>Submit</span>}
-          </button>
+
+          {success && (
+            <div className="font-semibold block w-full bg-green-500 gird place-items-center rounded-lg my-2">
+              <p className="text-lg py-2 text-center">Job Post Successful</p>
+            </div>
+          )}
+          {!success && (
+            <button
+              className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover-bg-blue-800"
+              type="submit"
+            >
+              {isLoading ? <span>Please Wait</span> : <span>Submit</span>}
+            </button>
+          )}
         </form>
       </div>
     </div>

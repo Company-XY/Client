@@ -6,7 +6,6 @@ import { setUser } from "../../../../store/Slices/userSlice";
 import Profile from "../Profile/createProfile";
 import MainDashboard from "./mainDashboard";
 import Skeleton from "../../../Loading2";
-//import Skeleton from "./jobsPageSkeleton";
 
 const freelancerDashboard = () => {
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const freelancerDashboard = () => {
   const fetchUserData = async (userId, token) => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

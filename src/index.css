@@ -8,6 +8,6 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-*{
-  
+.focus-outline:focus {
+  outline: 2px solid blue;
 }

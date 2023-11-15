@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Call = () => {
+const Details = () => {
   const [businessName, setBusinessName] = useState("");
   const [prGoals, setPrGoals] = useState("");
   const [budget, setBudget] = useState("");
@@ -10,21 +10,21 @@ const Call = () => {
   const [loading, setLoading] = useState(false);
 
   const userObjectString = localStorage.getItem("user");
-
   const userObject = JSON.parse(userObjectString);
-
   const token = userObject.token;
+  const name = userObject.name;
+  const email = userObject.email;
+  const role = userObject.role;
 
   const navigate = useNavigate();
-
-  const handleGoBack = () => {
-    navigate("/dashboard");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const callData = {
+    const detailsData = {
+      role,
+      name,
+      email,
       businessName,
       prGoals,
       budget,
@@ -32,8 +32,8 @@ const Call = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/details",
-        callData,
+        "http://localhost:8080/api/v1/consultations/details/create",
+        detailsData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,11 +41,9 @@ const Call = () => {
         }
       );
 
-      console.log("Call request successful", response.data);
       setLoading(false);
       setSuccess(true);
     } catch (error) {
-      console.error("Call request failed", error);
       setLoading(false);
       setSuccess(false);
     }
@@ -69,9 +67,9 @@ const Call = () => {
         className="py-4 px-4 w-full bg-white rounded-lg my-2 shadow-md"
       >
         <div className="mb-4">
-          <label htmlFor="email" className="py-2 font-semibold">
+          <label htmlFor="businessName" className="py-2 font-semibold">
             Enter your Business name
-          </label>{" "}
+          </label>
           <input
             type="text"
             id="businessName"
@@ -85,7 +83,7 @@ const Call = () => {
           <label htmlFor="description" className="py-2 font-semibold">
             Provide a brief description of your PR Goals and how you want them
             executed
-          </label>{" "}
+          </label>
           <textarea
             id="description"
             value={prGoals}
@@ -98,7 +96,7 @@ const Call = () => {
         <div className="mb-4">
           <label htmlFor="budget" className="py-2 font-semibold">
             What is your budget:
-          </label>{" "}
+          </label>
           <select
             onChange={(e) => setBudget(e.target.value)}
             value={budget}
@@ -112,19 +110,29 @@ const Call = () => {
           </select>
         </div>
         {success && (
-          <p className="text-green-500 py-2 my-1 bg-gray-200 px-4 rounded-lg text-center">
+          <p className="text-green-500 py-2 bg-gray-200 px-4 rounded-lg text-center my-2">
             Guidance Requested Successfully
           </p>
         )}
-        <button
-          type="submit"
-          className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-800"
-        >
-          {loading ? <span>Wait...</span> : <span>Submit</span>}
-        </button>
+        <div className="flex justify-between mx-2 px-4">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-800"
+          >
+            {loading ? <span>Wait...</span> : <span>Submit</span>}
+          </button>
+          {success && (
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            >
+              Go Back
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
 };
 
-export default Call;
+export default Details;

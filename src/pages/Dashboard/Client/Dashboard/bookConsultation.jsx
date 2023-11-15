@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const bookConsultation = () => {
+const BookConsultation = () => {
   const navigate = useNavigate();
 
   const handleDetails = () => {
@@ -16,31 +16,32 @@ const bookConsultation = () => {
         <h2 className="text-2xl font-semibold grid place-items-center py-2">
           Get Guidance
         </h2>
-        <p className="text-base leading-8 text-center">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex assumenda
-          odit neque, illum blanditiis nam maiores ipsum possimus ullam quisquam
-          quae dolorum omnis, dolor ipsam quod perspiciatis sit voluptas vero.
+        <p className="text-base leading-8 text-center mb-2 py-3">
+          Explore our expert consultation services to gain valuable insights and
+          guidance for your business. Our experienced advisors are here to help
+          you achieve your goals and overcome challenges.
         </p>
-        <section className="flex flex-col gap-2 items-center">
+        <section className="flex flex-col gap-2 items-center my-2 py-2">
           <button
             onClick={handleDetails}
-            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:bg-blue-800"
+            className="w-1/5 rounded-lg border-2 border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
           >
             Fill in Details
           </button>
-          <p>OR</p>
+          <p className="font-semibold">OR</p>
           <button
             onClick={handleCall}
-            className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:bg-blue-800"
+            className="w-1/5 rounded-lg border-2 border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
           >
             Book a Call
           </button>
         </section>
+        <hr className="my-2 pb-2" />
         <span
-          className="font-semibold cursor-pointer py-2 my-6"
+          className="font-semibold cursor-pointer"
           onClick={() => navigate("/dashboard")}
         >
-          <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
+          <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover-text-white">
             Go Back
           </span>
         </span>
@@ -49,4 +50,4 @@ const bookConsultation = () => {
   );
 };
 
-export default bookConsultation;
+export default BookConsultation;

@@ -13,22 +13,23 @@ const Call = () => {
   const [date2, setDate2] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const userObjectString = localStorage.getItem("user");
-
-  const userObject = JSON.parse(userObjectString);
-
-  const token = userObject.token;
 
   const navigate = useNavigate();
 
-  const handleGoBack = () => {
-    navigate("/dashboard");
-  };
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const token = userObject.token;
+  const email = userObject.email;
+  const name = userObject.name;
+  const role = userObject.role;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const callData = {
+      role,
+      name,
+      email,
       phone,
       businessName,
       prGoals,
@@ -41,7 +42,7 @@ const Call = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/calls",
+        "http://localhost:8080/api/v1/consultations/calls/create",
         callData,
         {
           headers: {
@@ -78,12 +79,12 @@ const Call = () => {
         className="py-4 px-4 w-full h-fit bg-white rounded-lg my-2 shadow-md"
       >
         <div className="mb-4">
-          <label htmlFor="email" className="py-2 font-semibold">
+          <label htmlFor="businessName" className="py-2 font-semibold">
             Enter your Business name
           </label>
           <input
             type="text"
-            id="name"
+            id="businessName"
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
             className="w-full border rounded-md py-2 px-3"
@@ -91,7 +92,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="name" className="py-2 font-semibold">
+          <label htmlFor="phone" className="py-2 font-semibold">
             Phone Number
           </label>
           <input
@@ -104,12 +105,12 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="description" className="py-2 font-semibold">
+          <label htmlFor="prGoals" className="py-2 font-semibold">
             Provide a brief description of your PR Goals and how you want them
             executed
           </label>
           <textarea
-            id="description"
+            id="prGoals"
             value={prGoals}
             onChange={(e) => setPrGoals(e.target.value)}
             className="w-full border rounded-md py-2 px-3"
@@ -118,12 +119,12 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
-            When are you available for the call ?
+          <label htmlFor="date" className="py-2 font-semibold">
+            When are you available for the call?
           </label>
           <input
             type="date"
-            id="businessName"
+            id="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="w-full border rounded-md py-2 px-3"
@@ -131,7 +132,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="budget" className="py-2 font-semibold">
+          <label htmlFor="time" className="py-2 font-semibold">
             At what time?
           </label>
           <select
@@ -152,13 +153,13 @@ const Call = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
-            Provide an alternate date incase you are not available on the first
+          <label htmlFor="date2" className="py-2 font-semibold">
+            Provide an alternate date in case you are not available on the first
             date
           </label>
           <input
             type="date"
-            id="businessName"
+            id="date2"
             value={date2}
             onChange={(e) => setDate2(e.target.value)}
             className="w-full border rounded-md py-2 px-3"
@@ -166,7 +167,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="budget" className="py-2 font-semibold">
+          <label htmlFor="time2" className="py-2 font-semibold">
             At what time?
           </label>
           <select
@@ -207,12 +208,22 @@ const Call = () => {
             Call Requested Successfully
           </p>
         )}
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-800"
-        >
-          {loading ? <span>Wait...</span> : <span>Submit</span>}
-        </button>
+        <div className="flex justify-between px-4 mx-2">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-800"
+          >
+            {loading ? <span>Wait...</span> : <span>Submit</span>}
+          </button>
+          {success && (
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            >
+              Go Back
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

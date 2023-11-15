@@ -10,7 +10,6 @@ const CreateProfile = () => {
   const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
@@ -24,7 +23,7 @@ const CreateProfile = () => {
 
       axios
         .patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          `http://localhost:8080/api/v1/users/update/profile/${_id}`,
           { phone, location, bio, contactInfo, paymentMethod },
           {
             headers: {
@@ -64,7 +63,7 @@ const CreateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/avatar/${_id}`,
+          `http://localhost:8080/api/v1/users/profile/avatar/${_id}`,
           formData,
           {
             headers: {
@@ -88,38 +87,28 @@ const CreateProfile = () => {
 
   const updateIsApproved = async () => {
     try {
-      setIsLoading(true);
       const userString = localStorage.getItem("user");
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/approval/${_id}`,
+          `http://localhost:8080/api/v1/users/profile/approval/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        console.log("isApproved status updated successfully:", response);
-        setIsSuccess(true);
-        setIsLoading(false);
-        handleReload();
+        window.location.reload();
       } else {
         console.error("User data not found in localStorage");
-        setIsLoading(false);
       }
     } catch (error) {
       console.error("Failed to update isApproved status:", error);
-      setIsLoading(false);
     }
   };
 
-  const handleReload = () => {
-    window.location.reload();
-  };
-
   return (
-    <div className="mx-auto max-w-3xl p-4 mt-14">
+    <div className="mx-auto max-w-3xl px-4 mt-8">
       <div className="w-full max-w-screen-md p-4 px-5 sm:px-0">
         <h2 className="text-2xl font-semibold mb-2 text-center">
           Create Your Client Profile
@@ -128,26 +117,30 @@ const CreateProfile = () => {
           To proceed to the dashboard and post projects, you need to create a
           profile
         </p>
-        <div className="bg-white pt-4 rounded shadow-md">
+        <div className="bg-white pt-4 rounded">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="py-2 my-1">
               <label htmlFor="phone" className="block font-semibold mb-2">
-                Phone:
+                Phone
               </label>
-              <p className="font-normal">Enter your phone number</p>
+              <p className="font-normal">
+                Enter your phone number, Use the format 0700000000
+              </p>
               <input
                 type="text"
                 id="phone"
                 name="phone"
-                value={phone}
                 required
+                maxLength={10}
+                minLength={10}
+                placeholder="0700000000"
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
+                className="block w-full p-2 border border-gray-300 rounded-md focus-outline"
               />
             </div>
             <div className="py-2 my-1">
               <label htmlFor="avatar" className="block font-semibold mb-2">
-                Avatar:
+                Avatar
               </label>
               <p className="font-normal">
                 Upload a quality picture to be used as your profile picture
@@ -164,7 +157,7 @@ const CreateProfile = () => {
             </div>
             <div className="py-2 my-1">
               <label htmlFor="location" className="block font-semibold mb-2">
-                Location:
+                Location
               </label>
               <p className="font-normal">Where are you located?</p>
               <input
@@ -172,6 +165,7 @@ const CreateProfile = () => {
                 id="location"
                 name="location"
                 required
+                placeholder="Nairobi"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
@@ -179,7 +173,7 @@ const CreateProfile = () => {
             </div>
             <div className="py-2 my-1">
               <label htmlFor="bio" className="block font-semibold mb-2">
-                Bio:
+                Bio
               </label>
               <p className="font-normal">
                 A brief of who you are and the services you are looking for
@@ -188,6 +182,7 @@ const CreateProfile = () => {
                 id="bio"
                 name="bio"
                 required
+                placeholder="What the client is looking for and how they can be assisted"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
@@ -198,10 +193,11 @@ const CreateProfile = () => {
                 htmlFor="paymentMethod"
                 className="block font-semibold mb-2"
               >
-                Payment Method:
+                Payment Method
               </label>
               <p className="font-normal">
-                What is your preferred payment option?
+                What is your preferred payment option when topping up your
+                account?
               </p>
               <select
                 id="paymentMethod"
@@ -211,19 +207,21 @@ const CreateProfile = () => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 className="block w-full p-2 border border-gray-300 rounded-md"
               >
-                <option>M-Pesa</option>
-                <option>PayPal</option>
-                <option>Stripe</option>
+                <option value="">Select Payment Method</option>
+                <option value="M-pesa">M-Pesa</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Stripe">Stripe</option>
               </select>
             </div>
             <div className="py-2 my-1">
               <label htmlFor="contactInfo" className="block font-semibold mb-2">
-                Contact Info:
+                Contact Info
               </label>
               <input
                 type="text"
                 id="contactInfo"
                 required
+                placeholder="ABC Place, Westlands"
                 name="contactInfo"
                 value={contactInfo}
                 onChange={(e) => setContactInfo(e.target.value)}
@@ -241,22 +239,19 @@ const CreateProfile = () => {
               </div>
             )}
             <div className="flex justify-evenly px-2">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
-              >
-                {loading ? (
-                  <span>Please Wait...</span>
-                ) : (
-                  <span> Update Profile</span>
-                )}
-              </button>
-              {isSuccess && (
+              {isSuccess ? (
                 <button
                   onClick={updateIsApproved}
                   className="bg-green-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
                 >
-                  {isLoading ? "Please Wait" : "Proceed"}
+                  Proceed
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  className="bg-blue-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
+                >
+                  {loading ? "Please Wait..." : "Submit"}
                 </button>
               )}
             </div>

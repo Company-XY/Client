@@ -30,7 +30,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/${_id}`,
+          `http://localhost:8080/api/v1/users/update/profile/${_id}`,
           {
             phone,
             location,
@@ -78,7 +78,7 @@ const UpdateProfile = () => {
       if (userString) {
         const { _id, token } = JSON.parse(userString);
         const response = await axios.patch(
-          `https://assist-api-okgk.onrender.com/api/v1/profile/avatar/${_id}`,
+          `http://localhost:8080/api/v1/users/update/profile/${_id}`,
           formData,
           {
             headers: {

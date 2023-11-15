@@ -17,7 +17,7 @@ const Profile = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -26,7 +26,6 @@ const Profile = () => {
       );
 
       setUserData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
@@ -103,12 +102,18 @@ const Profile = () => {
             <p className="text-gray-700 text-center">
               Balance:{" "}
               <span className="font-semibold">
-                Ksh.{userData.accountBalance}
+                Ksh.{userData.currentBalance}
+              </span>
+            </p>
+            <p className="text-blue-700 text-center">
+              Escrow Balance:{" "}
+              <span className="font-semibold">
+                Ksh.{userData.escrowBalance}
               </span>
             </p>
             <div className="text-center">
               <span className="text-gray-500">Rating: </span>
-              <span className="text-xl text-blue-400">{userData.rating}</span>
+              <span className="text-lg text-blue-400">{userData.rating}</span>
             </div>
           </div>
         </div>
