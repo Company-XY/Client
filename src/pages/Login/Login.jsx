@@ -21,13 +21,10 @@ const Login = () => {
     setIsLoading(true);
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/v1/login", {
+        email,
+        password,
+      });
 
       const user = response.data;
 
@@ -36,12 +33,16 @@ const Login = () => {
       setIsLoading(false);
       setLoading(false);
 
-      console.log(user);
       navigate("/dashboard");
       dispatch(setUser(user));
       setLoading(false);
     } catch (error) {
-      setError("Invalid Username or Password");
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
+
       setIsLoading(false);
       setLoading(false);
     }
@@ -52,14 +53,14 @@ const Login = () => {
   };
 
   return (
-    <main className="w-full h-screen flex justify-center items-center sm:bg-gray-100">
-      <section className="w-auto max-w-md bg-snow p-8 rounded-lg sm:shadow-md md:w-2/3 lg:w-1/2 mt-20">
+    <main className="w-full h-screen flex justify-center items-center">
+      <section className="w-auto max-w-md p-8 rounded-lg sm:shadow-md md:w-2/3 lg:w-1/2 mt-20 bg-gray-100">
         <h2 className="text-center font-semibold text-3xl mb-6">
           Enter correct credentials to login
         </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="email" className="flex items-center text-blue-800">
+            <label htmlFor="email" className="flex items-center text-blue-800 font-semibold">
               <FaUserShield
                 className="mr-2 grid place-items-center"
                 size={20}
@@ -78,7 +79,7 @@ const Login = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="flex items-center text-blue-800"
+              className="flex items-center text-blue-800 font-semibold"
             >
               <BsFillShieldLockFill
                 className="mr-2 grid place-items-center"
@@ -125,13 +126,13 @@ const Login = () => {
         <div className="mt-6 text-center">
           <p>
             Forgot Password? Reset{" "}
-            <Link to="/reset" className="text-blue-900">
+            <Link to="/reset" className="text-blue-800 font-semibold">
               Here
             </Link>
           </p>
           <p>
             New to Assist Africa? Signup{" "}
-            <Link to="/register" className="text-blue-900">
+            <Link to="/register" className="text-blue-800 font-semibold">
               Here
             </Link>
           </p>

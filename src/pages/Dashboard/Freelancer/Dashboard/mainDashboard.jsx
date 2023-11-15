@@ -28,14 +28,11 @@ const MainDashboard = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(
-        "https://assist-api-okgk.onrender.com/api/v1/jobs",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:8080/api/v1/jobs", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const sortedJobs = response.data.sort((a, b) => {
         const dateA = new Date(a.createdAt);
@@ -168,7 +165,7 @@ const MainDashboard = () => {
   const filterCompletedJobs = () => {
     const completedJobs = jobs.filter(
       (job) =>
-        job.stage === "Completed" &&
+        job.stage === "Complete" &&
         job.bids.some((bid) => bid.email === userEmail)
     );
     setFilteredJobs(completedJobs);
@@ -249,7 +246,7 @@ const MainDashboard = () => {
             className="p-2 w-full border-2 border-blue-700 rounded-lg"
           />
 
-          <hr className="my-2" />
+          <hr className="border border-solid border-gray-500 my-4" />
           {loading ? (
             <JobCardSkeleton />
           ) : (
@@ -274,7 +271,15 @@ const MainDashboard = () => {
                     <p className="text-gray-600 my-2">{job.description}</p>
                     <div className="mt-4">
                       <p className="text-gray-700">
-                        Skills: {job.skills.join(", ")}
+                        <span className="font-semibold">Skills: </span>
+                        {job.skills && job.skills.length > 0
+                          ? job.skills.map((skill, index) => (
+                              <span key={index}>
+                                {skill.label}
+                                {index !== job.skills.length - 1 ? ", " : ""}
+                              </span>
+                            ))
+                          : "No skills specified"}
                       </p>
                       <p className="text-gray-700">Bids: {job.bids.length}</p>
                     </div>

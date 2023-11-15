@@ -29,6 +29,7 @@ import FreelancerProfilePage from "../pages/Dashboard/Freelancer/Profile/profile
 import VerifyEmail from "../pages/Dashboard/Freelancer/Profile/profile/verifyEmail";
 import VerifyPhone from "../pages/Dashboard/Freelancer/Profile/profile/verifyPhone";
 import Trial from "../pages/Trial";
+import Error404 from "../pages/Error404";
 
 function Routers() {
   return (
@@ -40,9 +41,9 @@ function Routers() {
       <Route path="/register/freelancer" element={<FreelancerRegister />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/client/profile" element={<CreateProfile />} />
-      <Route path="/client/update_profile" element={<UpdateProfile />} />
+      <Route path="/client/update_profile" element={<Error404 />} />
       <Route path="/freelancer/profile" element={<CreateProfile1 />} />
-      <Route path="/freelancer/update_profile" element={<UpdateProfile1 />} />
+      <Route path="/freelancer/update_profile" element={<Error404 />} />
       <Route path="/dashboard/admin" element={<Admins />} />
       <Route path="/dashboard/client/post" element={<PostProject />} />
       <Route path="/dashboard/client/book" element={<BookConsultation />} />
@@ -61,6 +62,8 @@ function Routers() {
       <Route path="/verify/email" element={<VerifyEmail />} />
       <Route path="/verify/phone" element={<VerifyPhone />} />
       <Route path="/trial" element={<Trial />} />
+      <Route path="*" element={<Error404 />} />
+      <Route path="/404" element={<Error404 />} />
     </Routes>
   );
 }

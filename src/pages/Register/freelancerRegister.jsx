@@ -13,7 +13,7 @@ const FreelancerRegister = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [name, setName] = useState("");
-  const [type, setType] = useState("Experienced VA");
+  const [type, setType] = useState("Experienced Freelancer");
   const [isLoading, setIsLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
@@ -28,7 +28,7 @@ const FreelancerRegister = () => {
     if (password === password2) {
       try {
         const response = await axios.post(
-          "https://assist-api-okgk.onrender.com/api/v1/register/freelancer",
+          "http://localhost:8080/api/v1/register/freelancer",
           {
             type,
             name,
@@ -61,28 +61,29 @@ const FreelancerRegister = () => {
         <h2 className="text-center font-semibold text-2xl pb-2 mb-2">
           Enter correct credentials to join Assist Africa as a Freelancer
         </h2>
-        <p className="py-2 mb-2">
-          Register as a Client instead{" "}
-          <Link to="/register/client" className="font-semibold text-blue-800">
-            Here
-          </Link>
-        </p>
         <form onSubmit={handleRegister}>
           <div className="flex flex-col gap-2 py-2 mb-2">
-            <label className="font-semibold">Account Type</label>
+            <label className="font-semibold text-blue-800">Account Type</label>
             <select
               className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-blue-500 mb-2"
               value={type}
               required
               onChange={(e) => setType(e.target.value)}
             >
-              <option value="Experienced VA">Experienced VA</option>
-              <option value="Beginner VA">Beginner VA</option>
-              <option value="Agency VA">Agency VA</option>
+              <option value="Intermediate Freelancer">
+                Intermediate Freelancer
+              </option>
+              <option value="Experienced Freelancer">
+                Experienced Freelancer
+              </option>
+              <option value="Agency Freelancer">Agency Freelancer</option>
             </select>
           </div>
           <div className="flex flex-col gap-2 my-2">
-            <label className="flex gap-2 font-semibold" htmlFor="name">
+            <label
+              className="flex gap-2 font-semibold text-blue-800"
+              htmlFor="name"
+            >
               <BsFillPersonCheckFill size={20} />
               Username
             </label>
@@ -95,7 +96,10 @@ const FreelancerRegister = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="flex gap-2 font-semibold" htmlFor="email">
+            <label
+              className="flex gap-2 font-semibold text-blue-800"
+              htmlFor="email"
+            >
               <FaUserShield size={20} />
               Email Address
             </label>
@@ -108,7 +112,10 @@ const FreelancerRegister = () => {
             />
           </div>
           <div className="flex flex-col gap-2 py-2">
-            <label className="flex gap-2 mt-2 font-semibold" htmlFor="password">
+            <label
+              className="flex gap-2 mt-2 font-semibold text-blue-800"
+              htmlFor="password"
+            >
               <BsFillShieldLockFill size={20} />
               Password
             </label>
@@ -120,8 +127,11 @@ const FreelancerRegister = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="flex flex-col gap-2 py-2">
-            <label className="flex gap-2 mt-2 font-semibold" htmlFor="password">
+          <div className="flex flex-col gap-2 py-2 ">
+            <label
+              className="flex gap-2 mt-2 font-semibold text-blue-800"
+              htmlFor="password"
+            >
               <BsFillShieldLockFill size={20} />
               Confirm Password
             </label>
@@ -153,7 +163,7 @@ const FreelancerRegister = () => {
           <div className="w-full text-center grid place-items-center">
             <button
               type="submit"
-              className="bg-white w-full flex justify-center items-center text-blue-500 py-2 px-6 rounded-full text-lg md:text-xl font-semibold hover:bg-blue-600 hover:text-white focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="bg-white w-full flex my-2 justify-center items-center text-blue-800 py-2 px-6 rounded-full text-lg md:text-xl font-semibold hover:bg-blue-600 hover:text-white focus:ring-2 focus:ring-blue-500 transition duration-300"
             >
               <span className="items-center">
                 {isLoading ? (
@@ -165,9 +175,15 @@ const FreelancerRegister = () => {
             </button>
           </div>
         </form>
-        <p className="py-2 mt-2">
+        <p className="py-2">
+          Register as a Client instead{" "}
+          <Link to="/register/client" className="font-semibold text-blue-800">
+            Here
+          </Link>
+        </p>
+        <p className="py-2">
           Already have an account?{" "}
-          <span className="font-semibold">
+          <span className="font-semibold text-blue-800">
             <Link to="/login">Login</Link>
           </span>
         </p>

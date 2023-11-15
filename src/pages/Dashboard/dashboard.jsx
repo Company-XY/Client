@@ -30,7 +30,7 @@ const Dashboard = () => {
   const fetchUserData = async (userId, token) => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

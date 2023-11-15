@@ -20,20 +20,16 @@ const UserJobs = () => {
   useEffect(() => {
     const fetchUserJobs = async () => {
       try {
-        const response = await axios.get(
-          `https://assist-api-okgk.onrender.com/api/v1/jobs`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`http://localhost:8080/api/v1/jobs`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const filteredJobs = response.data.filter(
           (job) => job.user_email === userEmail
         );
 
-        // Sort the filteredJobs by createdAt in descending order (most recent first)
         filteredJobs.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -55,13 +51,13 @@ const UserJobs = () => {
     setCount1(userJobs.filter((job) => job.stage === "Pending").length);
     setCount2(userJobs.filter((job) => job.stage === "Ongoing").length);
     setCount3(userJobs.filter((job) => job.stage === "UnderReview").length);
-    setCount4(userJobs.filter((job) => job.stage === "Completed").length);
+    setCount4(userJobs.filter((job) => job.stage === "Complete").length);
   }, [userJobs]);
 
   const tabs = {
     InProgress: userJobs.filter((job) => job.stage === "Ongoing"),
     UnderReview: userJobs.filter((job) => job.stage === "UnderReview"),
-    Completed: userJobs.filter((job) => job.stage === "Completed"),
+    Completed: userJobs.filter((job) => job.stage === "Complete"),
     Pending: userJobs.filter((job) => job.stage === "Pending"),
   };
 
@@ -75,6 +71,8 @@ const UserJobs = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">My Projects</h2>
+      <hr className="border border-solid border-gray-500 my-4" />
+
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -130,9 +128,9 @@ const UserJobs = () => {
                       </p>
                     </h3>
                     <p className="text-gray-600">{job.description}</p>
-                    <p className="text-gray-600">Budget: {job.budget}</p>
+                    <p className="text-gray-600">Budget: Ksh. {job.budget}</p>
                     <p className="text-gray-600 flex justify-between">
-                      <p>Duration: {job.duration}</p>
+                      Duration: {job.duration} days
                     </p>
                   </div>
                 </Link>

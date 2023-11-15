@@ -27,7 +27,7 @@ const Withdraw = () => {
   const fetchUserData = async (userId, token) => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const Withdraw = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://assist-api-okgk.onrender.com/api/v1/withdraw",
+        "http://localhost:8080/api/v1/withdraw",
         {
           phone,
           amount,
@@ -86,7 +86,7 @@ const Withdraw = () => {
         <div className="bg-blue-200 rounded-lg h-20 grid place-items-center my-2 cursor-pointer">
           <p className="font-semibold text-xl">
             Available Balance:{" "}
-            {userData ? userData.accountBalance : "Loading..."}
+            {userData ? userData.currentBalance : "Loading..."}
           </p>
         </div>
         <form onSubmit={handleSubmit}>
@@ -105,6 +105,8 @@ const Withdraw = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
+              minLength={10}
+              maxLength={10}
               placeholder="0700000000"
             />
           </div>
@@ -122,6 +124,7 @@ const Withdraw = () => {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
+              min={1}
               placeholder="1000"
             />
           </div>

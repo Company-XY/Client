@@ -7,14 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
 import DarkModeToggle from "./toggle";
+import axios from "axios";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [scrolling, setScrolling] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [open, setOpen] = useState(false); //To control the dropwdon list for profile
   const [notification, setNotification] = useState(false); // to control the notification modal
+  const [notifications, setNotifications] = useState(null);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -39,19 +40,42 @@ const Header = () => {
     document.title = `Dashboard | Assist Africa`;
   }, []);
 
-  const handleScroll = () => {
-    if (window.scrollY > 0) {
-      setScrolling(true);
-    } else {
-      setScrolling(false);
+  const fetchNotifications = async (userId, token) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/user/notifications/all/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setNotifications(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    if (user) {
+      fetchNotifications(user._id, user.token);
+    }
+  }, []);
+
+  useEffect(() => {
+    const notificationInterval = setInterval(() => {
+      if (user) {
+        fetchNotifications(user._id, user.token);
+      }
+    }, 60000);
+
+    return () => clearInterval(notificationInterval);
+  }, []);
+
+  useEffect(() => {
+    const userObjectString = localStorage.getItem("user");
+    const userObject = JSON.parse(userObjectString);
   }, []);
 
   return (
@@ -107,8 +131,7 @@ const Header = () => {
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <div className="relative ml-5">
-                    <div>
-                      {" "}
+                    <div className="relative">
                       <button
                         type="button"
                         onClick={() => setNotification(!notification)}
@@ -121,9 +144,15 @@ const Header = () => {
                         <FaBell
                           size={24}
                           className="text-blue-700 dark:text-blue-100 grid place-items-center"
-                        />{" "}
+                        />
                       </button>
+                      {user.notifications && user.notifications.length > 0 && (
+                        <div className="absolute -top-2 -right-2 h-6 w-6 bg-green-600 text-white text-xs rounded-full flex items-center justify-center">
+                          {user.notifications.length}
+                        </div>
+                      )}
                     </div>
+
                     <div
                       onClick={() => setNotification(!notification)}
                       className={`absolute right-0 z-10 mt-2 w-64 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
@@ -154,7 +183,7 @@ const Header = () => {
                           </div>
                           <hr className="my-2" />
                           <span className="text-center font-light italic my-2">
-                            No notifications at the moment
+                            {user.notifications}
                           </span>
                         </div>
                       </div>
@@ -276,7 +305,7 @@ const Header = () => {
                     Profile
                   </RouterLink>
                 ) : null}
-                <span>
+                <span className="grid place-items-center">
                   <DarkModeToggle />
                 </span>
               </div>
@@ -427,7 +456,7 @@ const Header = () => {
                 >
                   Get Started
                 </RouterLink>
-                <span>
+                <span className="grid place-items-center">
                   <DarkModeToggle />
                 </span>
               </div>

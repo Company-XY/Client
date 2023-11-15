@@ -15,7 +15,7 @@ const ProfileCard = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -24,7 +24,6 @@ const ProfileCard = () => {
       );
 
       setUserData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
@@ -110,9 +109,11 @@ const ProfileCard = () => {
             <p className="text-gray-600">Joined: {calculateMemberDuration()}</p>
             <p className="text-gray-700">
               Balance:{" "}
-              <span className="font-semibold">
-                Ksh. {userData.accountBalance}
-              </span>
+              {userData.accountBalance && (
+                <span className="font-semibold">
+                  Ksh. {userData.currentBalance}
+                </span>
+              )}
             </p>
             <div className="mt-4">
               <span className="text-gray-500">Rating: </span>

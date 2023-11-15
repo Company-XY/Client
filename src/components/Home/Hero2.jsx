@@ -18,7 +18,7 @@ const Hero = () => {
             <div className="flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
               <Link
                 to="/register/freelancer"
-                className="flex-1 rounded-lg bg-blue-500 py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
+                className="flex-1 rounded-lg border bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
               >
                 Looking for work
               </Link>
@@ -27,7 +27,7 @@ const Hero = () => {
               </p>
               <Link
                 to="/register/client"
-                className="flex-1 rounded-lg bg-blue-500 py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
+                className="flex-1 rounded-lg border bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
               >
                 Looking to hire
               </Link>

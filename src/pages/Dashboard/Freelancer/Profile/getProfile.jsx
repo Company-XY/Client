@@ -17,7 +17,7 @@ const Profile = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://assist-api-okgk.onrender.com/api/v1/profile/${userId}`,
+        `http://localhost:8080/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const Profile = () => {
               <span className="grid place-items-center">
                 <BiMoney size={20} />
               </span>
-              <span>Ksh. {userData.accountBalance}</span>
+              <span>Ksh. {userData.currentBalance}</span>
             </h2>
             <h2>
               <h2>
