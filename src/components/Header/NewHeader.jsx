@@ -13,9 +13,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false); //To control the dropwdon list for profile
-  const [notification, setNotification] = useState(false); // to control the notification modal
-  const [notifications, setNotifications] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [notification, setNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -52,6 +52,8 @@ const Header = () => {
       );
 
       setNotifications(response.data);
+      console.log(response.data);
+      console.log(notifications);
     } catch (error) {
       console.error(error);
     }
@@ -76,7 +78,42 @@ const Header = () => {
   useEffect(() => {
     const userObjectString = localStorage.getItem("user");
     const userObject = JSON.parse(userObjectString);
+    const userId = userObject._id;
   }, []);
+
+  const markNotificationAsRead = async (notificationId) => {
+    try {
+      const userObjectString = localStorage.getItem("user");
+      const userObject = JSON.parse(userObjectString);
+      const userId = userObject._id;
+
+      if (userId) {
+        const response = await axios.patch(
+          `https://assist-api-5y59.onrender.com/api/v1/user/${userId}/notifications/${notificationId}/read`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${userObject.token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          const updatedNotifications = [...notifications];
+          const notificationIndex = updatedNotifications.findIndex(
+            (notification) => notification._id === notificationId
+          );
+
+          if (notificationIndex !== -1) {
+            updatedNotifications[notificationIndex].read = true;
+            setNotifications(updatedNotifications);
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -146,16 +183,22 @@ const Header = () => {
                           className="text-blue-700 dark:text-blue-100 grid place-items-center"
                         />
                       </button>
-                      {user.notifications && user.notifications.length > 0 && (
-                        <div className="absolute -top-2 -right-2 h-6 w-6 bg-green-600 text-white text-xs rounded-full flex items-center justify-center">
-                          {user.notifications.length}
+                      {notifications.some(
+                        (notification) => !notification.read
+                      ) && (
+                        <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-600 text-white text-xs rounded-full flex items-center justify-center">
+                          {
+                            notifications.filter(
+                              (notification) => !notification.read
+                            ).length
+                          }
                         </div>
                       )}
                     </div>
 
                     <div
                       onClick={() => setNotification(!notification)}
-                      className={`absolute right-0 z-10 mt-2 w-64 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      className={`absolute right-0 z-10 mt-2 w-96 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                         notification ? "block" : "hidden"
                       }`}
                       role="menu"
@@ -182,13 +225,45 @@ const Header = () => {
                             </p>
                           </div>
                           <hr className="my-2" />
-                          <span className="text-center font-light italic my-2">
-                            {user.notifications}
-                          </span>
+                          {notifications && notifications.length > 0 ? (
+                            notifications.map((notification, index) => (
+                              <div
+                                key={index}
+                                className={`border p-4 mb-4 ${
+                                  notification.read
+                                    ? "bg-gray-200"
+                                    : "bg-blue-200"
+                                }`}
+                                onClick={() => markNotificationAsRead(index)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <div className="font-semibold">
+                                  {notification.message}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  Created at:{" "}
+                                  {new Date(
+                                    notification.timestamp
+                                  ).toLocaleString()}
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="text-center font-light italic my-2">
+                              No notifications
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
+
+                    <div
+                      onClick={() => setNotification(!notification)}
+                      className={`absolute right-0 z-20 mt-2 w-6 h-6 rounded-full bg-transparent`}
+                      style={{ pointerEvents: "auto" }}
+                    ></div>
                   </div>
+
                   <div className="relative ml-5">
                     <div>
                       <button
