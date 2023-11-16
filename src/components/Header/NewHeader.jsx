@@ -40,10 +40,15 @@ const Header = () => {
     document.title = `Dashboard | Assist Africa`;
   }, []);
 
-  const fetchNotifications = async (userId, token) => {
+  const fetchNotifications = async (id, token) => {
     try {
+      const userObjectString = localStorage.getItem("user");
+      const userObject = JSON.parse(userObjectString);
+      const id = userObject._id;
+      const token = userObject.token;
+
       const response = await axios.get(
-        `https://assist-api-5y59.onrender.com/api/v1/user/notifications/all/${userId}`,
+        `https://assist-api-5y59.onrender.com/api/v1/user/notifications/all/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,8 +57,6 @@ const Header = () => {
       );
 
       setNotifications(response.data);
-      console.log(response.data);
-      console.log(notifications);
     } catch (error) {
       console.error(error);
     }
@@ -61,25 +64,10 @@ const Header = () => {
 
   useEffect(() => {
     if (user) {
-      fetchNotifications(user._id, user.token);
+      const { _id: id, token } = user;
+      fetchNotifications(id, token);
     }
-  }, []);
-
-  useEffect(() => {
-    const notificationInterval = setInterval(() => {
-      if (user) {
-        fetchNotifications(user._id, user.token);
-      }
-    }, 60000);
-
-    return () => clearInterval(notificationInterval);
-  }, []);
-
-  useEffect(() => {
-    const userObjectString = localStorage.getItem("user");
-    const userObject = JSON.parse(userObjectString);
-    const userId = userObject._id;
-  }, []);
+  }, [user]);
 
   const markNotificationAsRead = async (notificationId) => {
     try {
@@ -99,15 +87,14 @@ const Header = () => {
         );
 
         if (response.status === 200) {
-          const updatedNotifications = [...notifications];
-          const notificationIndex = updatedNotifications.findIndex(
-            (notification) => notification._id === notificationId
+          const updatedNotifications = notifications.map((notification) =>
+            notification._id === notificationId
+              ? { ...notification, read: true }
+              : notification
           );
-
-          if (notificationIndex !== -1) {
-            updatedNotifications[notificationIndex].read = true;
-            setNotifications(updatedNotifications);
-          }
+          setNotifications(updatedNotifications);
+        } else {
+          console.error(`Unexpected response status: ${response.status}`);
         }
       }
     } catch (error) {
@@ -183,21 +170,21 @@ const Header = () => {
                           className="text-blue-700 dark:text-blue-100 grid place-items-center"
                         />
                       </button>
-                      {notifications.some(
-                        (notification) => !notification.read
-                      ) && (
-                        <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-600 text-white text-xs rounded-full flex items-center justify-center">
-                          {
-                            notifications.filter(
-                              (notification) => !notification.read
-                            ).length
-                          }
-                        </div>
-                      )}
+                      {Array.isArray(notifications) &&
+                        notifications.some(
+                          (notification) => !notification.read
+                        ) && (
+                          <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-600 text-white text-xs rounded-full flex items-center justify-center">
+                            {
+                              notifications.filter(
+                                (notification) => !notification.read
+                              ).length
+                            }
+                          </div>
+                        )}
                     </div>
 
                     <div
-                      onClick={() => setNotification(!notification)}
                       className={`absolute right-0 z-10 mt-2 w-96 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                         notification ? "block" : "hidden"
                       }`}
@@ -212,7 +199,10 @@ const Header = () => {
                             <h2 className="font-semibold text-center">
                               Notifications
                             </h2>
-                            <p className="cursor-pointer flex justify-between">
+                            <p
+                              onClick={() => setNotification(!notification)}
+                              className="cursor-pointer flex justify-between"
+                            >
                               <span className="grid place-items-center">
                                 Close
                               </span>
@@ -226,28 +216,35 @@ const Header = () => {
                           </div>
                           <hr className="my-2" />
                           {notifications && notifications.length > 0 ? (
-                            notifications.map((notification, index) => (
-                              <div
-                                key={index}
-                                className={`border p-4 mb-4 ${
-                                  notification.read
-                                    ? "bg-gray-200"
-                                    : "bg-blue-200"
-                                }`}
-                                onClick={() => markNotificationAsRead(index)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <div className="font-semibold">
-                                  {notification.message}
+                            notifications
+                              .slice()
+                              .sort(
+                                (a, b) =>
+                                  new Date(b.timestamp) - new Date(a.timestamp)
+                              )
+                              .map((notification) => (
+                                <div
+                                  key={notification._id}
+                                  className={`border p-4 mb-4 ${
+                                    notification.read
+                                      ? "bg-gray-200"
+                                      : "bg-blue-200"
+                                  }`}
+                                  onClick={() =>
+                                    markNotificationAsRead(notification._id)
+                                  }
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div className="font-semibold">
+                                    {notification.message}
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    {new Date(
+                                      notification.timestamp
+                                    ).toLocaleString()}
+                                  </div>
                                 </div>
-                                <div className="text-xs text-gray-500">
-                                  Created at:{" "}
-                                  {new Date(
-                                    notification.timestamp
-                                  ).toLocaleString()}
-                                </div>
-                              </div>
-                            ))
+                              ))
                           ) : (
                             <div className="text-center font-light italic my-2">
                               No notifications
