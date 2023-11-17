@@ -6,7 +6,8 @@ const FileUpload = () => {
   const { jobId } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const token = user.token;
-  const userEmail = user.user_email;
+  const email = user.email;
+  const name = user.name;
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,8 @@ const FileUpload = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("email", userEmail);
+      formData.append("name", name);
+      formData.append("email", email);
       for (const file of selectedFiles) {
         formData.append("files", file);
       }
