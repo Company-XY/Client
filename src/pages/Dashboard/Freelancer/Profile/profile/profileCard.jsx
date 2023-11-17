@@ -109,7 +109,7 @@ const ProfileCard = () => {
             <p className="text-gray-600">Joined: {calculateMemberDuration()}</p>
             <p className="text-gray-700">
               Balance:{" "}
-              {userData.accountBalance && (
+              {userData.currentBalance && (
                 <span className="font-semibold">
                   Ksh. {userData.currentBalance}
                 </span>

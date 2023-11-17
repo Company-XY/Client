@@ -178,6 +178,28 @@ const JobPage = () => {
                           {bid.price}
                         </p>
 
+                        {/* Display bid files */}
+                        {bid.files && bid.files.length > 0 && (
+                          <div>
+                            <h3 className="text-sm font-semibold">
+                              Bid Files:
+                            </h3>
+                            {bid.files.map((file) => (
+                              <div key={file._id}>
+                                <a
+                                  href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/download/${file._id}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  download
+                                  className="underline font-semibold"
+                                >
+                                  {file.title}
+                                </a>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
                         {/* Error specific to the selected bid */}
                         {selectedBidId === bid._id && selectedBidError && (
                           <div className="w-full my-2 bg-gray-200 py-2 rounded-md">
@@ -186,36 +208,39 @@ const JobPage = () => {
                             </p>
                           </div>
                         )}
-
-                        {/* Selecting a bid and Awarding */}
-                        <button
-                          onClick={() => handleSelectBid(bid._id)}
-                          className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
-                        >
-                          {selectedBidId === bid._id ? (
-                            selectedBidLoading ? (
-                              <span>Please Wait</span>
-                            ) : (
-                              <span>Selected</span>
-                            )
-                          ) : (
-                            <span>Select Bid</span>
-                          )}
-                        </button>
-
-                        {selectedBidId === bid._id && (
-                          <button
-                            onClick={() => handleAwardProject(bid._id)}
-                            disabled={awarded}
-                            className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
-                          >
-                            {selectedBidLoading ? (
-                              <span>Please Wait</span>
-                            ) : (
-                              <span>Award Project</span>
+                        <div className="flex justify-evenly">
+                          <div>
+                            <button
+                              onClick={() => handleSelectBid(bid._id)}
+                              className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
+                            >
+                              {selectedBidId === bid._id ? (
+                                selectedBidLoading ? (
+                                  <span>Please Wait</span>
+                                ) : (
+                                  <span>Selected</span>
+                                )
+                              ) : (
+                                <span>Select Bid</span>
+                              )}
+                            </button>
+                          </div>
+                          <div>
+                            {selectedBidId === bid._id && (
+                              <button
+                                onClick={() => handleAwardProject(bid._id)}
+                                disabled={awarded}
+                                className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
+                              >
+                                {selectedBidLoading ? (
+                                  <span>Please Wait</span>
+                                ) : (
+                                  <span>Award Project</span>
+                                )}
+                              </button>
                             )}
-                          </button>
-                        )}
+                          </div>
+                        </div>
                       </div>
                     ))}
                 </div>

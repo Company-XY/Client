@@ -22,7 +22,7 @@ const VerifyEmail = () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `https://assist-api-5y59.onrender.com/api/v1/profile/${userId}`,
+          `https://assist-api-5y59.onrender.com/api/v1/user/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -175,6 +175,7 @@ const VerifyEmail = () => {
                       <button
                         onClick={handleRequest}
                         className="bg-blue-700 text-white py-2 px-4 rounded-md hover-bg-blue-200"
+                        disabled={!userData}
                       >
                         {isLoading ? "Please Wait" : "Request Code"}
                       </button>

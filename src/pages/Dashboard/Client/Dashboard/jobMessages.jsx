@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const userId = userObject._id;
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
+    fetchMessages();
   }, []);
 
-  const sendMessage = () => {
-    if (newMessage.trim() !== "") {
-      socket.emit("message", newMessage);
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+  const fetchMessages = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/messages/${userId}`
+      );
+      setMessages(response.data.messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  const sendMessage = async () => {
+    try {
+      await axios.post(
+        "https://assist-api-5y59.onrender.com/api/v1/messages/${userId}/create",
+        {
+          from: userId,
+          to: "recipient_id_here",
+          message: newMessage,
+        }
+      );
       setNewMessage("");
+      fetchMessages();
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
   };
 
@@ -42,7 +59,7 @@ const Messages = () => {
             ))}
           </div>
 
-          {/* input */}
+          {/* Input */}
           <div className="p-4 border-t border-gray-300">
             <input
               type="text"
@@ -53,7 +70,7 @@ const Messages = () => {
             />
             <button
               onClick={sendMessage}
-              className="mt-2 bg-purple-800 text-white rounded-full px-4 py-2 hover-bg-purple-600"
+              className="mt-2 bg-purple-800 text-white rounded-full px-4 py-2 hover:bg-purple-600"
             >
               Send
             </button>

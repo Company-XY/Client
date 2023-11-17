@@ -185,25 +185,26 @@ const Header = () => {
                     </div>
 
                     <div
-                      className={`absolute right-0 z-10 mt-2 w-96 h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      className={`absolute right-0 z-10 mt-2 w-96 h-96 max-h-screen/2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                         notification ? "block" : "hidden"
-                      }`}
+                      } overflow-y-auto`}
                       role="menu"
+                      id="notification-container"
                       aria-orientation="vertical"
                       aria-labelledby="user-menu-button"
                       tabIndex="-1"
                     >
                       <div className="py-2 px-4 w-full h-full">
                         <div className="py-1 px-1">
-                          <div className="flex justify-between px-2">
+                          <div className="flex justify-between px-2 sticky top-0 bg-white z-10 my-2">
                             <h2 className="font-semibold text-center">
                               Notifications
                             </h2>
                             <p
                               onClick={() => setNotification(!notification)}
-                              className="cursor-pointer flex justify-between"
+                              className="cursor-pointer flex justify-between bg-blue-100 hover:bg-blue-500 hover:text-white py-1 px-2 rounded-lg"
                             >
-                              <span className="grid place-items-center">
+                              <span className="grid place-items-center font-semibold">
                                 Close
                               </span>
                               <span className="text-center mt-1">

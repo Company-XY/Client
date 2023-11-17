@@ -1,5 +1,3 @@
-import React from "react";
-
 const Messages = () => {
   return (
     <div className="flex mt-12 bg-gray-100">
