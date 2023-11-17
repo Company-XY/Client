@@ -187,7 +187,7 @@ const JobPage = () => {
                             {bid.files.map((file) => (
                               <div key={file._id}>
                                 <a
-                                  href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/download/${file._id}`}
+                                  href={`https://assist-api-5y59.onrender.com/api/v1/jobs/bids/${jobId}/${bid._id}/${file._id}`}
                                   target="_blank"
                                   rel="noreferrer"
                                   download
@@ -199,7 +199,6 @@ const JobPage = () => {
                             ))}
                           </div>
                         )}
-
                         {/* Error specific to the selected bid */}
                         {selectedBidId === bid._id && selectedBidError && (
                           <div className="w-full my-2 bg-gray-200 py-2 rounded-md">
@@ -278,7 +277,7 @@ const JobPage = () => {
                     {job.product.files.map((file) => (
                       <div key={file._id}>
                         <a
-                          href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/download/${file._id}`}
+                          href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/${file._id}`}
                           target="_blank"
                           rel="noreferrer"
                           download
