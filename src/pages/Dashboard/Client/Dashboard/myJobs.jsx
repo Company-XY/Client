@@ -20,11 +20,14 @@ const UserJobs = () => {
   useEffect(() => {
     const fetchUserJobs = async () => {
       try {
-        const response = await axios.get(`https://assist-api-5y59.onrender.com/api/v1/jobs`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `https://assist-api-5y59.onrender.com/api/v1/jobs`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const filteredJobs = response.data.filter(
           (job) => job.user_email === userEmail
@@ -121,10 +124,10 @@ const UserJobs = () => {
               {currentTabJobs.map((job, index) => (
                 <Link to={`/dashboard/client/job/${job._id}`} key={index}>
                   <div className="bg-white p-4 mb-4 border border-gray-300 rounded-lg">
-                    <h3 className="text-lg font-semibold flex justify-between">
+                    <h3 className="text-lg font-semibold flex justify-between my-2">
                       <p>{job.title}</p>
-                      <p className="bg-blue-200 p-1 rounded-lg">
-                        Bids: {job.bids.length}
+                      <p className="text-green-600 px-2 rounded-lg border hover:bg-slate-200">
+                        Bids {job.bids.length}
                       </p>
                     </h3>
                     <p className="text-gray-600">{job.description}</p>

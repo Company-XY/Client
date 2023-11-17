@@ -20,7 +20,6 @@ const Deposit = () => {
         : null;
 
       if (!userId) {
-        console.error("User ID not found");
         setLoading(false);
         setSuccess(false);
         return;
@@ -29,12 +28,11 @@ const Deposit = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "x-user-id": userId,
         },
       };
 
       const response = await axios.post(
-        "https://assist-api-5y59.onrender.com/api/v1/deposit",
+        `https://assist-api-5y59.onrender.com/api/v1/deposit/${userId}`,
         {
           phone,
           amount,
@@ -42,11 +40,9 @@ const Deposit = () => {
         config
       );
 
-      console.log("Deposit successful", response.data);
       setLoading(false);
       setSuccess(true);
     } catch (error) {
-      console.error("Error making deposit:", error);
       setSuccess(false);
       setLoading(false);
     }

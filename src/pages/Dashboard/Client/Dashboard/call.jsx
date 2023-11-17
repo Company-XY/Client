@@ -4,6 +4,7 @@ import axios from "axios";
 
 const Call = () => {
   const [phone, setPhone] = useState("");
+  const [service, setService] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [prGoals, setPrGoals] = useState("");
   const [budget, setBudget] = useState("");
@@ -30,6 +31,7 @@ const Call = () => {
       role,
       name,
       email,
+      service,
       phone,
       businessName,
       prGoals,
@@ -51,11 +53,9 @@ const Call = () => {
         }
       );
 
-      console.log("Call request successful", response.data);
       setSuccess(true);
       setLoading(false);
     } catch (error) {
-      console.error("Call request failed", error);
       setSuccess(false);
       setLoading(false);
     }
@@ -78,6 +78,51 @@ const Call = () => {
         onSubmit={handleSubmit}
         className="py-4 px-4 w-full h-fit bg-white rounded-lg my-2 shadow-md"
       >
+        <div className="mb-4">
+          <label htmlFor="businessName" className="py-2 font-semibold">
+            What service are you looking for?
+          </label>
+          <select
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
+          >
+            <option value="">Select a PR Service</option>
+            <option value="Media Relations">Media Relations</option>
+            <option value="Press Release Writing & Distribution">
+              Press Release Writing & Distribution
+            </option>
+            <option value="Crisis Management">Crisis Management</option>
+            <option value="Event Management">Event Management</option>
+            <option value="Speaker Placement">Speaker Placement</option>
+            <option value="Social Media Management">
+              Social Media Management
+            </option>
+            <option value="Influencer Marketing">Influencer Marketing</option>
+            <option value="Online Reputation Management">
+              Online Reputation Management
+            </option>
+            <option value="Content Creation & Marketing">
+              Content Creation & Marketing
+            </option>
+            <option value="SEO for Public Relations">
+              SEO for Public Relations
+            </option>
+            <option value="Brand Messaging & Positioning">
+              Brand Messaging & Positioning
+            </option>
+            <option value="Public Affairs & Government Relations">
+              Public Affairs & Government Relations
+            </option>
+            <option value="Corporate Communications">
+              Corporate Communications
+            </option>
+            <option value="Thought Leadership Programs">
+              Thought Leadership Programs
+            </option>
+            <option value="Community Relations">Community Relations</option>
+          </select>
+        </div>
         <div className="mb-4">
           <label htmlFor="businessName" className="py-2 font-semibold">
             Enter your Business name
