@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Messages from "./jobMessages";
 
 const JobPage = () => {
   const { jobId } = useParams();
@@ -251,19 +252,24 @@ const JobPage = () => {
             </div>
           )}
           {job.stage === "Ongoing" && (
-            <div>
-              Project Ongoing.
-              {job.bids.map((bid) => {
-                if (bid.status === "Ongoing") {
-                  return (
-                    <span key={bid._id} className="font-semibold">
-                      Bid Awarded to: {bid.name}
-                    </span>
-                  );
-                }
-                return null;
-              })}
-            </div>
+            <>
+              <div>
+                Project Ongoing.
+                {job.bids.map((bid) => {
+                  if (bid.status === "Ongoing") {
+                    return (
+                      <span key={bid._id} className="font-semibold">
+                        Bid Awarded to: {bid.name}
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+              <div>
+                <Messages jobId={jobId} />
+              </div>
+            </>
           )}
 
           {job.stage === "UnderReview" || job.stage === "Completed" ? (
