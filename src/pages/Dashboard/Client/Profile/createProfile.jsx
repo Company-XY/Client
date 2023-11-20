@@ -108,19 +108,22 @@ const CreateProfile = () => {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 mt-8">
-      <div className="w-full max-w-screen-md p-4 px-5 sm:px-0">
-        <h2 className="text-2xl font-semibold mb-2 text-center">
+    <div className="mx-auto max-w-4xl md:px-4 mt-8">
+      <div className="w-full max-w-screen-md px-1 md:px-5 sm:px-0">
+        <h2 className="text-xl md:text-2xl font-semibold mb-2 text-center">
           Create Your Client Profile
         </h2>
-        <p className="text-center leading-8">
+        <p className="text-center leading-6 md:leading-8">
           To proceed to the dashboard and post projects, you need to create a
           profile
         </p>
         <div className="bg-white pt-4 rounded">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="py-2 my-1">
-              <label htmlFor="phone" className="block font-semibold mb-2">
+              <label
+                htmlFor="phone"
+                className="block font-semibold mb-1 text-blue-700"
+              >
                 Phone
               </label>
               <p className="font-normal">
@@ -139,7 +142,10 @@ const CreateProfile = () => {
               />
             </div>
             <div className="py-2 my-1">
-              <label htmlFor="avatar" className="block font-semibold mb-2">
+              <label
+                htmlFor="avatar"
+                className="block font-semibold mb-1 text-blue-700"
+              >
                 Avatar
               </label>
               <p className="font-normal">
@@ -156,7 +162,10 @@ const CreateProfile = () => {
               />
             </div>
             <div className="py-2 my-1">
-              <label htmlFor="location" className="block font-semibold mb-2">
+              <label
+                htmlFor="location"
+                className="block font-semibold mb-1 text-blue-700"
+              >
                 Location
               </label>
               <p className="font-normal">Where are you located?</p>
@@ -172,7 +181,10 @@ const CreateProfile = () => {
               />
             </div>
             <div className="py-2 my-1">
-              <label htmlFor="bio" className="block font-semibold mb-2">
+              <label
+                htmlFor="bio"
+                className="block font-semibold mb-1 text-blue-700"
+              >
                 Bio
               </label>
               <p className="font-normal">
@@ -191,11 +203,11 @@ const CreateProfile = () => {
             <div className="py-2 my-1">
               <label
                 htmlFor="paymentMethod"
-                className="block font-semibold mb-2"
+                className="block font-semibold mb-1 text-blue-700"
               >
                 Payment Method
               </label>
-              <p className="font-normal">
+              <p className="font-normal py-1">
                 What is your preferred payment option when topping up your
                 account?
               </p>
@@ -214,9 +226,15 @@ const CreateProfile = () => {
               </select>
             </div>
             <div className="py-2 my-1">
-              <label htmlFor="contactInfo" className="block font-semibold mb-2">
+              <label
+                htmlFor="contactInfo"
+                className="block font-semibold mb-2 text-blue-700"
+              >
                 Contact Info
               </label>
+              <p className="font-normal">
+                Enter your physical address or any other information
+              </p>
               <input
                 type="text"
                 id="contactInfo"

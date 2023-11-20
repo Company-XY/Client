@@ -33,7 +33,7 @@ const Chatbot = () => {
 
     axios
       .post(
-        "https://assist-api-okgk.onrender.com/api/v1/bot/message",
+        "https://assist-api-5y59.onrender.com/api/v1/bot/message",
         requestBody,
         {
           headers: {
@@ -52,15 +52,14 @@ const Chatbot = () => {
 
     setUserMessage("");
   };
-
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
     }
   };
 
   return (
-    <div className="fixed bottom-16 right-5">
+    <div className="fixed bottom-14 md:bottom-16 right-3 md:right-5">
       <div
         className={`${
           isOpen ? "hidden" : ""
@@ -88,7 +87,7 @@ const Chatbot = () => {
       <div
         className={`${
           isOpen ? "" : "hidden"
-        } bg-white border border-gray-300 rounded-lg shadow-lg w-96`}
+        } bg-white border border-gray-300 rounded-lg shadow-lg w-72 md:w-96`}
       >
         <div className="bg-blue-700 text-white py-2 px-4 rounded-t-lg">
           <div className="flex items-center justify-between">
@@ -138,7 +137,7 @@ const Chatbot = () => {
             className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none mb-2"
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
           />
           <button
             className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 focus:outline-none"

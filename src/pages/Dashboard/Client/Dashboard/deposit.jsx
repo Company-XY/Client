@@ -58,7 +58,7 @@ const Deposit = () => {
           Go Back
         </span>
       </span>
-      <div className="bg-white rounded-lg w-2/3 shadow-md py-4 my-2 px-2">
+      <div className="bg-white rounded-lg w-full md:w-2/3 shadow-md py-4 my-2 px-4">
         <h2 className="text-2xl text-blue-600 mb-4 text-center">
           Make a Deposit (Mpesa)
         </h2>

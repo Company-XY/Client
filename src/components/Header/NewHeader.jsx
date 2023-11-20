@@ -103,7 +103,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <div>
       {isAuthenticated ? (
         <div className={`${darkMode ? "dark" : ""}`}>
           {" "}
@@ -185,7 +185,7 @@ const Header = () => {
                     </div>
 
                     <div
-                      className={`absolute right-0 z-10 mt-2 w-96 h-96 max-h-screen/2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      className={`absolute right-0 z-10 mt-2 w-72 md:w-96 h-72 md:h-96 max-h-screen/2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                         notification ? "block" : "hidden"
                       } overflow-y-auto`}
                       role="menu"
@@ -361,12 +361,14 @@ const Header = () => {
                 <RouterLink
                   to="/dashboard"
                   className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
+                  onClick={toggleMobileMenu}
                 >
                   Dashboard
                 </RouterLink>
                 <RouterLink
                   to="/blog"
                   className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium"
+                  onClick={toggleMobileMenu}
                 >
                   Resource Center
                 </RouterLink>
@@ -374,6 +376,7 @@ const Header = () => {
                   <RouterLink
                     to={`/freelancer/${user._id}`}
                     className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium"
+                    onClick={toggleMobileMenu}
                   >
                     Profile
                   </RouterLink>
@@ -390,10 +393,7 @@ const Header = () => {
           {" "}
           <nav className="bg-gray-100">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div
-                onClick={toggleMobileMenu}
-                className="relative flex items-center justify-between h-16"
-              >
+              <div className="relative flex items-center justify-between h-16">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   <button
                     type="button"
@@ -412,7 +412,7 @@ const Header = () => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   <RouterLink to="/">
-                    <span className="text-blue-700 cursor-pointer hover:scale-105 font-bold text-base sm:text-lg md:text-xl ml-14">
+                    <span className="text-blue-700 cursor-pointer hover:scale-105 font-bold text-lg sm:text-xl md:text-2xl ml-14">
                       Assist Africa
                     </span>
                   </RouterLink>
@@ -422,7 +422,7 @@ const Header = () => {
                     to="Hero"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
                   >
                     Home
                   </ScrollLink>
@@ -430,7 +430,7 @@ const Header = () => {
                     to="Section1"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
                   >
                     About Us
                   </ScrollLink>
@@ -438,7 +438,7 @@ const Header = () => {
                     to="Services"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
                   >
                     Services
                   </ScrollLink>
@@ -446,7 +446,7 @@ const Header = () => {
                     to="FAQ"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
+                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
                   >
                     FAQ's
                   </ScrollLink>
@@ -475,6 +475,7 @@ const Header = () => {
             <div
               className={`sm:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
               id="mobile-menu"
+              onClick={toggleMobileMenu}
             >
               <div
                 className="px-2 pt-2 pb-3 space-y-1"
@@ -486,6 +487,7 @@ const Header = () => {
                   smooth={true}
                   className="text-gray-800 hover:bg-blue-100 hover:text-gray block px-3 py-2 rounded-md text-base font-medium"
                   aria-current="page"
+                  onClick={toggleMobileMenu}
                 >
                   Home
                 </ScrollLink>
@@ -494,6 +496,7 @@ const Header = () => {
                   duration={600}
                   smooth={true}
                   className="text-gray-800 hover:bg-blue-100 hover:text-gray block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={toggleMobileMenu}
                 >
                   About Us
                 </ScrollLink>
@@ -503,6 +506,7 @@ const Header = () => {
                   smooth={true}
                   className="text-gray-800 hover:bg-blue-100 hover:text-gray block px-3 py-2 rounded-md text-base font-medium"
                   aria-current="page"
+                  onClick={toggleMobileMenu}
                 >
                   Services
                 </ScrollLink>
@@ -511,6 +515,7 @@ const Header = () => {
                   duration={600}
                   smooth={true}
                   className="text-gray-800 hover:bg-blue-100 hover:text-gray block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={toggleMobileMenu}
                 >
                   FAQ's
                 </ScrollLink>
@@ -519,6 +524,7 @@ const Header = () => {
                   duration={600}
                   smooth={true}
                   className="text-gray-800 hover:bg-blue-100 hover:text-gray block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={toggleMobileMenu}
                 >
                   Contact Us
                 </ScrollLink>
@@ -526,6 +532,7 @@ const Header = () => {
                 <RouterLink
                   to="/register"
                   className="flex py-1 px-3 bg-white border-2 rounded-lg border-blue-600 hover:text-blue-700 font-semibold"
+                  onClick={toggleMobileMenu}
                 >
                   Get Started
                 </RouterLink>
@@ -537,7 +544,7 @@ const Header = () => {
           </nav>
         </>
       )}
-    </>
+    </div>
   );
 };
 

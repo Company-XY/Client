@@ -12,13 +12,14 @@ const Hero = () => {
           </h1>
           <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
             Join us today, and experience a seamless and rewarding journey where
-            freelancers and clients come together to achieve excellence.
+            freelancers and clients come together to achieve excellence. Are you
+            ?
           </p>
           <div className="px-5">
             <div className="flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
               <Link
                 to="/register/freelancer"
-                className="flex-1 rounded-lg border bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
+                className="dark:bg-gray-400 flex-1 rounded-lg border-2 border-blue-800 hover:border-none bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
               >
                 Looking for work
               </Link>
@@ -27,7 +28,7 @@ const Hero = () => {
               </p>
               <Link
                 to="/register/client"
-                className="flex-1 rounded-lg border bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
+                className="dark:bg-gray-400 flex-1 rounded-lg border-2 border-blue-800 hover:border-none bg-white py-3 px-6 font-semibold hover:bg-blue-600 hover:text-white inline-flex items-center justify-center transition duration-300 ease-in-out"
               >
                 Looking to hire
               </Link>

@@ -155,22 +155,20 @@ const ClientRegister = () => {
           {passwordError && (
             <p className="text-red-400 py-2 my-2">{passwordError}</p>
           )}
-          <div className="w-full text-center grid place-items-center my-2 py-1">
+          <div className="w-full text-center grid place-items-center my-4 py-2">
             <button
               type="submit"
-              className="bg-white w-full flex justify-center items-center text-blue-800 py-2 px-6 rounded-full text-lg md:text-xl font-semibold hover:bg-blue-600 hover:text-white focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full bg-blue-700 hover:bg-blue-800 h-fit grid place-items-center text-white font-medium py-2 rounded-lg"
             >
-              <span className="items-center">
-                {isLoading ? (
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-800"></div>
-                ) : (
-                  <span>Register</span>
-                )}
-              </span>
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+              ) : (
+                "Register"
+              )}
             </button>
           </div>
         </form>
-        <p className="py-2">
+        <p className="py-2 text-center">
           Register as a Freelancer instead{" "}
           <Link
             to="/register/freelancer"
@@ -179,7 +177,7 @@ const ClientRegister = () => {
             Here
           </Link>
         </p>
-        <p className="py-2">
+        <p className="py-2 text-center">
           Already have an account?{" "}
           <span className="font-semibold text-blue-800">
             <Link to="/login">Login</Link>

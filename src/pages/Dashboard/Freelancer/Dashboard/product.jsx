@@ -19,17 +19,15 @@ const FileUpload = () => {
     setSelectedFiles([...selectedFiles, ...files]);
   };
 
-  const handleSubmit = async () => {
+  const handleFileUpload = async () => {
     try {
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
       for (const file of selectedFiles) {
         formData.append("files", file);
       }
-      setLoading(true);
-      const response = await axios.post(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/submit`,
+
+      const response = await axios.patch(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/product`,
         formData,
         {
           headers: {
@@ -39,18 +37,40 @@ const FileUpload = () => {
         }
       );
 
-      console.log(formData);
+      console.log("File upload response:", response.data);
       setMessage("File Submitted Successfully");
       setLoading(false);
       setSuccess(true);
-      console.log("Product details submitted successfully.", response.data);
+    } catch (error) {
+      console.error("Error uploading files. Please try again.", error);
+      setLoading(false);
+      setMessage("Error Submitting File");
+      setSuccess(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/submit`,
+        { name, email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setLoading(false);
     } catch (error) {
       console.error(
         "Error submitting product details. Please try again.",
         error
       );
       setLoading(false);
-      setMessage("Error Submitting File");
+      setMessage("Error Submitting Product Details");
       setSuccess(false);
     }
   };

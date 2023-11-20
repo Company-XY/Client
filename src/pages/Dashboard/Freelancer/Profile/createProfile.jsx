@@ -133,7 +133,7 @@ const CreateProfile = () => {
   };
 
   return (
-    <div className="mx-auto max-w-3xl p-4">
+    <div className="mx-auto max-w-3xl">
       <h2 className="text-2xl font-semibold mb-4 text-center">
         Create Your Freelancer Profile
       </h2>
@@ -473,7 +473,7 @@ const CreateProfile = () => {
                 {loading ? (
                   <span>Please Wait...</span>
                 ) : (
-                  <span> Update Profile</span>
+                  <span> Create Profile</span>
                 )}
               </button>
             )}

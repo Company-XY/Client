@@ -13,7 +13,7 @@ const clientActions = () => {
   };
   return (
     <div className="bg-snow-300 p-4 text-gray-800">
-      <div className="mt-4 flex gap-4 items-center justify-center">
+      <div className="mt-4 flex flex-col md:flex-row gap-4 items-center justify-center">
         <button
           onClick={depositFunds}
           className="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition duration-300 ease-in-out"
