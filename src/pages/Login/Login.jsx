@@ -20,11 +20,15 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     setLoading(true);
+    setError("");
     try {
-      const response = await axios.post("https://assist-api-5y59.onrender.com/api/v1/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://assist-api-5y59.onrender.com/api/v1/login",
+        {
+          email,
+          password,
+        }
+      );
 
       const user = response.data;
 
@@ -54,13 +58,16 @@ const Login = () => {
 
   return (
     <main className="w-full h-screen flex justify-center items-center">
-      <section className="w-auto max-w-md p-8 rounded-lg sm:shadow-md md:w-2/3 lg:w-1/2 mt-20 bg-gray-100">
+      <section className="w-auto max-w-md p-8 rounded-lg sm:shadow-md md:w-2/3 lg:w-1/2 mt-20 bg-white md:bg-gray-100">
         <h2 className="text-center font-semibold text-3xl mb-6">
           Enter correct credentials to login
         </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="email" className="flex items-center text-blue-800 font-semibold">
+            <label
+              htmlFor="email"
+              className="flex items-center text-blue-800 font-semibold"
+            >
               <FaUserShield
                 className="mr-2 grid place-items-center"
                 size={20}
@@ -72,7 +79,7 @@ const Login = () => {
               value={email}
               required
               placeholder="Email"
-              className="px-4 py-2 my-1 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-800 hover:border-blue-300"
+              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-blue-500 my-2"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -92,7 +99,7 @@ const Login = () => {
               value={password}
               required
               placeholder="Password"
-              className="px-4 py-2 my-1 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-800"
+              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-blue-500 my-2"
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="mt-2">
@@ -109,7 +116,7 @@ const Login = () => {
               </label>
             </div>
           </div>
-          <p className="text-red-500 mb-4">{error}</p>
+          <p className="text-red-600 mb-4">{error}</p>
           <div className="w-full text-center">
             <button
               type="submit"

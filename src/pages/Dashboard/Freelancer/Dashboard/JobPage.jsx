@@ -202,7 +202,7 @@ const JobPage = () => {
                       rel="noreferrer"
                       download
                     >
-                      {file.title}
+                      {file.filename}
                     </a>
                   ) : null}
                 </li>

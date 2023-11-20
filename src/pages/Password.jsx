@@ -60,7 +60,7 @@ const Password = () => {
               New Password
             </label>
             <input
-              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-purple-500 mb-2"
+              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-blue-500 my-2"
               type={showPass ? "text" : "password"}
               required
               value={password}
@@ -76,7 +76,7 @@ const Password = () => {
               Confirm Password
             </label>
             <input
-              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-purple-500 mb-2"
+              className="w-full px-4 py-2 rounded-lg focus:outline-none border focus:ring-2 focus:ring-blue-500 my-2"
               type={showPass ? "text" : "password"}
               value={password2}
               required
@@ -91,8 +91,8 @@ const Password = () => {
               checked={showPass}
               onChange={handleShowPassChange}
               className={`${
-                showPass ? "text-purple-800" : "text-black"
-              } appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-purple-800 checked:border-transparent focus:outline-none`}
+                showPass ? "text-blue-800" : "text-black"
+              } appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-800 checked:border-transparent focus:outline-none`}
             />
           </div>
           <p className="text-red-400 py-2 my-2">{message}</p>
@@ -100,27 +100,25 @@ const Password = () => {
           <div className="w-full text-center grid place-items-center mt-2 pt-2">
             <button
               type="submit"
-              className="bg-white w-full flex justify-center items-center text-purple-500 py-2 px-6 rounded-full text-lg md:text-xl font-semibold hover:bg-purple-600 hover:text-white focus:ring-2 focus:ring-purple-500 transition duration-300"
+              className="w-full bg-blue-700 hover:bg-blue-800 h-fit grid place-items-center text-white font-medium py-2 rounded-lg"
             >
-              <span className="flex text-center">
-                {loading ? (
-                  <span>Please Wait</span>
-                ) : (
-                  <span>Update Password</span>
-                )}
-              </span>
+              {loading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+              ) : (
+                "Update Password"
+              )}
             </button>
           </div>
         </form>
         <div className="mt-3 pt-2 flex flex-col gap-2">
-          <p>
-            <span className="font-semibold">
+          <p className="text-center">
+            <span className="font-semibold text-blue-700">
               <Link to="/login">Login instead</Link>
             </span>
           </p>
-          <p>
+          <p className="text-center">
             New to Assist Africa? Signup{" "}
-            <span className="font-semibold">
+            <span className="font-semibold text-blue-700">
               <Link to="/register">Here</Link>
             </span>
           </p>

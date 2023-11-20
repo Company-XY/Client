@@ -72,7 +72,7 @@ const UserJobs = () => {
   const currentTabJobs = tabs[currentTab] || [];
 
   return (
-    <div className="p-4">
+    <div className="py-4">
       <h2 className="text-2xl font-semibold mb-4">My Projects</h2>
       <hr className="border border-solid border-gray-500 my-4" />
 
@@ -80,7 +80,7 @@ const UserJobs = () => {
         <p>Loading...</p>
       ) : (
         <div>
-          <div className="flex space-x-6 py-2 my-1 text-center">
+          <div className="flex space-x-1 md:space-x-6 md:py-2 my-1 text-center">
             <button
               className={`border p-2 rounded-lg ${
                 activeButton === "Pending" ? "bg-blue-700 text-white" : ""

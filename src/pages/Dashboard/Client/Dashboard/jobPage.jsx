@@ -148,7 +148,7 @@ const JobPage = () => {
                       rel="noreferrer"
                       download
                     >
-                      {file.title}
+                      {file.filename}
                     </a>
                   ) : null}
                 </li>
@@ -194,7 +194,7 @@ const JobPage = () => {
                                   download
                                   className="underline font-semibold"
                                 >
-                                  {file.title}
+                                  {file.filename}
                                 </a>
                               </div>
                             ))}
@@ -289,7 +289,7 @@ const JobPage = () => {
                           download
                           className="underline font-semibold"
                         >
-                          {file.title}
+                          {file.filename}
                         </a>
                       </div>
                     ))}

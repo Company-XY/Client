@@ -52,7 +52,7 @@ const clientDashboard = () => {
       {isLoading ? (
         <Skeleton />
       ) : (
-        <div className="px-2 py-2">
+        <div className="md:px-2 md:py-2">
           {userData && userData.isApproved ? (
             <section>
               <Dashboard />{" "}

@@ -48,7 +48,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="mt-5 pt-2 px-2 sm:px-10">
+    <div className="mt-5 pt-2 px-1 sm:px-10">
       {isLoading ? (
         <Skeleton active={isLoading} />
       ) : (
@@ -56,7 +56,7 @@ const Dashboard = () => {
           {userData && userData.isAdmin ? (
             <Admin />
           ) : (
-            <div className="px-5 py-2">
+            <div className="md:px-5 md:py-2">
               {userData && userData.role === "Freelancer" ? (
                 <Freelancer />
               ) : userData && userData.role === "Client" ? (

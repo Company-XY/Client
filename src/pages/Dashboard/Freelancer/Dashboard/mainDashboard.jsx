@@ -28,11 +28,14 @@ const MainDashboard = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get("https://assist-api-5y59.onrender.com/api/v1/jobs", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://assist-api-5y59.onrender.com/api/v1/jobs",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const sortedJobs = response.data.sort((a, b) => {
         const dateA = new Date(a.createdAt);
@@ -300,7 +303,7 @@ const MainDashboard = () => {
             </div>
           )}
         </div>
-        <div className="hidden md:flex basis-1/5">
+        <div className="flex basis-1/5">
           <Profile />
         </div>
       </div>
