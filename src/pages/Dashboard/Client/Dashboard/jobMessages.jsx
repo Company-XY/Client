@@ -1,16 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Messages = () => {
+const Messages = ({ jobId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [freelancerEmail, setFreelancerEmail] = useState("");
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
+  const userEmail = userObject.email;
 
   useEffect(() => {
     fetchMessages();
+    fetchJob();
   }, []);
+
+  const fetchJob = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`
+      );
+      const { assignedTo } = response.data;
+      setFreelancerEmail(assignedTo);
+    } catch (error) {
+      console.error("Error fetching job:", error);
+    }
+  };
 
   const fetchMessages = async () => {
     try {
@@ -26,10 +41,10 @@ const Messages = () => {
   const sendMessage = async () => {
     try {
       await axios.post(
-        "https://assist-api-5y59.onrender.com/api/v1/messages/${userId}/create",
+        `https://assist-api-5y59.onrender.com/api/v1/messages/create`,
         {
-          from: userId,
-          to: "recipient_id_here",
+          from: userEmail,
+          to: freelancerEmail,
           message: newMessage,
         }
       );
@@ -53,7 +68,8 @@ const Messages = () => {
             {messages.map((message, index) => (
               <div key={index} className="flex justify-start mb-4">
                 <div className="rounded-lg p-2 bg-blue-200">
-                  <p>{message}</p>
+                  {/* Render individual message content */}
+                  <p>{message.message}</p>
                 </div>
               </div>
             ))}
