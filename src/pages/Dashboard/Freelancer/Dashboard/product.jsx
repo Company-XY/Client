@@ -63,6 +63,7 @@ const FileUpload = () => {
         }
       );
 
+      handleFileUpload();
       setLoading(false);
     } catch (error) {
       console.error(
