@@ -102,7 +102,12 @@ const JobPage = () => {
     try {
       const response = await axios.patch(
         `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${bidId}/files`,
-        files
+        files,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setHasPlacedBid(true);
@@ -135,16 +140,15 @@ const JobPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log(response.data);
-
       setHasPlacedBid(true);
       setMessage("Bid placed successfully");
 
       //const { bidId } = response.data._id;
-
       //handleBidFiles(bidId);
     } catch (error) {
       setMessage(error.message);
