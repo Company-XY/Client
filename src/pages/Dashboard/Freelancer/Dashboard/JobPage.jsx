@@ -9,6 +9,7 @@ const JobPage = () => {
   const userObject = JSON.parse(userObjectString);
   const email = userObject.email;
   const name = userObject.name;
+  const token = userObject.token;
   const { jobId } = useParams();
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +74,12 @@ const JobPage = () => {
     const fetchJob = async () => {
       try {
         const response = await axios.get(
-          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`
+          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         setJob(response.data);

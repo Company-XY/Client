@@ -14,6 +14,9 @@ const JobPage = () => {
   const [rating, setRating] = useState(1);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const token = userObject.token;
 
   const [selectedBidId, setSelectedBidId] = useState(null);
   const [selectedBidLoading, setSelectedBidLoading] = useState(false);
@@ -29,7 +32,12 @@ const JobPage = () => {
       setSelectedBidError(null);
       setSelectedBidLoading(true);
       await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/bids/${bidId}/award`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/bids/${bidId}/award`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setAwarded(true);
@@ -44,7 +52,12 @@ const JobPage = () => {
     const fetchJob = async () => {
       try {
         const response = await axios.get(
-          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`
+          `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         setJob(response.data);
@@ -62,7 +75,12 @@ const JobPage = () => {
     try {
       const response = await axios.patch(
         `https://assist-api-5y59.onrender.com/api/v1/review/${jobId}`,
-        { review, rating }
+        { review, rating },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       console.log("Review and rating submitted successfully.", response);
@@ -74,7 +92,12 @@ const JobPage = () => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/approve`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/approve`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setSuccess(true);
       setLoading(false);
@@ -86,7 +109,12 @@ const JobPage = () => {
   const handleDisputeProject = async () => {
     try {
       const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/dispute`
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/dispute`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
     } catch (error) {
       console.log(error);

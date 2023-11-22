@@ -8,6 +8,9 @@ const Deposit = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const token = userObject.token;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,19 +28,17 @@ const Deposit = () => {
         return;
       }
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
       const response = await axios.post(
         `https://assist-api-5y59.onrender.com/api/v1/deposit/${userId}`,
         {
           phone,
           amount,
         },
-        config
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setLoading(false);
