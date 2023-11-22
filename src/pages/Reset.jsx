@@ -8,6 +8,9 @@ const Reset = () => {
   const [message, setMessage] = useState("");
   const [success, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const token = userObject.token;
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -17,7 +20,12 @@ const Reset = () => {
       setMessage("");
       const response = await axios.post(
         "https://assist-api-5y59.onrender.com/api/v1/reset",
-        { email }
+        { email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setSucess(true);
       setLoading(false);

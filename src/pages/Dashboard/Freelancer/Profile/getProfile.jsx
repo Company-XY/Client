@@ -6,11 +6,8 @@ import { BiMoney } from "react-icons/bi";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-
   const userObjectString = localStorage.getItem("user");
-
   const userObject = JSON.parse(userObjectString);
-
   const userId = userObject._id;
   const token = userObject.token;
 
