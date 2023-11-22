@@ -3,8 +3,10 @@ import Select from "react-select";
 import axios from "axios";
 
 const CreateProfile = () => {
-  const userString = localStorage.getItem("user");
-  const { _id, token } = userString ? JSON.parse(userString) : {};
+  const userObjectString = localStorage.getItem("user");
+  const userObject = JSON.parse(userObjectString);
+  const _id = userObject._id;
+  const token = userObject.token;
 
   const [phone, setPhone] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
