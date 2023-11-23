@@ -8,7 +8,7 @@ const clientDashboard = () => {
   return (
     <>
       <main className="py-2 flex flex-col w-full">
-        <section className="w-full rounded-lg bg-blue-200">
+        <section className="w-full rounded-lg">
           <Profile />
         </section>
         <section className="w-full">
