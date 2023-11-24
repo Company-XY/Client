@@ -3,7 +3,6 @@ import axios from "axios";
 import { IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -11,6 +10,7 @@ const Profile = () => {
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
   const token = userObject.token;
+  const profileCompletion = 60;
 
   const fetchUserData = async () => {
     try {
@@ -81,30 +81,6 @@ const Profile = () => {
     return greeting;
   };
 
-  const RatingStars = ({ rating }) => {
-    const filledStars = Math.floor(rating);
-    const hasHalfStar = rating - filledStars !== 0;
-    const totalStars = 5;
-
-    const starElements = [];
-    let i;
-
-    for (i = 0; i < filledStars; i++) {
-      starElements.push(<FaStar key={i} className="text-yellow-500" />);
-    }
-
-    if (hasHalfStar) {
-      starElements.push(<FaStarHalfAlt key={i} className="text-yellow-500" />);
-      i++;
-    }
-
-    for (; i < totalStars; i++) {
-      starElements.push(<FaStar key={i} className="text-gray-300" />);
-    }
-
-    return <div className="flex space-x-1">{starElements}</div>;
-  };
-
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
@@ -122,8 +98,8 @@ const Profile = () => {
             </h2>
           </section>
           <section className="flex">
-            <div className="hidden basis-1/4 md:flex flex-col px-4 my-auto">
-              <div className="w-3/4 h-2/3 grid place-items-center mx-auto py-2">
+            <div className="hidden basis-1/4 md:flex flex-col px-4">
+              <div className="w-3/4 h-2/3 grid place-items-center mx-auto my-1 py-2">
                 <img
                   className="w-32 h-32 rounded-full"
                   src={userData.avatar.imageUrl}
@@ -143,7 +119,7 @@ const Profile = () => {
                 {calculateMemberDuration()}
               </div>
             </div>
-            <div className="basis-3/4 my-auto">
+            <div className="basis-3/4">
               <div className="flex space-x-5 my-1">
                 <div className="flex space-x-3">
                   <span className="">
@@ -175,74 +151,13 @@ const Profile = () => {
                 </div>
               </div>
               <div className="my-3 p-1">{userData.bio}</div>
-              <div className="flex space-x-1">
-                <span>Rating</span>
-                <span className="font-semibold grid place-items-center text-yellow-700">
-                  {userData.rating}
-                </span>
-                <RatingStars rating={userData.rating} />
-              </div>
+              <div className="">Rating: {userData.rating}</div>
+              <div className="cursor-pointer underline">Complete Profile</div>
             </div>
           </section>
         </div>
       ) : (
-        <div
-          id="Client_Profile_Card"
-          className="rounded-lg border border-gray-300 p-4 w-full animate-pulse"
-        >
-          <section className="mb-1">
-            <h2 className="text-2xl font-semibold px-9">
-              <span className="bg-gray-300 rounded h-6 w-20 inline-block mb-2"></span>
-              <span className="bg-gray-300 rounded h-6 w-40 inline-block mb-2 ml-2"></span>
-            </h2>
-          </section>
-          <section className="flex">
-            <div className="hidden md:flex flex-col px-4 my-auto w-1/4">
-              <div className="w-3/4 h-2/3 grid place-items-center mx-auto py-2">
-                <span className="bg-gray-300 rounded-full h-32 w-32 inline-block mb-2"></span>
-              </div>
-              <div className="grid place-items-center mt-1">
-                <div className="flex space-x-2">
-                  <span className="bg-gray-300 rounded h-4 w-12 inline-block"></span>
-                  <span className="bg-gray-300 rounded h-4 w-20 inline-block"></span>
-                </div>
-              </div>
-              <div className="text-center mt-1">
-                <span className="bg-gray-300 rounded h-4 w-24 inline-block"></span>
-              </div>
-            </div>
-            <div className="my-auto w-3/4">
-              <div className="flex space-x-5 my-1">
-                <div className="flex space-x-3">
-                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
-                  <span className="bg-gray-300 rounded h-6 w-40 inline-block"></span>
-                </div>
-                <div className="flex space-x-3">
-                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
-                  <span className="bg-gray-300 rounded h-6 w-24 inline-block"></span>
-                </div>
-              </div>
-              <div className="flex space-x-5 my-1">
-                <div className="flex space-x-3">
-                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
-                  <span className="bg-gray-300 rounded h-6 w-40 inline-block"></span>
-                </div>
-                <div className="flex">
-                  <span className="bg-gray-300 rounded h-6 w-32 inline-block"></span>
-                  <span className="bg-gray-300 rounded h-6 w-32 inline-block"></span>
-                </div>
-              </div>
-              <div className="my-3 p-1">
-                <span className="bg-gray-300 rounded h-16 w-full inline-block"></span>
-              </div>
-              <div className="flex space-x-1">
-                <span className="bg-gray-300 rounded h-6 w-16 inline-block"></span>
-                <span className="bg-gray-300 rounded h-6 w-16 inline-block"></span>
-                <RatingStars />
-              </div>
-            </div>
-          </section>
-        </div>
+        <div className="animate-spin rounded-full h-16 w-16 text-center grid place-items-center border-t-2 border-b-2 border-blue-500"></div>
       )}
     </div>
   );

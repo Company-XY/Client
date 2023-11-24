@@ -139,45 +139,36 @@ const JobPage = () => {
         <p>Loading...</p>
       ) : (
         <div className="bg-white py-4 px-2">
-          <div className="border-2 rounded-lg p-4">
-            <h3 className="text-base md:text-xl font-semibold text-blue-700">
-              {job.title}
-            </h3>
-            <p className="text-gray-600 font-semibold my-1 p-1">
-              {job.description}
-            </p>
+          <div>
+            <h3 className="text-lg font-semibold">{job.title}</h3>
+            <p className="text-gray-600">{job.description}</p>
             <p className="text-gray-600">
               <span className="font-semibold">Budget: </span>
-              <span className="text-blue-700">Ksh. {job.budget}</span>
+              Ksh. {job.budget}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Status: </span>
-              <span className="text-blue-700">{job.stage}</span>
+              {job.stage}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Duration: </span>
-              <span className="text-blue-700">{job.duration} days </span>
+              {job.duration} days
             </p>
             <p className="text-gray-700">
               <span className="font-semibold">Skills: </span>
               {job.skills && job.skills.length > 0
                 ? job.skills.map((skill, index) => (
-                    <span key={index} className="text-blue-700">
+                    <span key={index}>
                       {skill.label}
                       {index !== job.skills.length - 1 ? ", " : ""}
                     </span>
                   ))
                 : "No skills specified"}
             </p>
-            <p className="text-gray-600">
-              Files:{" "}
-              <span className="text-blue-700 font-semibold">
-                {job.files.length}
-              </span>
-            </p>
+            <p className="text-gray-600">Files: {job.files.length}</p>
             <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
               {job.files.map((file, index) => (
-                <li key={index} className="hover:underline text-blue-700">
+                <li key={index} className="hover:underline">
                   {file._id ? (
                     <a
                       href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/download/${file._id}`}
@@ -283,7 +274,7 @@ const JobPage = () => {
                 </div>
               ) : (
                 <p className="font-semibold py-4 pl-2">
-                  There are no current bids available for this project.
+                  There are no current bids available for this job.
                 </p>
               )}
             </div>
