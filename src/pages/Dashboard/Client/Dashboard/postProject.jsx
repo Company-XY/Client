@@ -10,6 +10,7 @@ const PostProject = () => {
   const [services, setServices] = useState("");
   const [skills, setSkills] = useState("");
   const [budget, setBudget] = useState("");
+  const [experience, setExperience] = useState("");
   const [duration, setDuration] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -117,16 +118,16 @@ const PostProject = () => {
   };
 
   return (
-    <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
+    <div className="max-w-4xl mx-auto mt-24 my-5">
       <span
-        className="font-semibold cursor-pointer py-2 my-6"
+        className="font-semibold cursor-pointer my-8"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover-text-white">
+        <span className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-800 hover:text-white">
           Go Back
         </span>
       </span>
-      <h1 className="font-semibold text-2xl text-center py-2">
+      <h1 className="font-semibold text-2xl text-center text-blue-700 py-2">
         Post a Project
       </h1>
       <div className="h-fit w-full border-2 rounded-lg">
@@ -272,14 +273,19 @@ const PostProject = () => {
           </div>
           <div className="flex flex-col mb-4">
             <label className="font-semibold my-1">
-              What experience are you looking for
+              What level of experience is needed to handle the project?
             </label>
-            <select className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none">
-              <option>0-1 year</option>
-              <option>1-3 years</option>
-              <option>3-5 years</option>
-              <option>over 5 years</option>
-              <option>Any</option>
+            <select
+              value={experience}
+              onChange={(e) => setExperience(e.target.value)}
+              className="w-full border rounded-lg py-2 px-4 focus:ring focus:ring-blue-500 focus:outline-none"
+            >
+              <option>Level of Experience</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Experienced">Experienced</option>
+              <option value="Expert">Expert</option>
+              <option value="Any">Any</option>
             </select>
           </div>
           <div className="flex flex-col mb-4">
@@ -297,7 +303,9 @@ const PostProject = () => {
 
           {success && (
             <div className="font-semibold block w-full bg-green-500 gird place-items-center rounded-lg my-2">
-              <p className="text-lg py-2 text-center">Job Post Successful</p>
+              <p className="text-lg py-2 text-center">
+                Project Post Successful
+              </p>
             </div>
           )}
           {!success && (
