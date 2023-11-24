@@ -148,8 +148,8 @@ const JobPage = () => {
       setHasPlacedBid(true);
       setMessage("Bid placed successfully");
 
-      const { bidId } = response.data._id;
-      handleBidFiles(bidId);
+      //const { bidId } = response.data._id;
+      //handleBidFiles(bidId);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -160,10 +160,10 @@ const JobPage = () => {
   return (
     <div className="py-4 mt-14 max-w-5xl mx-auto">
       <span
-        className="font-semibold cursor-pointer py-2 mt-6 "
+        className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 mt-2 rounded-lg bg-blue-600 hover:bg-blue-700 hover:text-white">
+        <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
           Go Back
         </span>
       </span>
@@ -174,44 +174,37 @@ const JobPage = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="bg-white py-4">
-          <div className="border-2 rounded-lg p-4">
-            <h3 className="text-base md:text-xl font-semibold text-blue-700">
-              {job.title}
-            </h3>{" "}
-            <p className="text-gray-600 py-1">{job.description}</p>
+        <div className="bg-white py-4 px-2">
+          <div>
+            <h3 className="text-lg font-semibold">{job.title}</h3>
+            <p className="text-gray-600">{job.description}</p>
             <p className="text-gray-600">
               <span className="font-semibold">Budget: </span>
-              <span className="text-blue-700">Ksh. {job.budget}</span>
+              Ksh. {job.budget}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Status: </span>
-              <span className="text-blue-700">{job.stage}</span>
+              {job.stage}
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Duration: </span>
-              <span className="text-blue-700">{job.duration} days </span>
+              {job.duration} days
             </p>
             <p className="text-gray-700">
               <span className="font-semibold">Skills: </span>
               {job.skills && job.skills.length > 0
                 ? job.skills.map((skill, index) => (
-                    <span key={index} className="text-blue-700">
+                    <span key={index}>
                       {skill.label}
                       {index !== job.skills.length - 1 ? ", " : ""}
                     </span>
                   ))
                 : "No skills specified"}
             </p>
-            <p className="text-gray-600 font-semibold">
-              Files:{" "}
-              <span className="text-blue-700 font-semibold">
-                {job.files.length}
-              </span>
-            </p>{" "}
+            <p className="text-gray-600">Files: {job.files.length}</p>
             <ul className="w-full h-fit border-dotted border-4 py-2 px-4 rounded-lg my-2">
               {job.files.map((file, index) => (
-                <li key={index} className="hover:underline text-blue-700">
+                <li key={index} className="hover:underline">
                   {file._id ? (
                     <a
                       href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/download/${file._id}`}

@@ -125,32 +125,15 @@ const UserJobs = () => {
                 <Link to={`/dashboard/client/job/${job._id}`} key={index}>
                   <div className="bg-white p-4 mb-4 border border-gray-300 rounded-lg">
                     <h3 className="text-lg font-semibold flex justify-between my-2">
-                      <p className="text-blue-700">{job.title}</p>
+                      <p>{job.title}</p>
                       <p className="text-green-600 px-2 rounded-lg border hover:bg-slate-200">
                         Bids {job.bids.length}
                       </p>
                     </h3>
-                    <p className="text-gray-600 py-1">{job.description}</p>
-                    <p className="text-gray-600">
-                      <span className="font-semibold">Budget: </span>
-                      <span className="text-blue-700">Ksh. {job.budget}</span>
-                    </p>{" "}
-                    <p className="text-gray-600">
-                      <span className="font-semibold">Duration: </span>
-                      <span className="text-blue-700">
-                        {job.duration} days{" "}
-                      </span>
-                    </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold">Skills: </span>
-                      {job.skills && job.skills.length > 0
-                        ? job.skills.map((skill, index) => (
-                            <span key={index} className="text-blue-700">
-                              {skill.label}
-                              {index !== job.skills.length - 1 ? ", " : ""}
-                            </span>
-                          ))
-                        : "No skills specified"}
+                    <p className="text-gray-600">{job.description}</p>
+                    <p className="text-gray-600">Budget: Ksh. {job.budget}</p>
+                    <p className="text-gray-600 flex justify-between">
+                      Duration: {job.duration} days
                     </p>
                   </div>
                 </Link>
