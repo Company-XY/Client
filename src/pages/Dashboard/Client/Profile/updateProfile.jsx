@@ -110,7 +110,7 @@ const UpdateProfile = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error("Failed to update isApproved status:", error);
+      console.error("Failed to update isApproved status...:", error);
       setIsLoading(false);
     }
   };
