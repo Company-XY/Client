@@ -7,10 +7,7 @@ import { FaClock } from "react-icons/fa";
 
 const MainDashboard = () => {
   const userObjectString = localStorage.getItem("user");
-  const userObject = JSON.parse(userObjectString);
-  const userId = userObject._id;
-  const token = userObject.token;
-  const userEmail = userObject.email;
+  const { _id: userId, token, email: userEmail } = JSON.parse(userObjectString);
 
   const [jobs, setJobs] = useState([]);
   const [visibleJobs, setVisibleJobs] = useState(10);
@@ -18,12 +15,36 @@ const MainDashboard = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [tabCounts, setTabCounts] = useState({
     all: 0,
     mybids: 0,
     activeBids: 0,
     completedJobs: 0,
   });
+
+  const fetchRecommendedJobs = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/recommended/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response;
+    } catch (error) {
+      console.error("Failed to fetch recommended jobs:", error);
+      throw error;
+    }
+  };
+
+  const handleRecommendedJobsClick = () => {
+    setFilteredJobs(recommendedJobs);
+    setActiveTab("recommended");
+  };
 
   const fetchJobs = async () => {
     try {
@@ -74,7 +95,7 @@ const MainDashboard = () => {
 
     const completedJobs = jobs.filter(
       (job) =>
-        job.stage === "Completed" &&
+        job.stage === "Complete" &&
         job.bids.some((bid) => bid.email === userEmail)
     );
 
@@ -89,6 +110,14 @@ const MainDashboard = () => {
   useEffect(() => {
     if (userId && token) {
       fetchJobs();
+      fetchRecommendedJobs()
+        .then((response) => {
+          const recommendedJobsData = response.data;
+          setRecommendedJobs(recommendedJobsData);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch recommended jobs:", error);
+        });
     }
   }, [userId, token]);
 
@@ -141,6 +170,10 @@ const MainDashboard = () => {
     setSearchQuery(query);
 
     const filtered = jobs.filter((job) => {
+      if (job.stage !== "Pending") {
+        return false; 
+      }
+
       return (
         job.title.toLowerCase().includes(query) ||
         job.skills.join(", ").toLowerCase().includes(query) ||
@@ -172,6 +205,7 @@ const MainDashboard = () => {
         job.stage === "Complete" &&
         job.bids.some((bid) => bid.email === userEmail)
     );
+
     setFilteredJobs(completedJobs);
     setTabCounts({ ...tabCounts, completedJobs: completedJobs.length });
   };
@@ -191,7 +225,18 @@ const MainDashboard = () => {
       filterActiveBids();
     } else if (tab === "completedJobs") {
       filterCompletedJobs();
+    } else if (tab === "recommended") {
+      fetchRecommendedJobs()
+        .then((response) => {
+          const recommendedJobs = response.data;
+          setFilteredJobs(recommendedJobs);
+          setActiveTab(tab);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch recommended jobs:", error);
+        });
     }
+
     setActiveTab(tab);
   };
 
@@ -209,7 +254,17 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("all")}
             >
-              All Jobs ({tabCounts.all})
+              All Projects ({tabCounts.all})
+            </button>
+            <button
+              className={`${
+                activeTab === "recommended"
+                  ? "bg-blue-700 text-white"
+                  : "bg-gray-300"
+              } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
+              onClick={handleRecommendedJobsClick}
+            >
+              Recommended ({recommendedJobs.length})
             </button>
             <button
               className={`${
@@ -239,7 +294,7 @@ const MainDashboard = () => {
               } text-gray-800 py-2 px-4 rounded hover:bg-blue-600`}
               onClick={() => filterJobs("completedJobs")}
             >
-              Completed Jobs ({tabCounts.completedJobs})
+              Completed ({tabCounts.completedJobs})
             </button>
           </div>
 
