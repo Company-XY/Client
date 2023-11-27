@@ -13,6 +13,7 @@ const FileUpload = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -37,15 +38,13 @@ const FileUpload = () => {
         }
       );
 
-      console.log("File upload response:", response.data);
       setMessage("File Submitted Successfully");
       setLoading(false);
       setSuccess(true);
     } catch (error) {
-      console.error("Error uploading files. Please try again.", error);
       setLoading(false);
-      setMessage("Error Submitting File");
       setSuccess(false);
+      setError(error.response.data.message || "Unknown error occurred");
     }
   };
 
@@ -66,12 +65,8 @@ const FileUpload = () => {
       handleFileUpload();
       setLoading(false);
     } catch (error) {
-      console.error(
-        "Error submitting product details. Please try again.",
-        error
-      );
+      setError(error.response.data.message || "Unknown error occurred");
       setLoading(false);
-      setMessage("Error Submitting Product Details");
       setSuccess(false);
     }
   };

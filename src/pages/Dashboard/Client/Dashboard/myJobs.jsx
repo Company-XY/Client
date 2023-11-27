@@ -119,7 +119,7 @@ const UserJobs = () => {
         <div>
           <div className="flex space-x-1 md:space-x-6 md:py-2 my-1 text-center">
             <button
-              className={`border p-2 rounded-lg ${
+              className={`border p-2 rounded-lg font-semibold ${
                 activeButton === "Pending" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("Pending")}
@@ -127,7 +127,7 @@ const UserJobs = () => {
               Pending ({count1})
             </button>
             <button
-              className={`border p-2 rounded-lg ${
+              className={`border p-2 rounded-lg font-semibold ${
                 activeButton === "InProgress" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("InProgress")}
@@ -135,7 +135,7 @@ const UserJobs = () => {
               In Progress ({count2})
             </button>
             <button
-              className={`border p-2 rounded-lg ${
+              className={`border p-2 rounded-lg font-semibold ${
                 activeButton === "UnderReview" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("UnderReview")}
@@ -143,7 +143,7 @@ const UserJobs = () => {
               Under Review ({count3})
             </button>
             <button
-              className={`border p-2 rounded-lg ${
+              className={`border p-2 rounded-lg font-semibold ${
                 activeButton === "Completed" ? "bg-blue-700 text-white" : ""
               }`}
               onClick={() => switchTab("Completed")}
@@ -191,7 +191,7 @@ const UserJobs = () => {
                     </p>
                     <p className="flex space-x-2 my-1">
                       <span className="grid place-items-center">
-                        <FaClock className="text-blue-700"size={18} />
+                        <FaClock className="text-blue-700" size={18} />
                       </span>
                       <span className="text-gray-700">
                         {formatTimeAgo(job.createdAt)}
