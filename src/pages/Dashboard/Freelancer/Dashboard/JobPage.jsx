@@ -329,7 +329,8 @@ const JobPage = () => {
         </div>
       )}
       {job.stage === "Ongoing" && (
-        <div>
+        <div className="flex flex-col space-y-4 my-5">
+          <Messages />
           <Product />
         </div>
       )}
