@@ -261,18 +261,14 @@ const JobPage = () => {
                               disabled={selectedBidLoading || awarded}
                             >
                               {selectedBidId === bid._id ? (
-                                selectedBidLoading ? (
-                                  <span>Please Wait</span>
-                                ) : (
-                                  <span
-                                    onClick={(e) => {
-                                      e.stopPropagation(); // Prevents the parent click from firing
-                                      handleSelectBid(bid._id); // Handles unselecting the bid
-                                    }}
-                                  >
-                                    Back
-                                  </span>
-                                )
+                                <span
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevents the parent click from firing
+                                    handleSelectBid(bid._id); // Handles unselecting the bid
+                                  }}
+                                >
+                                  Back
+                                </span>
                               ) : (
                                 <span>View Bid</span>
                               )}
