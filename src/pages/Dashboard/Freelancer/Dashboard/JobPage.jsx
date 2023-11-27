@@ -98,62 +98,54 @@ const JobPage = () => {
     fetchJob();
   }, [jobId, email, hasPlacedBid, message]);
 
-  const handleBidFiles = async (bidId) => {
-    try {
-      const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${bidId}/files`,
-        files,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setHasPlacedBid(true);
-      setMessage("Bid placed successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleBidSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    if (bidAmount.trim() === "" || proposal.trim() === "") {
-      alert("Please enter both bid amount and a proposal.");
-      return;
-    }
-
-    setIsBidding(true);
+    const bidData = {
+      price: bidAmount,
+      name,
+      email,
+      proposal,
+    };
 
     try {
-      const formData = new FormData();
-      formData.append("price", bidAmount);
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("proposal", proposal);
-
-      const response = await axios.post(
+      const bidResponse = await axios.post(
         `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/create`,
-        formData,
+        bidData,
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      console.log(response.data);
-      setHasPlacedBid(true);
-      setMessage("Bid placed successfully");
 
-      const { bidId } = response.data._id;
-      handleBidFiles(bidId);
+      const newBidId = bidResponse.data._id;
+
+      const formDataFiles = new FormData();
+      uploadedFiles.forEach((file) => {
+        formDataFiles.append("files", file);
+      });
+
+      const filesResponse = await axios.patch(
+        `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${newBidId}/files`,
+        formDataFiles,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setIsLoading(false);
+      setSuccess(true);
+      setMessage("Bid placed successfully");
+      setHasPlacedBid(true);
     } catch (error) {
-      setMessage(error.message);
-    } finally {
-      setIsBidding(false);
+      console.error("Error submitting bid:", error);
+      setIsLoading(false);
     }
   };
 

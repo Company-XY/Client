@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { IoPersonSharp, IoLocation } from "react-icons/io5";
-import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
-import { BiMoney } from "react-icons/bi";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -68,6 +66,30 @@ const Profile = () => {
     return "Unknown";
   };
 
+  const RatingStars = ({ rating }) => {
+    const filledStars = Math.floor(rating);
+    const hasHalfStar = rating - filledStars !== 0;
+    const totalStars = 5;
+
+    const starElements = [];
+    let i;
+
+    for (i = 0; i < filledStars; i++) {
+      starElements.push(<FaStar key={i} className="text-yellow-500" />);
+    }
+
+    if (hasHalfStar) {
+      starElements.push(<FaStarHalfAlt key={i} className="text-yellow-500" />);
+      i++;
+    }
+
+    for (; i < totalStars; i++) {
+      starElements.push(<FaStar key={i} className="text-gray-300" />);
+    }
+
+    return <div className="flex space-x-1">{starElements}</div>;
+  };
+
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
@@ -111,9 +133,12 @@ const Profile = () => {
                 Ksh.{userData.escrowBalance}
               </span>
             </p>
-            <div className="text-center">
-              <span className="text-gray-500">Rating: </span>
-              <span className="text-lg text-blue-400">{userData.rating}</span>
+            <div className="flex space-x-2 justify-center">
+              <span>Rating</span>
+              <span className="font-semibold grid place-items-center text-yellow-700">
+                {userData.rating}/5
+              </span>
+              <RatingStars rating={userData.rating} />
             </div>
           </div>
         </div>

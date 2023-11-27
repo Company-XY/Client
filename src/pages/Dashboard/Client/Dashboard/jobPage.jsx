@@ -23,7 +23,11 @@ const JobPage = () => {
   const [selectedBidError, setSelectedBidError] = useState(null);
 
   const handleSelectBid = (bidId) => {
-    setSelectedBidId(bidId);
+    if (selectedBidId === bidId) {
+      setSelectedBidId(null);
+    } else {
+      setSelectedBidId(bidId);
+    }
     setSelectedBidError(null);
   };
 
@@ -245,20 +249,32 @@ const JobPage = () => {
                             </p>
                           </div>
                         )}
-                        <div className="flex justify-evenly">
+                        <div className="flex justify-start my-2 space-x-4">
                           <div>
                             <button
                               onClick={() => handleSelectBid(bid._id)}
-                              className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
+                              className={`py-2 px-4 w-40 rounded-lg ${
+                                selectedBidId === bid._id
+                                  ? "bg-gray-400"
+                                  : "bg-blue-400"
+                              }`}
+                              disabled={selectedBidLoading || awarded}
                             >
                               {selectedBidId === bid._id ? (
                                 selectedBidLoading ? (
                                   <span>Please Wait</span>
                                 ) : (
-                                  <span>Selected</span>
+                                  <span
+                                    onClick={(e) => {
+                                      e.stopPropagation(); // Prevents the parent click from firing
+                                      handleSelectBid(bid._id); // Handles unselecting the bid
+                                    }}
+                                  >
+                                    Back
+                                  </span>
                                 )
                               ) : (
-                                <span>Select Bid</span>
+                                <span>View Bid</span>
                               )}
                             </button>
                           </div>
@@ -267,12 +283,14 @@ const JobPage = () => {
                               <button
                                 onClick={() => handleAwardProject(bid._id)}
                                 disabled={awarded}
-                                className={`py-2 px-4 w-40 bg-blue-400 rounded-lg my-2`}
+                                className={`py-2 px-4 w-40 rounded-lg ${
+                                  awarded ? "bg-gray-400" : "bg-green-500"
+                                }`}
                               >
                                 {selectedBidLoading ? (
                                   <span>Please Wait</span>
                                 ) : (
-                                  <span>Award Project</span>
+                                  <span>Award Bid</span>
                                 )}
                               </button>
                             )}

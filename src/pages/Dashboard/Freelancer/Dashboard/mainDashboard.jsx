@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import JobCardSkeleton from "./JobCardSkeleton";
 import Profile from "./profileSection";
+import { FaClock } from "react-icons/fa";
 
 const MainDashboard = () => {
   const userObjectString = localStorage.getItem("user");
@@ -259,9 +260,14 @@ const MainDashboard = () => {
                   <div className="bg-blue-100 p-4 mb-2 border border-blue-400 rounded-lg shadow-md">
                     <div className="flex justify-between">
                       <h3 className="text-xl font-semibold">{job.title}</h3>
-                      <span className="text-gray-700">
-                        {formatTimeAgo(job.createdAt)}
-                      </span>
+                      <p className="flex space-x-1 my-1">
+                        <span className="grid place-items-center">
+                          <FaClock className="text-blue-700" size={18} />
+                        </span>
+                        <span className="text-gray-700">
+                          {formatTimeAgo(job.createdAt)}
+                        </span>
+                      </p>
                     </div>
                     <div className="flex justify-start gap-4 items-center">
                       <span className="text-blue-600 hover:underline">
@@ -269,6 +275,9 @@ const MainDashboard = () => {
                       </span>
                       <span className="text-blue-600 hover:underline">
                         Duration: {job.duration} days
+                      </span>
+                      <span className="text-blue-600 hover:underline">
+                        Bids: {job.bids.length}
                       </span>
                     </div>
                     <p className="text-gray-600 my-2">{job.description}</p>
@@ -284,7 +293,6 @@ const MainDashboard = () => {
                             ))
                           : "No skills specified"}
                       </p>
-                      <p className="text-gray-700">Bids: {job.bids.length}</p>
                     </div>
                   </div>
                 </Link>
