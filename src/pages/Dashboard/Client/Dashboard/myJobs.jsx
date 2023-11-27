@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaClock } from "react-icons/fa";
 
 const UserJobs = () => {
   const [userJobs, setUserJobs] = useState([]);
@@ -16,6 +17,42 @@ const UserJobs = () => {
   const userObject = JSON.parse(userObjectString);
   const userEmail = userObject.email;
   const token = userObject.token;
+
+  const formatTimeAgo = (createdAt) => {
+    const currentTime = new Date();
+    const jobTime = new Date(createdAt);
+
+    const timeDifference = currentTime - jobTime;
+
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const week = 7 * day;
+    const month = 30 * day;
+    const year = 365 * day;
+
+    if (timeDifference < minute) {
+      return "1 second ago";
+    } else if (timeDifference < hour) {
+      const minutes = Math.floor(timeDifference / minute);
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+    } else if (timeDifference < day) {
+      const hours = Math.floor(timeDifference / hour);
+      return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+    } else if (timeDifference < week) {
+      const days = Math.floor(timeDifference / day);
+      return `${days} ${days === 1 ? "day" : "days"} ago`;
+    } else if (timeDifference < month) {
+      const weeks = Math.floor(timeDifference / week);
+      return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
+    } else if (timeDifference < year) {
+      const months = Math.floor(timeDifference / month);
+      return `${months} ${months === 1 ? "month" : "months"} ago`;
+    } else {
+      const years = Math.floor(timeDifference / year);
+      return `${years} ${years === 1 ? "year" : "years"} ago`;
+    }
+  };
 
   useEffect(() => {
     const fetchUserJobs = async () => {
@@ -151,6 +188,14 @@ const UserJobs = () => {
                             </span>
                           ))
                         : "No skills specified"}
+                    </p>
+                    <p className="flex space-x-2 my-1">
+                      <span className="grid place-items-center">
+                        <FaClock className="text-blue-700"size={18} />
+                      </span>
+                      <span className="text-gray-700">
+                        {formatTimeAgo(job.createdAt)}
+                      </span>
                     </p>
                   </div>
                 </Link>
