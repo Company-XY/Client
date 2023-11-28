@@ -422,7 +422,7 @@ const Header = () => {
                     to="Hero"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                    className="hover:text-blue-700 font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base cursor-pointer"
                   >
                     Home
                   </ScrollLink>
@@ -430,7 +430,7 @@ const Header = () => {
                     to="Section1"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                    className="hover:text-blue-700 font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base cursor-pointer"
                   >
                     About Us
                   </ScrollLink>
@@ -438,7 +438,7 @@ const Header = () => {
                     to="Services"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                    className="hover:text-blue-700 font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base cursor-pointer"
                   >
                     Services
                   </ScrollLink>
@@ -446,7 +446,7 @@ const Header = () => {
                     to="FAQ"
                     duration={600}
                     smooth={true}
-                    className="hover:text-blue-700 hover:font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                    className="hover:text-blue-700 font-semibold hover:scale-105 text-gray rounded-md px-3 py-2 text-base cursor-pointer"
                   >
                     FAQ's
                   </ScrollLink>
@@ -455,13 +455,13 @@ const Header = () => {
                   <div className="flex space-x-4 text-sm font-medium">
                     <RouterLink
                       to="/register"
-                      className="hidden sm:grid place-items-center py-1 px-3 bg-white hover:bg-blue-700 rounded-lg hover:text-white font-semibold"
+                      className="hidden sm:grid place-items-center text-md py-1 px-3 bg-white hover:bg-blue-700 rounded-lg hover:text-white font-semibold"
                     >
                       Get Started
                     </RouterLink>
                     <button
                       onClick={handleLogin}
-                      className="grid place-items-center py-1 px-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-500"
+                      className="grid place-items-center text-md py-1 px-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-500"
                     >
                       Login
                     </button>
