@@ -20,25 +20,27 @@ const Error404 = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-200">
+    <div className="min-h-[93vh] flex items-center justify-center bg-blue-100">
       <div className="bg-white rounded-lg p-8 shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-2">Under Construction</h1>
-        <p className="text-gray-700 mb-4">
+        <h1 className="text-2xl font-bold mb-2 text-center">
+          Under Construction
+        </h1>
+        <p className="text-gray-700 mb-4 text-center">
           The page you requested is not available.
         </p>
         {authed ? (
-          <div className="space-x-4">
+          <div className="space-x-4 text-center">
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/dashboard")}
             >
               Dashboard
             </button>
           </div>
         ) : (
-          <div className="space-x-4">
+          <div className="space-x-4 text-center">
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/")}
             >
               Home
