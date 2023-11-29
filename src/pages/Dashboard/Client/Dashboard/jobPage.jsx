@@ -258,7 +258,7 @@ const JobPage = () => {
                           <div>
                             <button
                               onClick={() => handleSelectBid(bid._id)}
-                              className={`py-2 px-4 w-40 rounded-lg ${
+                              className={`py-2 px-4 w-40 rounded-lg text-white ${
                                 selectedBidId === bid._id
                                   ? "bg-gray-400"
                                   : "bg-blue-400"
@@ -284,7 +284,7 @@ const JobPage = () => {
                               <button
                                 onClick={() => handleAwardProject(bid._id)}
                                 disabled={awarded}
-                                className={`py-2 px-4 w-40 rounded-lg ${
+                                className={`py-2 px-4 w-40 rounded-lg text-white ${
                                   awarded ? "bg-gray-400" : "bg-green-500"
                                 }`}
                               >

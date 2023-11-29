@@ -16,15 +16,15 @@ const FileUpload = () => {
   const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
-    const files = e.target.files;
-    setSelectedFiles([...selectedFiles, ...files]);
+    const files = Array.from(e.target.files);
+    setSelectedFiles(files);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = {
+    const productData = {
       name,
       email,
     };
@@ -32,7 +32,7 @@ const FileUpload = () => {
     try {
       const jobResponse = await axios.post(
         `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/submit`,
-        formData,
+        productData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -92,8 +92,16 @@ const FileUpload = () => {
           ))}
         </div>
       )}
-      {success && <div>{message}</div>}
-      {error && <div>{error}</div>}
+      {success && (
+        <div className="text-green-600 py-2 bg-gray-200 rounded-lg text-center font-semibold">
+          {message}
+        </div>
+      )}
+      {error && (
+        <div className="text-red-600 py-2 bg-gray-200 rounded-lg text-center font-semibold">
+          {error}
+        </div>
+      )}
       {!success && (
         <button
           onClick={handleFormSubmit}
