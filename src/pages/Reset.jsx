@@ -22,7 +22,17 @@ const Reset = () => {
       setSucess(true);
       setLoading(false);
     } catch (error) {
-      setMessage("User Not Found");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setMessage(error.response.data.message);
+      } else if (error.message) {
+        setMessage(error.message);
+      } else {
+        setMessage("An error occurred while processing your request.");
+      }
       setSucess(false);
       setLoading(false);
     }

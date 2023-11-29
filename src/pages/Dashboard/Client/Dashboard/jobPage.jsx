@@ -212,33 +212,38 @@ const JobPage = () => {
                           Bid by {bid.name}
                         </h3>
                         <p className="text-gray-600">
-                          <span className="font-semibold">Proposal: </span>
-                          {bid.proposal}
-                        </p>
-                        <p className="text-gray-600">
                           <span className="font-semibold">Budget: </span>
                           {bid.price}
                         </p>
 
-                        {/* Display bid files */}
-                        {bid.files && bid.files.length > 0 && (
+                        {/* Additional details shown on "View Bid" click */}
+                        {selectedBidId === bid._id && (
                           <div>
-                            <h3 className="text-sm font-semibold">
-                              Bid Files:
-                            </h3>
-                            {bid.files.map((file) => (
-                              <div key={file._id}>
-                                <a
-                                  href={`https://assist-api-5y59.onrender.com/api/v1/jobs/bids/${jobId}/${bid._id}/${file._id}`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  download
-                                  className="underline font-semibold"
-                                >
-                                  {file.filename}
-                                </a>
+                            <p className="text-gray-600">
+                              <span className="font-semibold">Proposal: </span>
+                              {bid.proposal}
+                            </p>
+                            {/* Display bid files */}
+                            {bid.files && bid.files.length > 0 && (
+                              <div>
+                                <h3 className="text-sm font-semibold">
+                                  Bid Files:
+                                </h3>
+                                {bid.files.map((file) => (
+                                  <div key={file._id}>
+                                    <a
+                                      href={`https://assist-api-5y59.onrender.com/api/v1/jobs/bids/${jobId}/${bid._id}/${file._id}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      download
+                                      className="underline font-semibold"
+                                    >
+                                      {file.filename}
+                                    </a>
+                                  </div>
+                                ))}
                               </div>
-                            ))}
+                            )}
                           </div>
                         )}
                         {/* Error specific to the selected bid */}

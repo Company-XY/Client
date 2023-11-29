@@ -20,40 +20,19 @@ const FileUpload = () => {
     setSelectedFiles([...selectedFiles, ...files]);
   };
 
-  const handleFileUpload = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = {
+      name,
+      email,
+    };
+
     try {
-      const formData = new FormData();
-      for (const file of selectedFiles) {
-        formData.append("files", file);
-      }
-
-      const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/product`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setMessage("File Submitted Successfully");
-      setLoading(false);
-      setSuccess(true);
-    } catch (error) {
-      setLoading(false);
-      setSuccess(false);
-      setError(error.response.data.message || "Unknown error occurred");
-    }
-  };
-
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
+      const jobResponse = await axios.post(
         `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/submit`,
-        { name, email },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,12 +41,30 @@ const FileUpload = () => {
         }
       );
 
-      handleFileUpload();
+      const formDataFiles = new FormData();
+
+      selectedFiles.forEach((file) => {
+        formDataFiles.append("files", file);
+      });
+
+      const filesResponse = await axios.patch(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/product`,
+        formDataFiles,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       setLoading(false);
+      setSuccess(true);
+      setMessage("Files and Details Submitted Successfully");
     } catch (error) {
-      setError(error.response.data.message || "Unknown error occurred");
       setLoading(false);
       setSuccess(false);
+      setError(error.response.data.message || "Unknown error occurred");
     }
   };
 
@@ -99,7 +96,7 @@ const FileUpload = () => {
       {error && <div>{error}</div>}
       {!success && (
         <button
-          onClick={handleSubmit}
+          onClick={handleFormSubmit}
           className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
             isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
           }`}
