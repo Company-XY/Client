@@ -96,6 +96,7 @@ const FileUpload = () => {
         </div>
       )}
       {success && <div>{message}</div>}
+      {error && <div>{error}</div>}
       {!success && (
         <button
           onClick={handleSubmit}

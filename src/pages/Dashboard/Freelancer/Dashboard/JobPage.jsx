@@ -11,17 +11,16 @@ const JobPage = () => {
   const name = userObject.name;
   const token = userObject.token;
   const { jobId } = useParams();
+
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [bidAmount, setBidAmount] = useState("");
   const [proposal, setProposal] = useState("");
-  const [files, setFiles] = useState(null);
   const [isBidding, setIsBidding] = useState(false);
   const [targetPrice, setTargetPrice] = useState(0);
   const navigate = useNavigate();
   const [hasPlacedBid, setHasPlacedBid] = useState(false);
   const [message, setMessage] = useState(null);
-
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const maxFiles = 5;
 
@@ -100,7 +99,7 @@ const JobPage = () => {
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsBidding(true);
 
     const bidData = {
       price: bidAmount,
@@ -121,12 +120,17 @@ const JobPage = () => {
         }
       );
 
-      const newBidId = bidResponse.data._id;
+      {
+        /*const newBidId = bidResponse.data._id;
+
+      console.log(newBidId);
 
       const formDataFiles = new FormData();
       uploadedFiles.forEach((file) => {
         formDataFiles.append("files", file);
       });
+
+      console.log(formDataFiles);
 
       const filesResponse = await axios.patch(
         `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${newBidId}/files`,
@@ -139,13 +143,15 @@ const JobPage = () => {
         }
       );
 
-      setIsLoading(false);
+      console.log(filesResponse.data);*/
+      }
+      setIsBidding(false);
       setSuccess(true);
       setMessage("Bid placed successfully");
       setHasPlacedBid(true);
     } catch (error) {
       console.error("Error submitting bid:", error);
-      setIsLoading(false);
+      setIsBidding(false);
     }
   };
 
