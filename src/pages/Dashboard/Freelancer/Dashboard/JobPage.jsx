@@ -338,7 +338,7 @@ const JobPage = () => {
       {job.stage === "UnderReview" && (
         <div className="p-2 m-2 grid place-items-center bg-green-500 rounded-lg">
           <span className="font-semibold">
-            Product Successfully Submitted and Under Review
+            Project Successfully Submitted and Under Review
           </span>
         </div>
       )}
