@@ -120,17 +120,12 @@ const JobPage = () => {
         }
       );
 
-      {
-        /*const newBidId = bidResponse.data._id;
-
-      console.log(newBidId);
+      const newBidId = bidResponse.data._id;
 
       const formDataFiles = new FormData();
       uploadedFiles.forEach((file) => {
         formDataFiles.append("files", file);
       });
-
-      console.log(formDataFiles);
 
       const filesResponse = await axios.patch(
         `https://assist-api-5y59.onrender.com/api/v1/job/${jobId}/bids/${newBidId}/files`,
@@ -143,14 +138,11 @@ const JobPage = () => {
         }
       );
 
-      console.log(filesResponse.data);*/
-      }
       setIsBidding(false);
       setSuccess(true);
       setMessage("Bid placed successfully");
       setHasPlacedBid(true);
     } catch (error) {
-      console.error("Error submitting bid:", error);
       setIsBidding(false);
     }
   };
