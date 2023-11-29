@@ -24,14 +24,14 @@ const BookConsultation = () => {
         <section className="flex flex-col gap-2 items-center my-2 py-2">
           <button
             onClick={handleDetails}
-            className="w-1/5 rounded-lg border-2 border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
+            className="w-1/5 rounded-lg border-2 font-semibold border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
           >
             Fill in Details
           </button>
           <p className="font-semibold">OR</p>
           <button
             onClick={handleCall}
-            className="w-1/5 rounded-lg border-2 border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
+            className="w-1/5 rounded-lg border-2 font-semibold border-blue-700 py-2 px-4 bg-white hover:bg-blue-600 hover:text-white"
           >
             Book a Call
           </button>
@@ -41,7 +41,7 @@ const BookConsultation = () => {
           className="font-semibold cursor-pointer"
           onClick={() => navigate("/dashboard")}
         >
-          <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover-text-white">
+          <span className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-800 text-white">
             Go Back
           </span>
         </span>

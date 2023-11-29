@@ -19,7 +19,6 @@ const PostProject = () => {
 
   const userObject = JSON.parse(userObjectString);
 
-  const userId = userObject._id;
   const token = userObject.token;
   const userEmail = userObject.email;
   const userName = userObject.name;
@@ -123,7 +122,7 @@ const PostProject = () => {
         className="font-semibold cursor-pointer my-8"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-800 hover:text-white">
+        <span className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-800 text-white">
           Go Back
         </span>
       </span>
@@ -310,7 +309,7 @@ const PostProject = () => {
           )}
           {!success && (
             <button
-              className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover-bg-blue-800"
+              className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:text-white hover-bg-blue-800"
               type="submit"
             >
               {isLoading ? <span>Please Wait</span> : <span>Submit</span>}

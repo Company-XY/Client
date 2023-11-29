@@ -65,7 +65,7 @@ const Call = () => {
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
       <span
         className="font-semibold cursor-pointer py-2 my-6"
-        onClick={() => navigate("/dashboard")}
+        onClick={() => navigate("/dashboard/client/book")}
       >
         <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
           Go Back
@@ -79,7 +79,10 @@ const Call = () => {
         className="py-4 px-4 w-full h-fit bg-white rounded-lg my-2 shadow-md"
       >
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
+          <label
+            htmlFor="businessName"
+            className="py-2 font-semibold text-blue-700"
+          >
             What service are you looking for?
           </label>
           <select
@@ -124,7 +127,10 @@ const Call = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
+          <label
+            htmlFor="businessName"
+            className="py-2 font-semibold  text-blue-700"
+          >
             Enter your Business name
           </label>
           <input
@@ -137,7 +143,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="phone" className="py-2 font-semibold">
+          <label htmlFor="phone" className="py-2 font-semibold text-blue-700">
             Phone Number
           </label>
           <input
@@ -150,7 +156,10 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="prGoals" className="py-2 font-semibold">
+          <label
+            htmlFor="prGoals"
+            className="py-2 font-semibold  text-blue-700"
+          >
             Provide a brief description of your PR Goals and how you want them
             executed
           </label>
@@ -164,7 +173,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="date" className="py-2 font-semibold">
+          <label htmlFor="date" className="py-2 font-semibold  text-blue-700">
             When are you available for the call?
           </label>
           <input
@@ -177,7 +186,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="time" className="py-2 font-semibold">
+          <label htmlFor="time" className="py-2 font-semibold  text-blue-700">
             At what time?
           </label>
           <select
@@ -198,7 +207,7 @@ const Call = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="date2" className="py-2 font-semibold">
+          <label htmlFor="date2" className="py-2 font-semibold  text-blue-700">
             Provide an alternate date in case you are not available on the first
             date
           </label>
@@ -212,7 +221,7 @@ const Call = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="time2" className="py-2 font-semibold">
+          <label htmlFor="time2" className="py-2 font-semibold  text-blue-700">
             At what time?
           </label>
           <select
@@ -233,7 +242,7 @@ const Call = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="budget" className="py-2 font-semibold">
+          <label htmlFor="budget" className="py-2 font-semibold  text-blue-700">
             What is your budget:
           </label>
           <select
@@ -253,7 +262,7 @@ const Call = () => {
             Call Requested Successfully
           </p>
         )}
-        <div className="flex justify-between px-4 mx-2">
+        <div className="flex justify-between">
           <button
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-800"
