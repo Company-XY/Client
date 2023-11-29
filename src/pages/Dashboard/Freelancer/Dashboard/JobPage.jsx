@@ -20,7 +20,8 @@ const JobPage = () => {
   const [targetPrice, setTargetPrice] = useState(0);
   const navigate = useNavigate();
   const [hasPlacedBid, setHasPlacedBid] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const maxFiles = 5;
 
@@ -89,7 +90,6 @@ const JobPage = () => {
           setHasPlacedBid(true);
         }
       } catch (error) {
-        console.error("Failed to fetch job details:", error);
         setIsLoading(false);
       }
     };
@@ -139,11 +139,12 @@ const JobPage = () => {
       );
 
       setIsBidding(false);
-      setSuccess(true);
       setMessage("Bid placed successfully");
+      setSuccess(true);
       setHasPlacedBid(true);
     } catch (error) {
       setIsBidding(false);
+      setSuccess(false);
     }
   };
 
@@ -153,7 +154,7 @@ const JobPage = () => {
         className="font-semibold cursor-pointer py-2 mt-6 "
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 mt-2 rounded-lg bg-blue-600 hover:bg-blue-700 hover:text-white">
+        <span className="px-4 py-2 mt-2 rounded-lg bg-blue-500 hover:bg-blue-800 text-white">
           Go Back
         </span>
       </span>
@@ -298,7 +299,9 @@ const JobPage = () => {
                 />
               </div>
               {renderUploadedFiles()}
-              {message && <span className="text-green-500">{message}</span>}
+              {success && (
+                <span className="text-green-500 py-1">{message}</span>
+              )}
               <div className="flex justify-between">
                 <div className="flex justify-start space-x-5">
                   <button
