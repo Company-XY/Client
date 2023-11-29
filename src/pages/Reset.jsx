@@ -8,9 +8,6 @@ const Reset = () => {
   const [message, setMessage] = useState("");
   const [success, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const userObjectString = localStorage.getItem("user");
-  const userObject = JSON.parse(userObjectString);
-  const token = userObject.token;
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -19,17 +16,11 @@ const Reset = () => {
       setLoading(true);
       setMessage("");
       const response = await axios.post(
-        "https://assist-api-5y59.onrender.com/api/v1/reset",
-        { email },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        "https://assist-api-5y59.onrender.com/api/v1/password",
+        { email }
       );
       setSucess(true);
       setLoading(false);
-      console.log(response);
     } catch (error) {
       setMessage("User Not Found");
       setSucess(false);

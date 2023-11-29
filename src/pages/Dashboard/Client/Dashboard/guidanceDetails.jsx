@@ -55,7 +55,7 @@ const Details = () => {
     <div className="grid place-items-center max-w-4xl mx-auto mt-24 my-5">
       <span
         className="font-semibold cursor-pointer py-2 my-6"
-        onClick={() => navigate("/dashboard")}
+        onClick={() => navigate("/dashboard/client/book")}
       >
         <span className="px-4 py-2 rounded-lg bg-blue-300 hover:bg-blue-600 hover:text-white">
           Go Back
@@ -69,7 +69,7 @@ const Details = () => {
         className="py-4 px-4 w-full bg-white rounded-lg my-2 shadow-md"
       >
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
+          <label htmlFor="businessName" className="py-2 font-semibold  text-blue-700">
             What service are you looking for?
           </label>
           <select
@@ -114,7 +114,7 @@ const Details = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="businessName" className="py-2 font-semibold">
+          <label htmlFor="businessName" className="py-2 font-semibold  text-blue-700">
             Enter your Business name
           </label>
           <input
@@ -127,7 +127,7 @@ const Details = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="description" className="py-2 font-semibold">
+          <label htmlFor="description" className="py-2 font-semibold  text-blue-700">
             Provide a brief description of your PR Goals and how you want them
             executed
           </label>
@@ -141,7 +141,7 @@ const Details = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="budget" className="py-2 font-semibold">
+          <label htmlFor="budget" className="py-2 font-semibold  text-blue-700">
             What is your budget:
           </label>
           <select
@@ -161,7 +161,7 @@ const Details = () => {
             Guidance Requested Successfully
           </p>
         )}
-        <div className="flex justify-between mx-2 px-4">
+        <div className="flex justify-between">
           <button
             type="submit"
             className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-800"

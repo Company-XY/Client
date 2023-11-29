@@ -10,9 +10,6 @@ const Password = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const userObjectString = localStorage.getItem("user");
-  const userObject = JSON.parse(userObjectString);
-  const token1 = userObject.token;
 
   const { token } = useParams();
 
@@ -26,13 +23,8 @@ const Password = () => {
     } else {
       try {
         const response = await axios.post(
-          `https://assist-api-5y59.onrender.com/api/v1/reset/password`,
-          { resetToken: token, newPassword: password },
-          {
-            headers: {
-              Authorization: `Bearer ${token1}`,
-            },
-          }
+          `https://assist-api-5y59.onrender.com/api/v1/password/reset`,
+          { resetToken: token, newPassword: password }
         );
         if (response.status === 200) {
           setSuccess("Password updated successfully.");
