@@ -4,8 +4,6 @@ import axios from "axios";
 import Messages from "./jobMessages";
 
 const JobPage = () => {
-  const { jobId } = useParams();
-  const navigate = useNavigate();
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [awarded, setAwarded] = useState(false);
@@ -17,16 +15,18 @@ const JobPage = () => {
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const token = userObject.token;
+  const { jobId } = useParams();
+  const navigate = useNavigate();
 
   const [selectedBidId, setSelectedBidId] = useState(null);
   const [selectedBidLoading, setSelectedBidLoading] = useState(false);
   const [selectedBidError, setSelectedBidError] = useState(null);
 
-  const handleSelectBid = (bidId) => {
-    if (selectedBidId === bidId) {
+  const handleSelectBid = (bid) => {
+    if (selectedBidId === bid._id) {
       setSelectedBidId(null);
     } else {
-      setSelectedBidId(bidId);
+      setSelectedBidId(bid._id);
     }
     setSelectedBidError(null);
   };
@@ -125,6 +125,78 @@ const JobPage = () => {
     }
   };
 
+  const FreelancerDetails = ({ bid }) => {
+    const { email } = bid;
+
+    const [userDetails, setUserDetails] = useState(null);
+    const [loading2, setLoading2] = useState(true);
+
+    useEffect(() => {
+      const fetchFreelancerDetails = async () => {
+        try {
+          setLoading2(true);
+          const response = await axios.get(
+            `https://assist-api-5y59.onrender.com/api/v1/users/list`
+          );
+
+          const freelancerUser = response.data.find(
+            (user) => user.role === "Freelancer" && user.email === email
+          );
+
+          if (freelancerUser) {
+            setUserDetails(freelancerUser);
+          }
+
+          setLoading2(false);
+        } catch (error) {
+          console.error("Error fetching freelancer details:", error);
+          setLoading2(false);
+        }
+      };
+
+      fetchFreelancerDetails();
+    }, [email]);
+
+    return userDetails ? (
+      <div className="bg-white p-4 rounded-lg shadow-md -mt-12">
+        <h2 className="text-xl font-semibold mb-2 text-blue-700 text-center">
+          About {userDetails.name}
+        </h2>
+        <p className="mb-2">{userDetails.bio}</p>
+        <p className="mb-2">Experience: {userDetails.experience}</p>
+        <p className="mb-2">Rating: {userDetails.rating}</p>
+        <p className="mb-2">Location: {userDetails.location}, KE</p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Skills: </span>
+          {userDetails.skills && userDetails.skills.length > 0
+            ? userDetails.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="text-blue-700 font-semibold cursor-pointer hover:underline"
+                >
+                  {skill.label}
+                  {index !== userDetails.skills.length - 1 ? ", " : ""}
+                </span>
+              ))
+            : "No skills specified"}
+        </p>
+      </div>
+    ) : (
+      <div className="bg-white p-4 rounded-lg shadow-md -mt-10 animate-pulse">
+        <h2 className="text-xl font-semibold mb-2 bg-gray-200 h-8 w-2/3"></h2>
+        <p className="mb-2 bg-gray-200 h-4 w-3/4"></p>
+        <p className="mb-2 bg-gray-200 h-4 w-2/4"></p>
+        <p className="mb-2 bg-gray-200 h-4 w-1/4"></p>
+        <p className="mb-2 bg-gray-200 h-4 w-3/4"></p>
+        <p className="mb-2 bg-gray-200 h-4 w-2/4"></p>
+        <p className="text-gray-700">
+          <span className="font-semibold bg-gray-200 h-4 w-1/3 inline-block"></span>
+          <span className="bg-gray-200 h-4 w-2/3 inline-block"></span>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="py-4 mt-16 max-w-5xl mx-auto">
       <span
@@ -218,32 +290,39 @@ const JobPage = () => {
 
                         {/* Additional details shown on "View Bid" click */}
                         {selectedBidId === bid._id && (
-                          <div>
-                            <p className="text-gray-600">
-                              <span className="font-semibold">Proposal: </span>
-                              {bid.proposal}
-                            </p>
-                            {/* Display bid files */}
-                            {bid.files && bid.files.length > 0 && (
-                              <div>
-                                <h3 className="text-sm font-semibold">
-                                  Bid Files:
-                                </h3>
-                                {bid.files.map((file) => (
-                                  <div key={file._id}>
-                                    <a
-                                      href={`https://assist-api-5y59.onrender.com/api/v1/jobs/bids/${jobId}/${bid._id}/${file._id}`}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      download
-                                      className="underline font-semibold"
-                                    >
-                                      {file.filename}
-                                    </a>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
+                          <div className="flex">
+                            <div className="basis-1/2">
+                              <p className="text-gray-600">
+                                <span className="font-semibold">
+                                  Proposal:{" "}
+                                </span>
+                                {bid.proposal}
+                              </p>
+                              {/* Display bid files */}
+                              {bid.files && bid.files.length > 0 && (
+                                <div>
+                                  <h3 className="text-sm font-semibold">
+                                    Bid Files:
+                                  </h3>
+                                  {bid.files.map((file) => (
+                                    <div key={file._id}>
+                                      <a
+                                        href={`https://assist-api-5y59.onrender.com/api/v1/jobs/bids/${jobId}/${bid._id}/${file._id}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        download
+                                        className="underline font-semibold"
+                                      >
+                                        {file.filename}
+                                      </a>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                            <div className="basis-1/2">
+                              <FreelancerDetails bid={bid} />
+                            </div>
                           </div>
                         )}
                         {/* Error specific to the selected bid */}
@@ -257,7 +336,7 @@ const JobPage = () => {
                         <div className="flex justify-start my-2 space-x-4">
                           <div>
                             <button
-                              onClick={() => handleSelectBid(bid._id)}
+                              onClick={() => handleSelectBid(bid)}
                               className={`py-2 px-4 w-40 rounded-lg text-white ${
                                 selectedBidId === bid._id
                                   ? "bg-gray-400"
