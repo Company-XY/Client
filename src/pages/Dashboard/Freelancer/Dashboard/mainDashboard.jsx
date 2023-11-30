@@ -113,6 +113,13 @@ const MainDashboard = () => {
       fetchRecommendedJobs()
         .then((response) => {
           const recommendedJobsData = response.data;
+
+          recommendedJobsData.sort((a, b) => {
+            const timestampA = new Date(a.createdAt).getTime();
+            const timestampB = new Date(b.createdAt).getTime();
+            return timestampB - timestampA;
+          });
+
           setRecommendedJobs(recommendedJobsData);
         })
         .catch((error) => {
@@ -171,7 +178,7 @@ const MainDashboard = () => {
 
     const filtered = jobs.filter((job) => {
       if (job.stage !== "Pending") {
-        return false; 
+        return false;
       }
 
       return (
