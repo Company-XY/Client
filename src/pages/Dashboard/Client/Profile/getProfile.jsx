@@ -7,10 +7,29 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [projects, setProjects] = useState({});
+  const [error, setError] = useState("");
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
   const token = userObject.token;
+
+  const fetchUserProjects = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/user/completed/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setProjects(response.data);
+    } catch (error) {
+      setError("An error occured");
+    }
+  };
 
   const fetchUserData = async () => {
     try {
@@ -25,7 +44,7 @@ const Profile = () => {
 
       setUserData(response.data);
     } catch (error) {
-      console.error("Failed to fetch user ...data:", error);
+      setError("An error occured");
     }
   };
 
@@ -99,7 +118,7 @@ const Profile = () => {
     }
 
     for (; i < totalStars; i++) {
-      starElements.push(<FaStar key={i} className="text-gray-300" />);
+      starElements.push(<FaStar key={i} size={18} className="text-gray-300" />);
     }
 
     return <div className="flex space-x-1">{starElements}</div>;
@@ -108,6 +127,7 @@ const Profile = () => {
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
+      fetchUserProjects();
     }
   }, [userId, token]);
 
@@ -135,7 +155,7 @@ const Profile = () => {
                   <span className="">
                     <IoLocation size={20} />
                   </span>
-                  <span>{userData.location}</span>
+                  <span>{userData.location}, KE</span>
                 </div>
               </div>
               <div className="text-center mt-1">
@@ -176,6 +196,12 @@ const Profile = () => {
               </div>
               <div className="my-3 p-1">{userData.bio}</div>
               <div className="flex space-x-1">
+                <span>Projects Completed : </span>
+                <span className="font-semibold grid place-items-center underline cursor-pointer text-yellow-700">
+                  {projects.length}
+                </span>
+              </div>
+              <div className="flex space-x-1">
                 <span>Rating</span>
                 <span className="font-semibold grid place-items-center text-yellow-700">
                   {userData.rating}
@@ -183,6 +209,7 @@ const Profile = () => {
                 <RatingStars rating={userData.rating} />
               </div>
             </div>
+            {error}
           </section>
         </div>
       ) : (

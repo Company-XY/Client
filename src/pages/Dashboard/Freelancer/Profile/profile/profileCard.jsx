@@ -1,16 +1,35 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { IoPersonSharp, IoLocation } from "react-icons/io5";
+import { IoLocation } from "react-icons/io5";
 import { AiFillPhone, AiOutlineMail } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
-const ProfileCard = () => {
+const Profile = () => {
   const [userData, setUserData] = useState(null);
-
+  const [projects, setProjects] = useState({});
+  const [error, setError] = useState("");
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
   const token = userObject.token;
+
+  const fetchUserProjects = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/user/completed/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setProjects(response.data);
+    } catch (error) {
+      setError("An error occured");
+    }
+  };
 
   const fetchUserData = async () => {
     try {
@@ -25,7 +44,7 @@ const ProfileCard = () => {
 
       setUserData(response.data);
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      setError("An error occured");
     }
   };
 
@@ -66,65 +85,194 @@ const ProfileCard = () => {
     return "Unknown";
   };
 
+  const getGreeting = () => {
+    const currentTime = new Date().getHours();
+    let greeting = "";
+
+    if (currentTime >= 5 && currentTime < 12) {
+      greeting = "Good morning!";
+    } else if (currentTime >= 12 && currentTime < 18) {
+      greeting = "Good afternoon!";
+    } else {
+      greeting = "Good evening!";
+    }
+
+    return greeting;
+  };
+
+  const RatingStars = ({ rating }) => {
+    const filledStars = Math.floor(rating);
+    const hasHalfStar = rating - filledStars !== 0;
+    const totalStars = 5;
+
+    const starElements = [];
+    let i;
+
+    for (i = 0; i < filledStars; i++) {
+      starElements.push(<FaStar key={i} className="text-yellow-500" />);
+    }
+
+    if (hasHalfStar) {
+      starElements.push(<FaStarHalfAlt key={i} className="text-yellow-500" />);
+      i++;
+    }
+
+    for (; i < totalStars; i++) {
+      starElements.push(<FaStar key={i} size={18} className="text-gray-300" />);
+    }
+
+    return <div className="flex space-x-1">{starElements}</div>;
+  };
+
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
+      fetchUserProjects();
     }
   }, [userId, token]);
 
   return (
-    <main className="bg-blue-100 rounded-md h-80 ml-8 p-4">
+    <div className="flex flex-col w-full mb-4">
       {userData ? (
-        <section className="flex">
-          <div className="w-1/3 flex flex-col items-center">
-            <div className="w-3/4 h-3/4 relative">
-              <img
-                className="w-36 h-36 rounded-full"
-                src={userData.avatar.imageUrl}
-                alt="Profile"
-              />
-            </div>
-
-            <h2 className="text-xl font-bold mt-2">{userData.name}</h2>
-          </div>
-          <div className="w-2/3 p-4">
-            <div className="mb-4">
-              <div className="flex items-center">
-                <AiOutlineMail className="mr-2" />
-                <p className="text-gray-600">{userData.email}</p>
+        <div id="Client_Profile_Card" className="rounded-lg">
+          <section className="px-4 py-2 mb-1">
+            <h2 className="text-2xl font-semibold px-9">
+              <span>{getGreeting()} </span>
+              <span>{userData.name}</span>
+            </h2>
+          </section>
+          <section className="flex">
+            <div className="hidden basis-1/4 md:flex flex-col px-4 my-auto">
+              <div className="w-3/4 h-2/3 grid place-items-center mx-auto py-2">
+                <img
+                  className="w-32 h-32 rounded-full"
+                  src={userData.avatar.imageUrl}
+                  alt="Profile"
+                />
+              </div>
+              <div className="grid place-items-center mt-1">
+                <div className="flex space-x-2">
+                  <span className="">
+                    <IoLocation size={20} />
+                  </span>
+                  <span>{userData.location}, KE</span>
+                </div>
+              </div>
+              <div className="text-center mt-1">
+                <span className="">Joined </span>
+                {calculateMemberDuration()}
               </div>
             </div>
-            <div className="mb-4">
-              <div className="flex items-center">
-                <AiFillPhone className="mr-2" />
-                <p className="text-gray-600">{userData.phone}</p>
+            <div className="basis-3/4 my-auto">
+              <div className="flex space-x-5 my-1">
+                <div className="flex space-x-3">
+                  <span className="">
+                    <AiOutlineMail size={20} />
+                  </span>
+                  <span className="font-semibold">{userData.email}</span>
+                </div>
+                <div className="flex space-x-3">
+                  <span className="">
+                    <AiFillPhone size={20} />
+                  </span>
+                  <span className="font-semibold">{userData.phone}</span>
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <div className="flex items-center">
-                <IoLocation className="mr-2" />
-                <p className="text-gray-600">{userData.location}</p>
+              <div className="flex space-x-5 my-1">
+                <div className="flex space-x-3">
+                  <span className="">
+                    <BiMoney size={20} />
+                  </span>
+                  <span className="font-semibold">
+                    Ksh. {userData.currentBalance}
+                  </span>
+                </div>
+                <div className="flex">
+                  <span className="">Escrow Balance: </span>
+                  <span className="font-semibold">
+                    Ksh. {userData.escrowBalance}
+                  </span>
+                </div>
               </div>
-            </div>
-            <p className="text-gray-600">Joined: {calculateMemberDuration()}</p>
-            <p className="text-gray-700">
-              Balance:{" "}
-              {userData.currentBalance && (
-                <span className="font-semibold">
-                  Ksh. {userData.currentBalance}
+              <div className="my-3 p-1">{userData.bio}</div>
+              <div className="flex space-x-1">
+                <span>Projects Completed : </span>
+                <span className="font-semibold grid place-items-center underline cursor-pointer text-yellow-700">
+                  {projects.length}
                 </span>
-              )}
-            </p>
-            <div className="mt-4">
-              <span className="text-gray-500">Rating: </span>
+              </div>
+              <div className="flex space-x-1">
+                <span>Rating</span>
+                <span className="font-semibold grid place-items-center text-yellow-700">
+                  {userData.rating}
+                </span>
+                <RatingStars rating={userData.rating} />
+              </div>
             </div>
-          </div>
-        </section>
+            {error}
+          </section>
+        </div>
       ) : (
-        <span>Loading</span>
+        <div
+          id="Client_Profile_Card"
+          className="rounded-lg border border-gray-300 p-4 w-full animate-pulse"
+        >
+          <section className="mb-1">
+            <h2 className="text-2xl font-semibold px-9">
+              <span className="bg-gray-300 rounded h-6 w-20 inline-block mb-2"></span>
+              <span className="bg-gray-300 rounded h-6 w-40 inline-block mb-2 ml-2"></span>
+            </h2>
+          </section>
+          <section className="flex">
+            <div className="hidden md:flex flex-col px-4 my-auto w-1/4">
+              <div className="w-3/4 h-2/3 grid place-items-center mx-auto py-2">
+                <span className="bg-gray-300 rounded-full h-32 w-32 inline-block mb-2"></span>
+              </div>
+              <div className="grid place-items-center mt-1">
+                <div className="flex space-x-2">
+                  <span className="bg-gray-300 rounded h-4 w-12 inline-block"></span>
+                  <span className="bg-gray-300 rounded h-4 w-20 inline-block"></span>
+                </div>
+              </div>
+              <div className="text-center mt-1">
+                <span className="bg-gray-300 rounded h-4 w-24 inline-block"></span>
+              </div>
+            </div>
+            <div className="my-auto w-3/4">
+              <div className="flex space-x-5 my-1">
+                <div className="flex space-x-3">
+                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
+                  <span className="bg-gray-300 rounded h-6 w-40 inline-block"></span>
+                </div>
+                <div className="flex space-x-3">
+                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
+                  <span className="bg-gray-300 rounded h-6 w-24 inline-block"></span>
+                </div>
+              </div>
+              <div className="flex space-x-5 my-1">
+                <div className="flex space-x-3">
+                  <span className="bg-gray-300 rounded h-6 w-12 inline-block"></span>
+                  <span className="bg-gray-300 rounded h-6 w-40 inline-block"></span>
+                </div>
+                <div className="flex">
+                  <span className="bg-gray-300 rounded h-6 w-32 inline-block"></span>
+                  <span className="bg-gray-300 rounded h-6 w-32 inline-block"></span>
+                </div>
+              </div>
+              <div className="my-3 p-1">
+                <span className="bg-gray-300 rounded h-16 w-full inline-block"></span>
+              </div>
+              <div className="flex space-x-1">
+                <span className="bg-gray-300 rounded h-6 w-16 inline-block"></span>
+                <span className="bg-gray-300 rounded h-6 w-16 inline-block"></span>
+                <RatingStars />
+              </div>
+            </div>
+          </section>
+        </div>
       )}
-    </main>
+    </div>
   );
 };
 
-export default ProfileCard;
+export default Profile;

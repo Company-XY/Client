@@ -7,6 +7,7 @@ const VerifyPhone = () => {
   const [codeSent, setCodeSent] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
   const [verificationError, setVerificationError] = useState(null);
   const userObjectString = localStorage.getItem("user");
@@ -19,6 +20,7 @@ const VerifyPhone = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(
           `https://assist-api-5y59.onrender.com/api/v1/user/${userId}`,
           {
@@ -29,8 +31,10 @@ const VerifyPhone = () => {
         );
 
         setUserData(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
+        setIsLoading(false);
       }
     };
 
@@ -89,7 +93,7 @@ const VerifyPhone = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <section className="w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 border-2 rounded-lg py-4 px-6 bg-white">
         <div className="text-center my-4 py-2">
           <span
@@ -168,7 +172,7 @@ const VerifyPhone = () => {
                         className="bg-blue-700 text-white py-2 px-4 rounded-md hover-bg-blue-200"
                         disabled={!userData}
                       >
-                        Request Code
+                        {isLoading ? "Please Wait" : "Request Code"}
                       </button>
                     </div>
                   </div>

@@ -98,7 +98,7 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <section className="w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 border-2 rounded-lg py-4 px-6 bg-white">
         <div className="text-center my-4 py-2">
           <span
@@ -117,12 +117,12 @@ const VerifyEmail = () => {
           <hr className="border-t-2 border-blue-700 mb-4" />
           {success ? (
             <div className="grid place-items-center">
-              <p className="bg-gray-200 text-green-600">
+              <p className="py-1 text-green-600">
                 Email Verified Successfully
               </p>
               <button
                 onClick={() => navigate(`/freelancer/${userId}`)}
-                className="py-1 px-3 bg-blue-200 text-center"
+                className="py-1 px-3 rounded-md bg-blue-200 text-center"
               >
                 Return to Profile
               </button>

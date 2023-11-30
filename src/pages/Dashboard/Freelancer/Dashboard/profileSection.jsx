@@ -4,13 +4,28 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-
+  const [projects, setProjects] = useState({});
   const userObjectString = localStorage.getItem("user");
-
   const userObject = JSON.parse(userObjectString);
-
   const userId = userObject._id;
   const token = userObject.token;
+
+  const fetchUserProjects = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/user/completed/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setProjects(response.data);
+    } catch (error) {
+      setError("An error occured");
+    }
+  };
 
   const fetchUserData = async () => {
     try {
@@ -93,6 +108,7 @@ const Profile = () => {
   useEffect(() => {
     if (userId && token) {
       fetchUserData();
+      fetchUserProjects();
     }
   }, [userId, token]);
 
@@ -113,13 +129,16 @@ const Profile = () => {
             <p className="text-gray-600 text-center mb-2">{userData.email}</p>
             <p className="text-gray-600 text-center mb-2">{userData.phone}</p>
             <p className="text-gray-600 text-center mb-2">
-              {userData.location}
+              {userData.location}, KE
             </p>
             <p className="text-gray-600 text-center mb-2">
               Joined: {calculateMemberDuration()}
             </p>
             <p className="text-gray-600 text-center mb-2">
-              Projects Completed: 0
+              Projects Completed:{" "}
+              <span className="font-semibold cursor-pointer">
+                {projects.length}
+              </span>
             </p>
             <p className="text-gray-700 text-center">
               Balance:{" "}
@@ -143,7 +162,20 @@ const Profile = () => {
           </div>
         </div>
       ) : (
-        <span>Loading</span>
+        <div className="mt-20 py-4 w-full h-fit">
+          <div className="w-full">
+            <div className="animate-pulse w-24 h-24 rounded-full mx-auto mb-4 bg-gray-300"></div>
+            <h2 className="text-xl font-bold text-center w-40 h-6 bg-gray-300 mb-2"></h2>
+            <p className="text-gray-600 text-center mb-2 w-32 h-4 bg-gray-300"></p>
+            <p className="text-gray-600 text-center mb-2 w-32 h-4 bg-gray-300"></p>
+            <p className="text-gray-600 text-center mb-2 w-40 h-4 bg-gray-300"></p>
+            <p className="text-gray-600 text-center mb-2 w-48 h-4 bg-gray-300"></p>
+            <p className="text-gray-600 text-center mb-2 w-60 h-4 bg-gray-300"></p>
+            <p className="text-gray-600 text-center mb-2 w-56 h-4 bg-gray-300"></p>
+            <p className="text-gray-700 text-center mb-1  w-48 h-4 bg-gray-300"></p>
+            <p className="text-blue-700 text-center w-56 h-4 bg-gray-300"></p>
+          </div>
+        </div>
       )}
     </>
   );
