@@ -20,7 +20,7 @@ const verifications = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://assist-api-5y59.onrender.com/api/v1/profile/${userId}`,
+        `https://assist-api-5y59.onrender.com/api/v1/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +50,9 @@ const verifications = () => {
             </span>
             <span>Freelancer Identity</span>
           </span>
-          <span className="hover:text-blue-700 cursor-pointer">Verify</span>
+          <span className="hover:text-blue-700 cursor-pointer font-semibold hover:underline">
+            Verify
+          </span>
         </div>
         <div className="py-1 flex justify-between">
           <span className="flex space-x-2">
@@ -59,7 +61,9 @@ const verifications = () => {
             </span>
             <span>Payment</span>
           </span>
-          <span className="hover:text-blue-700 cursor-pointer">Verify</span>
+          <span className="hover:text-blue-700 cursor-pointer font-semibold hover:underline">
+            Verify
+          </span>
         </div>
         <div className="py-1 flex justify-between">
           <span className="flex space-x-2">
@@ -75,7 +79,7 @@ const verifications = () => {
           ) : (
             <span
               onClick={() => navigate("/verify/email")}
-              className="hover:text-blue-700 cursor-pointer"
+              className="hover:text-blue-700 cursor-pointer font-semibold hover:underline"
             >
               Verify
             </span>
@@ -95,7 +99,7 @@ const verifications = () => {
           ) : (
             <span
               onClick={() => navigate("/verify/phone")}
-              className="hover:text-blue-700 cursor-pointer"
+              className="hover:text-blue-700 cursor-pointer font-semibold hover:underline"
             >
               Verify
             </span>
