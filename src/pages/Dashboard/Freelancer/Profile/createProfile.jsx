@@ -18,6 +18,7 @@ const CreateProfile = () => {
   const [experience, setExperience] = useState("");
   const [tasks, setTasks] = useState("");
   const [skills, setSkills] = useState("");
+  const [consultation, setConsultation] = useState(false);
   const [availability, setAvailability] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -40,6 +41,7 @@ const CreateProfile = () => {
           paymentMethod,
           paymentRate,
           experience,
+          consultation,
           tasks,
           skills,
           availability,
@@ -340,6 +342,35 @@ const CreateProfile = () => {
                 <option>More than 5 years</option>
               </select>
             </label>
+            <label htmlFor="consultation" className="block py-2">
+              <span className="font-semibold">Consultation</span>
+              <p className="font-normal">Are you available for consultation?</p>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="consultationYes"
+                  name="consultation"
+                  value="true"
+                  checked={consultation === true}
+                  onChange={() => setConsultation(true)}
+                  className="mr-2"
+                />
+                <label htmlFor="consultationYes" className="mr-4">
+                  Yes
+                </label>
+                <input
+                  type="radio"
+                  id="consultationNo"
+                  name="consultation"
+                  value="false"
+                  checked={consultation === false}
+                  onChange={() => setConsultation(false)}
+                  className="mr-2"
+                />
+                <label htmlFor="consultationNo">No</label>
+              </div>
+            </label>
+
             <label htmlFor="sampleWork" className="block py-2">
               <span className="font-semibold">Sample Work (Up to 5 files)</span>
               <p className="font-normal">
