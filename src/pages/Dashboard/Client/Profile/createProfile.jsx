@@ -1,9 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import Select from "react-select";
+import { countryOptions } from "../../../../constants/countries";
 
 const CreateProfile = () => {
   const [phone, setPhone] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [location, setLocation] = useState("");
   const [bio, setBio] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
