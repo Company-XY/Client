@@ -7,8 +7,10 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [count, setCount] = useState(0);
   const [projects, setProjects] = useState({});
   const [error, setError] = useState("");
+
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
@@ -26,8 +28,9 @@ const Profile = () => {
       );
 
       setProjects(response.data);
+      setCount(response.data.completedJobs.length);
     } catch (error) {
-      setError("An error occured");
+      setError(error.response.data.message);
     }
   };
 
@@ -155,7 +158,10 @@ const Profile = () => {
                   <span className="">
                     <IoLocation size={20} />
                   </span>
-                  <span>{userData.location}, KE</span>
+                  <span className="flex space-x-1">
+                    <span>{userData.location.city},</span>
+                    <span>{userData.location.country.code}</span>
+                  </span>
                 </div>
               </div>
               <div className="text-center mt-1">
@@ -198,7 +204,7 @@ const Profile = () => {
               <div className="flex space-x-1">
                 <span>Projects Completed : </span>
                 <span className="font-semibold grid place-items-center underline cursor-pointer text-yellow-700">
-                  {projects.length}
+                  {count}
                 </span>
               </div>
               <div className="flex space-x-1">

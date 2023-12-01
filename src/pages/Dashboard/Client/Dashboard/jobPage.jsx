@@ -183,7 +183,6 @@ const JobPage = () => {
 
           setLoading2(false);
         } catch (error) {
-          console.error("Error fetching freelancer details:", error);
           setLoading2(false);
         }
       };
@@ -199,7 +198,12 @@ const JobPage = () => {
         <p className="mb-2">{userDetails.bio}</p>
         <p className="mb-2">Experience: {userDetails.experience}</p>
         <p className="mb-2">Rating: {userDetails.rating}</p>
-        <p className="mb-2">Location: {userDetails.location}, KE</p>
+        <p className="mb-2">
+          <span className="mb-2 flex space-x-1">
+            <span>{userData.location.city},</span>
+            <span>{userData.location.country.code}</span>
+          </span>
+        </p>
         <p className="text-gray-700">
           <span className="font-semibold">Skills: </span>
           {userDetails.skills && userDetails.skills.length > 0
