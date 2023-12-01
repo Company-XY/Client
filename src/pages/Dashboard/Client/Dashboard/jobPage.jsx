@@ -198,12 +198,12 @@ const JobPage = () => {
   };
 
   return (
-    <div className="py-4 mt-16 max-w-5xl mx-auto">
+    <div className="py-4 mt-20 max-w-5xl mx-auto">
       <span
         className="font-semibold cursor-pointer py-2 my-6"
         onClick={() => navigate("/dashboard")}
       >
-        <span className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-800 hover:text-white">
+        <span className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-800 text-white">
           Go Back
         </span>
       </span>
@@ -212,7 +212,19 @@ const JobPage = () => {
         Project Details
       </h2>{" "}
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="bg-white py-4">
+          <div className="border-2 rounded-lg p-4">
+            <div className="h-6 w-3/4 mb-4 bg-gray-300 rounded-lg"></div>
+            <div className="text-gray-600 py-1 h-3 bg-gray-300 rounded mb-2"></div>
+            <div className="flex flex-col space-y-3">
+              <div className="text-gray-600 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-700 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 font-semibold h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 font-semibold h-3 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="bg-white py-4 px-2">
           <div className="border-2 rounded-lg p-4">
@@ -388,13 +400,16 @@ const JobPage = () => {
           )}
           {job.stage === "Ongoing" && (
             <>
-              <div>
-                Project Ongoing.
+              <div className="mt-2 text-center">
+                Project Ongoing{" "}
                 {job.bids.map((bid) => {
                   if (bid.status === "Ongoing") {
                     return (
                       <span key={bid._id} className="font-semibold">
-                        Bid Awarded to: {bid.name}
+                        Bid Awarded to:{" "}
+                        <span className="text-blue-700 cursor-pointer">
+                          {bid.name}
+                        </span>
                       </span>
                     );
                   }
@@ -407,77 +422,107 @@ const JobPage = () => {
             </>
           )}
 
-          {job.stage === "UnderReview" || job.stage === "Completed" ? (
-            <div>
-              <div>
-                <h3 className="text-lg font-semibold">Product:</h3>
-                <p className="text-gray-600">Message: {job.product.review}</p>
-                {job.product.files && job.product.files.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold">Product Files:</h3>
-                    {job.product.files.map((file) => (
-                      <div key={file._id}>
-                        <a
-                          href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/${file._id}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          download
-                          className="underline font-semibold"
-                        >
-                          {file.filename}
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                )}
+          {job.stage === "Under Review" || job.stage === "Completed" ? (
+            <>
+              <div className="border-t border-gray-300 pt-4 mt-3 bg-blue-300 rounded-md">
+                <h3 className="text-xl font-semibold my-1 text-center">
+                  Project Submission
+                </h3>
+                <div className="p-4">
+                  <p className="text-gray-600">Message: {job.product.review}</p>
+                  {job.product.files && job.product.files.length > 0 && (
+                    <div className="mt-2">
+                      <h3 className="text-md font-semibold mb-1">
+                        Project Submissions:
+                      </h3>
+                      {job.product.files.map((file) => (
+                        <div key={file._id} className="mb-2">
+                          <a
+                            href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/${file._id}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            download
+                            className="hover:underline font-semibold text-blue-500 hover:text-blue-700"
+                          >
+                            {file.filename}
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </>
           ) : null}
-          {job.stage === "UnderReview" && (
+          {job.stage === "Under Review" && (
             <div className="flex flex-col gap-4 mt-4">
-              {/*<form className="flex flex-col gap-1">
-                <div className="mb-4">
-                  <label htmlFor="review" className="text-lg font-semibold">
-                    Add A Review
+              <form className="flex flex-col gap-1">
+                <div className="mb-2">
+                  <label htmlFor="review" className="flex flex-col">
+                    <span className="text-md font-semibold">
+                      Project Review
+                    </span>
+                    <span> Add a review for the project</span>
                   </label>
                   <textarea
                     id="review"
                     name="review"
+                    value={review}
                     placeholder="Enter your review..."
                     className="w-full border-2 rounded-md border-blue-700 py-2 px-4"
                     onChange={(e) => setReview(e.target.value)}
                   />
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="rating" className="text-lg font-semibold">
-                    Add a rating (1-5)
+                <div className="mb-2">
+                  <label htmlFor="rating" className="flex flex-col">
+                    <span className="text-md font-semibold">
+                      Freelancer Rating
+                    </span>
+                    <span>
+                      {" "}
+                      Add a rating for the freelancer in a scale of 1 - 5
+                    </span>
                   </label>
-                  <p>Rate the job in a scale of 1 - 5</p>
                   <input
                     type="number"
                     id="rating"
                     name="rating"
+                    value={rating}
                     placeholder="Rating"
                     min="1"
                     max="5"
-                    step="1"
+                    step="0.5"
                     className="w-full border-2 rounded-md border-blue-700 py-2 px-4"
                     onChange={(e) => setRating(e.target.value)}
                   />
                 </div>
-          </form>*/}
+              </form>
               {success ? (
-                <div className="flex space-x-10">
+                <div className="flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 inline-block"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
                   <span>Project Approved</span>
                 </div>
               ) : (
                 <div className="flex space-x-10">
                   <button
                     onClick={handleApproveProject}
-                    className={`py-2 px-4 w-40 bg-blue-200 rounded-lg ${
+                    className={`py-2 px-4 w-40 bg-green-500 rounded-lg text-white font-semibold ${
                       loading
                         ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-blue-300"
+                        : "hover:bg-green-700 cursor-pointer"
                     }`}
                     disabled={loading}
                   >
@@ -485,10 +530,10 @@ const JobPage = () => {
                   </button>
                   <button
                     onClick={handleDisputeProject}
-                    className={`py-2 px-4 w-40 bg-red-200 rounded-lg ${
+                    className={`py-2 px-4 w-40 bg-red-500 rounded-lg text-white font-semibold ${
                       loading
                         ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-red-300"
+                        : "hover:bg-red-700 cursor-pointer"
                     }`}
                     disabled={loading}
                   >
@@ -497,6 +542,49 @@ const JobPage = () => {
                 </div>
               )}
             </div>
+          )}
+          {job.stage === "Complete" && (
+            <>
+              <div className="p-2">
+                {job.product.files && job.product.files.length > 0 && (
+                  <div className="mt-2">
+                    <h3 className="text-md font-semibold mb-1">
+                      Project Submissions
+                    </h3>
+                    {job.product.files.map((file) => (
+                      <div key={file._id} className="mb-2">
+                        <a
+                          href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/${file._id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          download
+                          className="hover:underline font-semibold text-blue-500 hover:text-blue-700"
+                        >
+                          {file.filename}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 inline-block"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>Project Completed and Approved</span>
+              </div>
+            </>
           )}
         </div>
       )}

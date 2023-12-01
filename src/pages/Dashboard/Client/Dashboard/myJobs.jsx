@@ -90,13 +90,13 @@ const UserJobs = () => {
   useEffect(() => {
     setCount1(userJobs.filter((job) => job.stage === "Pending").length);
     setCount2(userJobs.filter((job) => job.stage === "Ongoing").length);
-    setCount3(userJobs.filter((job) => job.stage === "UnderReview").length);
+    setCount3(userJobs.filter((job) => job.stage === "Under Review").length);
     setCount4(userJobs.filter((job) => job.stage === "Complete").length);
   }, [userJobs]);
 
   const tabs = {
     InProgress: userJobs.filter((job) => job.stage === "Ongoing"),
-    UnderReview: userJobs.filter((job) => job.stage === "UnderReview"),
+    UnderReview: userJobs.filter((job) => job.stage === "Under Review"),
     Completed: userJobs.filter((job) => job.stage === "Complete"),
     Pending: userJobs.filter((job) => job.stage === "Pending"),
   };

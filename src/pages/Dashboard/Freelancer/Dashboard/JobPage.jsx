@@ -148,8 +148,26 @@ const JobPage = () => {
     }
   };
 
+  const calculateDeadline = (duration) => {
+    const awardedAt = new Date(job.awardedAt);
+    const deadlineDate = new Date(awardedAt);
+    deadlineDate.setDate(deadlineDate.getDate() + duration);
+
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    return deadlineDate.toLocaleString("en-US", options);
+  };
+
   return (
-    <div className="py-4 mt-14 max-w-5xl mx-auto">
+    <div className="py-4 mt-20 max-w-5xl mx-auto">
       <span
         className="font-semibold cursor-pointer py-2 mt-6 "
         onClick={() => navigate("/dashboard")}
@@ -163,7 +181,19 @@ const JobPage = () => {
         Project Details
       </h2>
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="bg-white py-4">
+          <div className="border-2 rounded-lg p-4">
+            <div className="h-6 w-3/4 mb-4 bg-gray-300 rounded-lg"></div>
+            <div className="text-gray-600 py-1 h-3 bg-gray-300 rounded mb-2"></div>
+            <div className="flex flex-col space-y-3">
+              <div className="text-gray-600 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-700 h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 font-semibold h-3 bg-gray-300 rounded"></div>
+              <div className="text-gray-600 font-semibold h-3 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="bg-white py-4">
           <div className="border-2 rounded-lg p-4">
@@ -300,7 +330,23 @@ const JobPage = () => {
               </div>
               {renderUploadedFiles()}
               {success && (
-                <span className="text-green-500 py-1">{message}</span>
+                <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 inline-block"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>{message}</span>
+                </div>
               )}
               <div className="flex justify-between">
                 <div className="flex justify-start space-x-5">
@@ -331,16 +377,77 @@ const JobPage = () => {
       )}
       {job.stage === "Ongoing" && (
         <div className="flex flex-col space-y-4 my-5">
+          <div className="bg-white p-4 border border-gray-300 rounded-lg flex space-x-2">
+            <p className="text-lg font-semibold">Deadline </p>
+            <p className="text-gray-600 text-lg underline cursor-pointer hover:text-blue-700 hover:font-semibold">
+              {calculateDeadline(job.duration)}
+            </p>
+          </div>{" "}
           <Messages />
           <Product />
         </div>
       )}
-      {job.stage === "UnderReview" && (
-        <div className="p-2 m-2 grid place-items-center bg-green-500 rounded-lg">
-          <span className="font-semibold">
-            Project Successfully Submitted and Under Review
-          </span>
+      {job.stage === "Under Review" && (
+        <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 inline-block"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          <span>Project Successfully Submitted and Under Review</span>
         </div>
+      )}
+      {job.stage === "Complete" && (
+        <>
+          <div className="p-2">
+            {job.product.files && job.product.files.length > 0 && (
+              <div className="mt-2">
+                <h3 className="text-md font-semibold mb-1">
+                  Project Submissions
+                </h3>
+                {job.product.files.map((file) => (
+                  <div key={file._id} className="mb-2">
+                    <a
+                      href={`https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/files/${file._id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      download
+                      className="hover:underline font-semibold text-blue-500 hover:text-blue-700"
+                    >
+                      {file.filename}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 inline-block"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <span>Project Completed and Approved</span>
+          </div>
+        </>
       )}
     </div>
   );

@@ -181,9 +181,12 @@ const MainDashboard = () => {
         return false;
       }
 
+      const skillLabels = job.skills.map((skill) => skill.label.toLowerCase());
+      const skillLabelsString = skillLabels.join(", ");
+
       return (
         job.title.toLowerCase().includes(query) ||
-        job.skills.join(", ").toLowerCase().includes(query) ||
+        skillLabelsString.includes(query) ||
         job.budget.toString().includes(query) ||
         job.duration.toString().includes(query)
       );
