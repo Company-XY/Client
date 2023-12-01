@@ -12,6 +12,7 @@ const JobPage = () => {
   const [rating, setRating] = useState(1);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const token = userObject.token;
@@ -78,8 +79,8 @@ const JobPage = () => {
     e.preventDefault();
     try {
       const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/review/${jobId}`,
-        { review, rating },
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/review`,
+        { review },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,26 +88,57 @@ const JobPage = () => {
         }
       );
 
-      console.log("Review and rating submitted successfully.", response);
+      return response.data;
     } catch (error) {
-      console.error("Failed to submit review and rating:", error);
+      setError(error.response.data.message || "Failed to submit review");
+      throw error;
     }
   };
-  const handleApproveProject = async () => {
+
+  const handleRating = async (e) => {
+    e.preventDefault();
     try {
-      setLoading(true);
       const response = await axios.patch(
-        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/approve`,
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/rating`,
+        { rating },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setSuccess(true);
-      setLoading(false);
+
+      return response.data;
     } catch (error) {
-      console.log(error);
+      setError(error.response.data.message || "Failed to submit rating");
+      throw error;
+    }
+  };
+
+  const handleApproveProject = async () => {
+    try {
+      setLoading(true);
+
+      const approveResponse = await axios.patch(
+        `https://assist-api-5y59.onrender.com/api/v1/jobs/${jobId}/approve`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (approveResponse.status === 200) {
+        await handleRating();
+        await handleReview();
+        setSuccess(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      setError(error.response.data.message || "Failed to approve project");
+      setLoading(false);
+      throw error;
     }
   };
 
@@ -121,7 +153,9 @@ const JobPage = () => {
         }
       );
     } catch (error) {
-      console.log(error);
+      setError(
+        error.response.data.message || "Failed to dispute project, try again"
+      );
     }
   };
 
@@ -516,30 +550,47 @@ const JobPage = () => {
                   <span>Project Approved</span>
                 </div>
               ) : (
-                <div className="flex space-x-10">
-                  <button
-                    onClick={handleApproveProject}
-                    className={`py-2 px-4 w-40 bg-green-500 rounded-lg text-white font-semibold ${
-                      loading
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-green-700 cursor-pointer"
-                    }`}
-                    disabled={loading}
-                  >
-                    {loading ? <span>Please Wait</span> : <span>Approve</span>}
-                  </button>
-                  <button
-                    onClick={handleDisputeProject}
-                    className={`py-2 px-4 w-40 bg-red-500 rounded-lg text-white font-semibold ${
-                      loading
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-red-700 cursor-pointer"
-                    }`}
-                    disabled={loading}
-                  >
-                    {loading ? <span>Please Wait</span> : <span>Dispute</span>}
-                  </button>
-                </div>
+                <>
+                  <>
+                    {error && (
+                      <span className="font-semibold text-red-700 bg-red-200 w-full p-2 my-2">
+                        {error}
+                      </span>
+                    )}
+                  </>
+                  <div className="flex space-x-10">
+                    <button
+                      onClick={handleApproveProject}
+                      className={`py-2 px-4 w-40 bg-green-500 rounded-lg text-white font-semibold ${
+                        loading
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-green-700 cursor-pointer"
+                      }`}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <span>Please Wait</span>
+                      ) : (
+                        <span>Approve</span>
+                      )}
+                    </button>
+                    <button
+                      onClick={handleDisputeProject}
+                      className={`py-2 px-4 w-40 bg-red-500 rounded-lg text-white font-semibold ${
+                        loading
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-red-700 cursor-pointer"
+                      }`}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <span>Please Wait</span>
+                      ) : (
+                        <span>Dispute</span>
+                      )}
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           )}

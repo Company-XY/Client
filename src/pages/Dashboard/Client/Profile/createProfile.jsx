@@ -12,6 +12,14 @@ const CreateProfile = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  const handleCityChange = (e) => {
+    setLocation(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -24,7 +32,19 @@ const CreateProfile = () => {
       axios
         .patch(
           `https://assist-api-5y59.onrender.com/api/v1/users/update/profile/${_id}`,
-          { phone, location, bio, contactInfo, paymentMethod },
+          {
+            phone,
+            location: {
+              city: location,
+              country: {
+                name: selectedCountry.label,
+                code: selectedCountry.value,
+              },
+            },
+            bio,
+            contactInfo,
+            paymentMethod,
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -100,10 +120,10 @@ const CreateProfile = () => {
         );
         window.location.reload();
       } else {
-        console.error("User data not found in localStorage");
+        setError("User data not found in localStorage");
       }
     } catch (error) {
-      console.error("Failed to update isApproved status:", error);
+      setError(error.response.data.message);
     }
   };
 
@@ -163,22 +183,32 @@ const CreateProfile = () => {
             </div>
             <div className="py-2 my-1">
               <label
-                htmlFor="location"
+                htmlFor="bio"
                 className="block font-semibold mb-1 text-blue-700"
               >
                 Location
-              </label>
-              <p className="font-normal">Where are you located?</p>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                required
-                placeholder="Nairobi"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none"
-              />
+              </label>{" "}
+              <p className="font-normal py-1">Where are you located?</p>
+              <div className="flex space-x-3">
+                <Select
+                  id="country"
+                  name="country"
+                  placeholder="Country"
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  options={countryOptions}
+                  className="basis-1/4 mt-1"
+                />
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  required
+                  placeholder="City..."
+                  onChange={handleCityChange}
+                  className="basis-3/4 w-full p-2 border border-gray-300 rounded-md focus-outline"
+                />
+              </div>
             </div>
             <div className="py-2 my-1">
               <label
