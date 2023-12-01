@@ -47,7 +47,7 @@ const MyDetails = () => {
       ) : error ? (
         <p>{error}</p>
       ) : details.length === 0 ? (
-        <p>No details found for the user</p>
+        <p>No consultation details found for the user</p>
       ) : (
         <ul>
           {details.map((detail) => (

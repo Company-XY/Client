@@ -194,7 +194,7 @@ const Header = () => {
                       aria-labelledby="user-menu-button"
                       tabIndex="-1"
                     >
-                      <div className="py-2 px-4 w-full h-full">
+                      <div className="py-2 px-4 w-full max-h-[50vh]">
                         <div className="py-1 px-1">
                           <div className="flex justify-between px-2 sticky top-0 bg-white z-10 my-2">
                             <h2 className="font-semibold text-center">

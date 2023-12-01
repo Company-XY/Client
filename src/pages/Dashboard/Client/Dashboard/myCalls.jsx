@@ -45,7 +45,7 @@ const MyCalls = () => {
       ) : error ? (
         <p>{error}</p>
       ) : calls.length === 0 ? (
-        <p>No calls found for the user</p>
+        <p>No conslutation calls found for the user</p>
       ) : (
         <ul>
           {calls.map((call) => (

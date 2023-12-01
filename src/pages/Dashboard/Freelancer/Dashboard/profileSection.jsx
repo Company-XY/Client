@@ -6,6 +6,8 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [projects, setProjects] = useState({});
   const [rating, setRating] = useState(null);
+  const [count, setCount] = useState(0);
+
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
@@ -23,8 +25,9 @@ const Profile = () => {
       );
 
       setProjects(response.data);
+      setCount(response.data.completedJobs.length);
     } catch (error) {
-      setError("An error occured");
+      setError(error.response.data.message);
     }
   };
 
@@ -148,16 +151,17 @@ const Profile = () => {
             <p className="text-gray-600 text-center mb-2">{userData.email}</p>
             <p className="text-gray-600 text-center mb-2">{userData.phone}</p>
             <p className="text-gray-600 text-center mb-2">
-              {userData.location}, KE
+              <span className="flex space-x-1">
+                <span>{userData.location.city},</span>
+                <span>{userData.location.country.code}</span>
+              </span>{" "}
             </p>
             <p className="text-gray-600 text-center mb-2">
               Joined: {calculateMemberDuration()}
             </p>
             <p className="text-gray-600 text-center mb-2">
               Projects Completed:{" "}
-              <span className="font-semibold cursor-pointer">
-                {projects.length}
-              </span>
+              <span className="font-semibold cursor-pointer">{count}</span>
             </p>
             <p className="text-gray-700 text-center">
               Balance:{" "}

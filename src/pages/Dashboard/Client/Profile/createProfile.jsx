@@ -13,6 +13,7 @@ const CreateProfile = () => {
   const [contactInfo, setContactInfo] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [error, setError] = useState(null);
 
   const handleCountryChange = (selectedOption) => {
@@ -110,6 +111,7 @@ const CreateProfile = () => {
 
   const updateIsApproved = async () => {
     try {
+      setLoading2(true);
       const userString = localStorage.getItem("user");
       if (userString) {
         const { _id, token } = JSON.parse(userString);
@@ -121,18 +123,21 @@ const CreateProfile = () => {
             },
           }
         );
+        setLoading2(false);
         window.location.reload();
       } else {
         setError("User data not found in localStorage");
+        setLoading2(false);
       }
     } catch (error) {
       setError(error.response.data.message);
+      setLoading2(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-4xl md:px-4 mt-8">
-      <div className="w-full max-w-screen-md px-1 md:px-5 sm:px-0">
+    <div className="mx-auto max-w-5xl md:px-4 mt-8">
+      <div className="w-full mx-auto max-w-3xl px-1 md:px-5 sm:px-0">
         <h2 className="text-xl md:text-2xl font-semibold mb-2 text-center">
           Create Your Client Profile
         </h2>
@@ -280,8 +285,10 @@ const CreateProfile = () => {
               />
             </div>
             {isSuccess && (
-              <div className="text-green-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
-                <p>Update successful</p>
+              <div className="bg-green-200 my-1 py-2 px-4 rounded-lg text-center">
+                <p className="text-green-700 font-semibold">
+                  Profile Created Successfully
+                </p>
               </div>
             )}
             {error && (
@@ -293,9 +300,9 @@ const CreateProfile = () => {
               {isSuccess ? (
                 <button
                   onClick={updateIsApproved}
-                  className="bg-green-500 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
+                  className="bg-green-700 text-white py-2 px-4 my-2 rounded-md hover-bg-blue-600"
                 >
-                  Proceed
+                  {loading2 ? "Please Wait" : "Proceed"}
                 </button>
               ) : (
                 <button
