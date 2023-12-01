@@ -14,6 +14,23 @@ const Profile = () => {
   const userId = userObject._id;
   const token = userObject.token;
 
+  const fetchUserRating = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/freelancer/rating/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setRating(response.data);
+    } catch (error) {
+      setError("An error occured");
+    }
+  };
+
   const fetchUserProjects = async () => {
     try {
       const response = await axios.get(
@@ -128,6 +145,7 @@ const Profile = () => {
     if (userId && token) {
       fetchUserData();
       fetchUserProjects();
+      fetchUserRating();
     }
   }, [userId, token]);
 
@@ -201,13 +219,15 @@ const Profile = () => {
                   {projects.length}
                 </span>
               </div>
-              <div className="flex space-x-1">
-                <span>Rating</span>
-                <span className="font-semibold grid place-items-center text-yellow-700">
-                  {userData.rating}
-                </span>
-                <RatingStars rating={userData.rating} />
-              </div>
+              {rating && (
+                <div className="flex space-x-2 justify-center">
+                  <span>Rating</span>
+                  <span className="font-semibold grid place-items-center text-yellow-700">
+                    {rating}/5
+                  </span>
+                  <RatingStars rating={rating} />
+                </div>
+              )}
             </div>
             {error}
           </section>
