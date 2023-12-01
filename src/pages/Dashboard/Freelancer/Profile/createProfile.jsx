@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
+import { countryOptions } from "../../../../constants/countries";
 
 const CreateProfile = () => {
   const userObjectString = localStorage.getItem("user");
@@ -11,6 +12,7 @@ const CreateProfile = () => {
   const [phone, setPhone] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
   const [sampleWorkFiles, setSampleWorkFiles] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [location, setLocation] = useState("");
   const [bio, setBio] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -26,6 +28,14 @@ const CreateProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  const handleCityChange = (e) => {
+    setLocation(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,7 +46,13 @@ const CreateProfile = () => {
         `https://assist-api-5y59.onrender.com/api/v1/users/update/profile/${_id}`,
         {
           phone,
-          location,
+          location: {
+            city: location,
+            country: {
+              name: selectedCountry.label,
+              code: selectedCountry.value,
+            },
+          },
           bio,
           paymentMethod,
           paymentRate,
@@ -154,7 +170,7 @@ const CreateProfile = () => {
             <hr />
             <label htmlFor="avatar" className="block py-2">
               <span className="font-semibold">Avatar</span>
-              <p className="font-normal">
+              <p className="font-normal py-1">
                 Upload a quality picture to be used as your profile picture
               </p>
               <input
@@ -185,17 +201,27 @@ const CreateProfile = () => {
             </label>
             <label htmlFor="location" className="block py-2">
               <span className="font-semibold">Location</span>
-              <p className="font-normal">Where are you located?</p>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                required
-                value={location}
-                placeholder="Nairobi"
-                onChange={(e) => setLocation(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded-md focus-outline"
-              />
+              <p className="font-normal py-1">Where are you located?</p>
+              <div className="flex space-x-3">
+                <Select
+                  id="country"
+                  name="country"
+                  placeholder="Country"
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  options={countryOptions}
+                  className="basis-1/4 mt-1"
+                />
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  required
+                  placeholder="City..."
+                  onChange={handleCityChange}
+                  className="basis-3/4 w-full p-2 border border-gray-300 rounded-md focus-outline"
+                />
+              </div>
             </label>
             <label htmlFor="bio" className="block py-2">
               <span className="font-semibold">Bio</span>
