@@ -24,12 +24,13 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background-color: #1e40af; /* Use blue-800 shade */
+  border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background-color: #1d4ed8; /* Darker shade for hover, similar to blue-700 */
 }
 
 /* Apply custom scrollbar to the notification container */

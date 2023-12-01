@@ -5,6 +5,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [projects, setProjects] = useState({});
+  const [rating, setRating] = useState(null);
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
@@ -27,6 +28,23 @@ const Profile = () => {
     }
   };
 
+  const fetchUserRating = async () => {
+    try {
+      const response = await axios.get(
+        `https://assist-api-5y59.onrender.com/api/v1/freelancer/rating/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setRating(response.data);
+    } catch (error) {
+      setError("An error occured");
+    }
+  };
+
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
@@ -40,7 +58,7 @@ const Profile = () => {
 
       setUserData(response.data);
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      setError("An error occured");
     }
   };
 
@@ -109,6 +127,7 @@ const Profile = () => {
     if (userId && token) {
       fetchUserData();
       fetchUserProjects();
+      fetchUserRating();
     }
   }, [userId, token]);
 
@@ -152,13 +171,15 @@ const Profile = () => {
                 Ksh.{userData.escrowBalance}
               </span>
             </p>
-            <div className="flex space-x-2 justify-center">
-              <span>Rating</span>
-              <span className="font-semibold grid place-items-center text-yellow-700">
-                {userData.rating}/5
-              </span>
-              <RatingStars rating={userData.rating} />
-            </div>
+            {rating && (
+              <div className="flex space-x-2 justify-center">
+                <span>Rating</span>
+                <span className="font-semibold grid place-items-center text-yellow-700">
+                  {rating}/5
+                </span>
+                <RatingStars rating={rating} />
+              </div>
+            )}
           </div>
         </div>
       ) : (
