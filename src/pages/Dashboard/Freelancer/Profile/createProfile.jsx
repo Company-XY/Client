@@ -209,6 +209,8 @@ const CreateProfile = () => {
                   id="phoneDigits"
                   name="phoneDigits"
                   required
+                  minLength={9}
+                  maxLength={9}
                   placeholder="Enter Phone Number"
                   onChange={(e) => setPhoneDigits(e.target.value)}
                   className="w-2/3 p-2 border border-gray-300 rounded-md focus-outline"
@@ -522,8 +524,22 @@ const CreateProfile = () => {
           </div>
 
           {isSuccess && (
-            <div className="text-green-500 my-1 py-2 bg-gray-200 px-4 rounded-lg text-center">
-              <p>Update successful</p>
+            <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Profile created successfully!</span>
             </div>
           )}
           {error && (

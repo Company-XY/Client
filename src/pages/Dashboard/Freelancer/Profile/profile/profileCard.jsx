@@ -199,7 +199,7 @@ const Profile = () => {
                   <span className="">
                     <AiFillPhone size={20} />
                   </span>
-                  <span className="font-semibold">{userData.phone}</span>
+                  <span className="font-semibold">{userData.phone.combined}</span>
                 </div>
               </div>
               <div className="flex space-x-5 my-1">
