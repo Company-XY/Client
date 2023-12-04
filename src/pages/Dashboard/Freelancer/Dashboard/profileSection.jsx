@@ -149,7 +149,7 @@ const Profile = () => {
             </div>
             <h2 className="text-xl font-bold text-center">{userData.name}</h2>
             <p className="text-gray-600 text-center mb-2">{userData.email}</p>
-            <p className="text-gray-600 text-center mb-2">{userData.phone}</p>
+            <p className="text-gray-600 text-center mb-2">{userData.phone.combined}</p>
             <p className="text-gray-600 text-center mb-2">
               <span className="flex space-x-1">
                 <span>{userData.location.city},</span>
