@@ -2,9 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import { countryOptions } from "../../../../constants/countries";
+import { countryPhoneOptions } from "../../../../constants/countryPhoneCodes";
 
 const CreateProfile = () => {
-  const [phone, setPhone] = useState("");
+  const [selectedCountryCode, setSelectedCountryCode] = useState(null);
+  const [phoneDigits, setPhoneDigits] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [location, setLocation] = useState("");
@@ -24,6 +26,10 @@ const CreateProfile = () => {
     setLocation(e.target.value);
   };
 
+  const handleCountryCodeChange = (selectedOption) => {
+    setSelectedCountryCode(selectedOption);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,7 +43,10 @@ const CreateProfile = () => {
         .patch(
           `https://assist-api-5y59.onrender.com/api/v1/users/update/profile/${_id}`,
           {
-            phone,
+            phone: {
+              countryCode: selectedCountryCode.value,
+              phoneNumber: phoneDigits,
+            },
             location: {
               city: location,
               country: {
@@ -157,17 +166,26 @@ const CreateProfile = () => {
               <p className="font-normal">
                 Enter your phone number, Use the format 0700000000
               </p>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                required
-                maxLength={10}
-                minLength={10}
-                placeholder="0700000000"
-                onChange={(e) => setPhone(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded-md focus-outline"
-              />
+              <div className="flex space-x-3 items-center">
+                <Select
+                  id="countryCode"
+                  name="countryCode"
+                  placeholder="Country Code"
+                  value={selectedCountryCode}
+                  onChange={handleCountryCodeChange}
+                  options={countryPhoneOptions}
+                  className="w-1/3"
+                />
+                <input
+                  type="text"
+                  id="phoneDigits"
+                  name="phoneDigits"
+                  required
+                  placeholder="Enter Phone Number"
+                  onChange={(e) => setPhoneDigits(e.target.value)}
+                  className="w-2/3 p-2 border border-gray-300 rounded-md focus-outline"
+                />
+              </div>
             </div>
             <div className="py-2 my-1">
               <label
