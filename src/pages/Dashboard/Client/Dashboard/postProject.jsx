@@ -301,15 +301,27 @@ const PostProject = () => {
           {renderUploadedFiles()}
 
           {success && (
-            <div className="font-semibold block w-full bg-green-500 gird place-items-center rounded-lg my-2">
-              <p className="text-lg py-2 text-center">
-                Project Post Successful
-              </p>
+            <div className="my-2 flex items-center justify-center space-x-2 bg-green-200 text-green-700 font-semibold px-4 py-2 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Project Posted Successfully!</span>
             </div>
           )}
           {!success && (
             <button
-              className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 hover:text-white hover-bg-blue-800"
+              className="w-1/5 rounded-lg border-2 py-2 px-4 bg-blue-600 font-semibold text-white hover:bg-blue-800"
               type="submit"
             >
               {isLoading ? <span>Please Wait</span> : <span>Submit</span>}
