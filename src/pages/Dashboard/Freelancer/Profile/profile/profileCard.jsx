@@ -10,7 +10,7 @@ const Profile = () => {
   const [projects, setProjects] = useState({});
   const [error, setError] = useState("");
   const [count, setCount] = useState(0);
-
+  const [rating, setRating] = useState(null);
   const userObjectString = localStorage.getItem("user");
   const userObject = JSON.parse(userObjectString);
   const userId = userObject._id;
@@ -199,7 +199,11 @@ const Profile = () => {
                   <span className="">
                     <AiFillPhone size={20} />
                   </span>
-                  <span className="font-semibold">{userData.phone.combined}</span>
+                  {userData && userData.phone && (
+                    <span className="font-semibold">
+                      {userData.phone.combined}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex space-x-5 my-1">
