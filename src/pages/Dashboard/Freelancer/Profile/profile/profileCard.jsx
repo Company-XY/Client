@@ -230,10 +230,10 @@ const Profile = () => {
                 </span>
               </div>
               {rating && (
-                <div className="flex space-x-2 justify-center">
+                <div className="flex space-x-2 justify-start">
                   <span>Rating</span>
                   <span className="font-semibold grid place-items-center text-yellow-700">
-                    {rating}/5
+                    {rating.averageRating}/5
                   </span>
                   <RatingStars rating={rating} />
                 </div>
