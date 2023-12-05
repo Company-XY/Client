@@ -42,7 +42,7 @@ const Profile = () => {
         }
       );
 
-      setRating(response.data);
+      setRating(response.data.averageRating);
     } catch (error) {
       setError("An error occured");
     }
@@ -120,7 +120,7 @@ const Profile = () => {
     }
 
     for (; i < totalStars; i++) {
-      starElements.push(<FaStar key={i} className="text-gray-300" />);
+      starElements.push(<FaStar key={i} size={18} className="text-gray-300" />);
     }
 
     return <div className="flex space-x-1">{starElements}</div>;
@@ -149,8 +149,10 @@ const Profile = () => {
             </div>
             <h2 className="text-xl font-bold text-center">{userData.name}</h2>
             <p className="text-gray-600 text-center mb-2">{userData.email}</p>
-            <p className="text-gray-600 text-center mb-2">{userData.phone.combined}</p>
             <p className="text-gray-600 text-center mb-2">
+              {userData.phone.combined}
+            </p>
+            <p className="text-gray-600 grid place-items-center mb-2">
               <span className="flex space-x-1">
                 <span>{userData.location.city},</span>
                 <span>{userData.location.country.code}</span>
@@ -175,15 +177,15 @@ const Profile = () => {
                 Ksh.{userData.escrowBalance}
               </span>
             </p>
-            {rating && (
-              <div className="flex space-x-2 justify-center">
+            {/* {rating && (
+              <div className="flex space-x-2 justify-start">
                 <span>Rating</span>
                 <span className="font-semibold grid place-items-center text-yellow-700">
                   {rating}/5
                 </span>
                 <RatingStars rating={rating} />
               </div>
-            )}
+           )}*/}
           </div>
         </div>
       ) : (
