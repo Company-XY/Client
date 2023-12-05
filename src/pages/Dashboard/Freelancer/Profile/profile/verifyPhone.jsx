@@ -164,7 +164,7 @@ const VerifyPhone = () => {
                   </p>
                   <div className="mt-4 text-center">
                     <div className="rounded-lg py-1 px-3 text-blue-700 font-semibold">
-                      {userData?.phone}
+                      {userData?.phone.combined}
                     </div>
                     <div className="mt-4 text-center">
                       <button
