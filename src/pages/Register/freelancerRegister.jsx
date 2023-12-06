@@ -156,11 +156,45 @@ const FreelancerRegister = () => {
               } appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-800 checked:border-transparent focus:outline-none`}
             />
           </div>
-          {error && <p className="text-red-400 py-2 my-2">{error}</p>}
-          {passwordError && (
-            <p className="text-red-400 py-2 my-2">{passwordError}</p>
+          {error && (
+            <div className="mt-2 flex items-center justify-center space-x-2 bg-red-200 text-red-700 font-semibold px-4 py-2 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
           )}
-          <div className="w-full text-center grid place-items-center my-4 py-2">
+          {passwordError && (
+            <div className="mt-2 flex items-center justify-center space-x-2 bg-red-200 text-red-700 font-semibold px-4 py-2 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              <span>{passwordError}</span>
+            </div>
+          )}
+          <div className="w-full text-center grid place-items-center my-2 py-2">
             <button
               type="submit"
               className="w-full bg-blue-700 hover:bg-blue-800 h-fit grid place-items-center text-white font-medium py-2 rounded-lg"

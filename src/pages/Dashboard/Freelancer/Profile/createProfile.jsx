@@ -211,7 +211,7 @@ const CreateProfile = () => {
                   required
                   minLength={9}
                   maxLength={9}
-                  placeholder="Enter Phone Number"
+                  placeholder="700000000"
                   onChange={(e) => setPhoneDigits(e.target.value)}
                   className="w-2/3 p-2 border border-gray-300 rounded-md focus-outline"
                 />
