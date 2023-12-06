@@ -200,8 +200,8 @@ const JobPage = () => {
         <p className="mb-2">Rating: {userDetails.rating}</p>
         <p className="mb-2">
           <span className="mb-2 flex space-x-1">
-          <span>{userDetails.location.city},</span>
-  <span>{userDetails.location.country.code}</span>
+            <span>{userDetails.location.city},</span>
+            <span>{userDetails.location.country.code}</span>
           </span>
         </p>
         <p className="text-gray-700">
