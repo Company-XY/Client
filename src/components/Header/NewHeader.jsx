@@ -455,7 +455,7 @@ const Header = () => {
                   <div className="flex space-x-4 text-sm font-medium">
                     <RouterLink
                       to="/register"
-                      className="hidden sm:grid place-items-center text-md py-1 px-3 bg-white hover:bg-blue-700 rounded-lg hover:text-white font-semibold"
+                      className="hidden sm:grid place-items-center text-md py-1 px-3 bg-inherit hover:bg-blue-700 rounded-lg hover:text-white font-semibold"
                     >
                       Get Started
                     </RouterLink>

@@ -4,15 +4,15 @@ import { FaArrowRight } from "react-icons/fa";
 const Register = () => {
   return (
     <main className="bg-cover bg-center h-screen w-full sm:px-5 md:px-10 mt-5 grid place-items-center text-gray-900">
-      <div className="md:px-24 px-2 mt-10 pt-5">
-        <h2 className="font-semibold text-3xl text-center">
+      <div className="md:px-24 px-2 mt-4 pt-5">
+        <h2 className="font-semibold text-3xl text-center my-3 py-2">
           Welcome to Assist Africa
         </h2>
         <p className="leading-8 px-1 md:px-10 text-center">
           Join us today, and experience a seamless and rewarding journey where
           freelancers and clients come together to achieve excellence. In our
           vibrant and dynamic community, opportunities are boundless.
-          <span className="hidden md:flex">
+          <span className="hidden md:flex leading-8">
             Whether you're a talented freelancer looking to showcase your skills
             and grow your career, or a client seeking top-tier expertise to
             bring your projects to life, our platform is your gateway to
@@ -30,39 +30,45 @@ const Register = () => {
             success is the destination. The journey begins here
           </span>
         </p>
-        <section className="flex flex-col gap-6 justify-center md:flex-row md:justify-evenly m-4">
-          <Link to="/register/client">
-            <div className="border-2 rounded-lg border-blue-700 hover:border-blue-400 transition duration-300">
-              <div className="bg-snow-100 hover:bg-blue-400 p-6">
+        <section className="flex flex-col gap-6 justify-center md:flex-row md:justify-evenly m-4 my-5">
+          <Link
+            to="/register/client"
+            className="bg-blue-200 hover:bg-blue-600 hover:text-white rounded-lg transition duration-300"
+          >
+            <div className="rounded-lg">
+              <div className="p-6">
                 <h2 className="font-semibold text-lg mb-2 text-center">
                   Looking to hire or consult experts ?
                 </h2>
-                <p className="text-gray-600">
+                <p className="">
                   Find top-tier expertise and kickstart your projects.
                 </p>
               </div>
-              <div className="hidden md:flex hover:bg-blue-600 justify-center space-x-2 mt-2 items-center py-2">
-                <span className="text-gray-800 font-semibold">Get Started</span>
-                <FaArrowRight className="transform group-hover:-rotate-90 text-gray-800 transition-all duration-300" />
+              <div className="hidden md:flex justify-center space-x-2 mt-2 items-center py-2">
+                <span className="font-semibold">Get Started</span>
+                <FaArrowRight className="transform group-hover:-rotate-90 transition-all duration-300" />
               </div>
             </div>
           </Link>
           <span className="md:hidden grid place-items-center font-semibold text-blue-700">
             OR
           </span>
-          <Link to="/register/freelancer">
-            <div className="border-2 rounded-lg border-blue-700 hover:border-blue-400 transition duration-300">
-              <div className="bg-snow-100 hover:bg-blue-400 p-6">
+          <Link
+            to="/register/freelancer"
+            className="bg-blue-200 hover:bg-blue-600 hover:text-white rounded-lg transition duration-300"
+          >
+            <div className="border-2 rounded-lg">
+              <div className="p-6">
                 <h2 className="font-semibold text-lg mb-2 text-center">
                   Looking for work as a Virtual Assistant ?
                 </h2>
-                <p className="text-gray-600">
+                <p className="">
                   Showcase your skills and find exciting projects.
                 </p>
               </div>
-              <div className="hidden md:flex hover:bg-blue-600 justify-center space-x-2 mt-2 items-center py-2">
-                <span className="text-gray-800 font-semibold">Get Started</span>
-                <FaArrowRight className="transform group-hover:-rotate-90 text-gray-800 transition-all duration-300" />
+              <div className="hidden md:flex justify-center space-x-2 mt-2 items-center py-2">
+                <span className="font-semibold">Get Started</span>
+                <FaArrowRight className="transform group-hover:-rotate-90 transition-all duration-300" />
               </div>
             </div>
           </Link>
