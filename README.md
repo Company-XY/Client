@@ -5,4 +5,4 @@ https://beta-assist.netlify.app/
 
 <hr />
 
-freelancing website for Virtual Assistance
+freelancing website for Virtual Assistants.
