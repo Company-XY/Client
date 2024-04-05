@@ -24,7 +24,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: #1e40af; /* Use blue-800 shade */
+  background-color: #1e40af;
   border-radius: 6px;
 }
 
